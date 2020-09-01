@@ -1,9 +1,41 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>search</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="selectMode();">
+        <ion-icon name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Search</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-text-center">
+  <p class="container" *ngIf="activeMode == null">Select what you want to find using a button in a right upper corner</p>
 
+  <div *ngIf="activeMode != null">
+    <br>
+
+    <strong>{{ activeMode.text }}</strong>
+
+    <div>
+      <ion-buttons slot="end">
+      <ion-searchbar [(ngModel)]="searchName"></ion-searchbar>
+        <ion-button (click)="find();">Find</ion-button>
+      </ion-buttons>
+    </div>
+
+  </div>
+
+  <ion-list *ngIf="results != null">
+    <p>{{ results.length }} results</p>
+    <ion-item *ngFor="let result of results">
+      <ion-label *ngIf="activeMode == mods[0]">{{ result.username }}</ion-label>
+      <ion-label *ngIf="activeMode == mods[1]">{{ result.title }}</ion-label>
+
+      <ion-button>Open</ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>

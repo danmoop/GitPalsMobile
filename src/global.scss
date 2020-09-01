@@ -24,3 +24,18 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+@font-face {
+    font-family: 'eina';
+    src: url('./Eina.ttf');
+}
+
+* {
+    font-family: 'eina'
+}
+
+.container {
+    width: 70%;
+    margin: 0px auto;
+    margin-top: 5%;
+}

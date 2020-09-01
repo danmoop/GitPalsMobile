@@ -4,6 +4,8 @@ import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { FolderPage } from './folder/folder.page';
+import { API_URL } from './../variables/constants';
+
 import axios from 'axios';
 
 @Component({
@@ -14,6 +16,24 @@ import axios from 'axios';
 export class AppComponent {
 
   user: any;
+
+  authenticatedLinks = [
+    {
+      title: 'Dashboard',
+      icon: 'person-outline',
+      link: '/dashboard'
+    },
+    {
+      title: 'Dialogs',
+      icon: 'mail-outline',
+      link: '/dialogs'
+    },
+    {
+      title: 'Submit Project',
+      icon: 'code-outline',
+      link: '/submit-project'
+    }
+  ];
   
   constructor(
     private platform: Platform,
@@ -56,7 +76,7 @@ export class AppComponent {
         {
           text: 'Ok',
           handler: (data) => {
-            axios.post('https://www.gitpals.com/api/auth/login', {
+            axios.post(`${API_URL}/auth/login`, {
               username: data.username,
               password: data.key
             }).then(response => {
@@ -64,10 +84,9 @@ export class AppComponent {
                 this.showAlert('Invalid Credentials');
               } else {
                 const jwt = response.data.jwt;
-                this.showAlert('Authorized!');
                 localStorage.setItem('jwt', jwt);
 
-                axios.post('https://www.gitpals.com/api/auth/get', {token: jwt})  
+                axios.post(`${API_URL}/auth/get`, {token: jwt})  
                   .then(response => {
                     var user = response.data;
 
@@ -75,6 +94,7 @@ export class AppComponent {
                       localStorage.setItem('user', JSON.stringify(user));
                       this.user = user;
                       FolderPage.user = user;
+                      this.showAlert('Authenticated!');
                     } else {
                       this.showAlert('You are banned');
                     }

@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FolderPage } from './../src/app/folder/folder.page';
 
 @Component({
   selector: 'app-dialogs',
   templateUrl: './dialogs.page.html',
   styleUrls: ['./dialogs.page.scss'],
 })
-export class DialogsPage implements OnInit {
+export class DialogsPage {
 
-  constructor() { }
+  constructor() {  }
 
-  ngOnInit() {
+  get user() {
+    return FolderPage.user;
   }
 
+  get dialogs () {
+    return Object.keys(this.user.dialogs);
+  }
 }

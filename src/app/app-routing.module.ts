@@ -4,11 +4,6 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/Inbox',
-    pathMatch: 'full'
-  },
-  {
-    path: 'folder/:id',
     loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
   },
   {
@@ -26,6 +21,18 @@ const routes: Routes = [
   {
     path: 'submit-project',
     loadChildren: () => import('../../submit-project/submit-project.module').then( m => m.SubmitProjectPageModule)
+  },
+  {
+    path: 'view-project',
+    loadChildren: () => import('../../view-project/view-project.module').then( m => m.ViewProjectPageModule)
+  },
+  {
+    path: 'view-user',
+    loadChildren: () => import('../../view-user/view-user.module').then( m => m.ViewUserPageModule)
+  },
+  {
+    path: 'view-forum-post',
+    loadChildren: () => import('../../view-forum-post/view-forum-post.module').then( m => m.ViewForumPostPageModule)
   }
 ];
 

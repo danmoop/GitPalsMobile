@@ -13,36 +13,22 @@
             <ion-list-header>GitPals</ion-list-header>
             <ion-note>{{ user.username }}</ion-note>
           </div>
-
           <ion-menu-toggle auto-hide="false">
             <ion-item *ngIf="user == null" (click)="signIn();" lines="none" detail="false">
               <ion-icon slot="start" name="log-in-outline"></ion-icon>
               <ion-label>Sign In</ion-label>
             </ion-item>
-
             <div *ngIf="user != null">
-              <ion-item lines="none" detail="false">
-                <ion-icon slot="start" name="person-outline"></ion-icon>
-                <ion-label>Dashboard</ion-label>
+              <ion-item *ngFor="let item of authenticatedLinks" lines="none" detail="false" [routerLink]="item.link">
+                <ion-icon slot="start" [name]="item.icon"></ion-icon>
+                <ion-label>{{ item.title }}</ion-label>
               </ion-item>
-
-              <ion-item lines="none" detail="false">
-                <ion-icon slot="start" name="mail-outline"></ion-icon>
-                <ion-label>Dialogs</ion-label>
-              </ion-item>
-
-              <ion-item lines="none" detail="false">
-                <ion-icon slot="start" name="code-outline"></ion-icon>
-                <ion-label>Submit a Project</ion-label>
-              </ion-item>
-
               <ion-item (click)="logOut();" lines="none" detail="false">
                 <ion-icon slot="start" name="log-out-outline"></ion-icon>
                 <ion-label>Log Out</ion-label>
               </ion-item>
             </div>
           </ion-menu-toggle>
-
         </ion-list>
       </ion-content>
     </ion-menu>

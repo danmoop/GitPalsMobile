@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import axios from 'axios';
+import { API_URL } from './../../variables/constants';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-folder',
@@ -11,16 +13,31 @@ export class FolderPage {
   projects = [];
   static user: any;
 
+  constructor(
+    private alertCtrl: AlertController
+  ) {}
+
   ngOnInit() {
-    axios.get('https://www.gitpals.com/api/projects/getAll')
+    axios.get(`${API_URL}/projects/getAll`)
       .then(response => {
         this.projects = response.data;
       });
 
-    var user = JSON.parse(localStorage.getItem('user'));
+    if(localStorage.getItem('jwt') != null) {
+      axios.post(`${API_URL}/auth/get`, {
+        token: localStorage.getItem('jwt')
+      })
+      .then(response => {
+        var user = response.data;
 
-    if(user != null) {
-      FolderPage.user = user;
+        if (!user.banned) {
+          localStorage.setItem('user', JSON.stringify(user));
+          FolderPage.user = user;
+        } else {
+          this.showAlert('You are banned');
+        }
+      })
+      .catch(err => this.showAlert(err));
     }
   }
 
@@ -30,5 +47,13 @@ export class FolderPage {
 
   alertCard(name) {
     console.log(name);
+  }
+
+  showAlert(msg) {
+    this.alertCtrl.create({
+      header: 'Message',
+      message: msg,
+      buttons: ['OK']
+    }).then(alert => alert.present());
   }
 }

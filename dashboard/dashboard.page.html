@@ -1,9 +1,76 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>dashboard</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Dashboard</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-text-center">
+  <ion-card mode="ios">
+    <ion-card-header>
+      <ion-card-subtitle>Location: {{ user.country }}</ion-card-subtitle>
+      <ion-card-title>{{ user.username }}</ion-card-title>
+    </ion-card-header>
 
+    <ion-card-content>
+      <strong>Info: {{ user.bio }}</strong>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card mode="ios">
+    <ion-card-header>
+      <ion-card-subtitle>Applied to {{ user.projectsAppliedTo.length }} projects</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p *ngIf="user.projectsAppliedTo.length == 0">You haven't applied to anything yet</p>
+      <ion-list>
+        <ion-item *ngFor="let project of user.projectsAppliedTo">
+          <ion-label>{{ project }}</ion-label>
+          <ion-button>Open</ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card mode="ios">
+    <ion-card-header>
+      <ion-card-subtitle>
+        Submitted {{ user.projects.length }} projects
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p *ngIf="user.projects.length == 0">You haven't submitted anything yet</p>
+      <ion-list>
+        <ion-item *ngFor="let project of user.projects">
+          <ion-label>{{ project }}</ion-label>
+          <ion-button>Open</ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card mode="ios">
+    <ion-card-header>
+      <ion-card-subtitle>
+        Your skills ({{ user.skillList.length }})
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button size="small" (click)="addNewSkill();" color="success">
+        Add New Skill
+      </ion-button>
+      <ion-list>
+        <ion-item *ngFor="let skill of user.skillList">
+          <ion-label>{{ skill }}</ion-label>
+          <ion-button fill="clear" color="danger" (click)="removeSkill(skill);">
+            <ion-icon name="close-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
