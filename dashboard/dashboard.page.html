@@ -29,7 +29,7 @@
       <ion-list>
         <ion-item *ngFor="let project of user.projectsAppliedTo">
           <ion-label>{{ project }}</ion-label>
-          <ion-button>Open</ion-button>
+          <ion-button [routerLink]="'/view-project/' + project">Open</ion-button>
         </ion-item>
       </ion-list>
     </ion-card-content>
@@ -47,7 +47,7 @@
       <ion-list>
         <ion-item *ngFor="let project of user.projects">
           <ion-label>{{ project }}</ion-label>
-          <ion-button>Open</ion-button>
+          <ion-button [routerLink]="'/view-project/' + project">Open</ion-button>
         </ion-item>
       </ion-list>
     </ion-card-content>

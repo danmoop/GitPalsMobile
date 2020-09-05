@@ -23,7 +23,7 @@ const routes: Routes = [
     loadChildren: () => import('../../submit-project/submit-project.module').then( m => m.SubmitProjectPageModule)
   },
   {
-    path: 'view-project',
+    path: 'view-project/:project',
     loadChildren: () => import('../../view-project/view-project.module').then( m => m.ViewProjectPageModule)
   },
   {

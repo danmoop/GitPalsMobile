@@ -28,6 +28,6 @@
       <strong>Roles: {{ project.requiredRoles.join(', ') }}</strong>
     </ion-card-content>
   
-    <ion-button shape="round" fill="clear" (click)="alertCard(project.title);">Explore</ion-button>
+    <ion-button [routerLink]="'/view-project/' + project.title" shape="round" fill="clear" (click)="alertCard(project.title);">Explore</ion-button>
   </ion-card>
 </ion-content>

@@ -13,7 +13,7 @@ export class DashboardPage {
 
   constructor(
     private alertCtrl: AlertController
-  ) { }
+  ) {}
 
   get user() {
     return FolderPage.user;
@@ -32,17 +32,21 @@ export class DashboardPage {
         {
           text: 'Add',
           handler: (data) => {
-            var obj = {
-              jwt: localStorage.getItem('jwt'),
-              skill: data.skill
+            if(data.skill.trim() == '') {
+              this.showAlert("Skill text shouldn't be empty!");
+            } else {
+              var obj = {
+                jwt: localStorage.getItem('jwt'),
+                skill: data.skill
+              }
+  
+              axios.post(`${API_URL}/users/addNewSkill`, obj) 
+                .then(response => {
+                  this.showAlert(response.data.status);
+                  FolderPage.user.skillList.push(data.skill);
+                })
+                .catch(err => this.showAlert(err));
             }
-
-            axios.post(`${API_URL}/users/addNewSkill`, obj) 
-              .then(response => {
-                this.showAlert(response.data.status);
-                FolderPage.user.skillList.push(data.skill);
-              })
-              .catch(err => this.showAlert(err));
           }
         },
         'Cancel'
@@ -62,7 +66,7 @@ export class DashboardPage {
             axios.post(`${API_URL}/users/removeSkill`, {
               skill: _skill,
               jwt: localStorage.getItem('jwt')
-            }).then(response => this.showAlert(response.data.status))
+            }).then(response => console.log(response.data.status))
             .catch(err => this.showAlert(err));
           }
         },

@@ -1,9 +1,80 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>viewProject</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="project != null">{{ project.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-card mode="ios" *ngIf="project != null">
+    <ion-card-header>
+      <ion-card-subtitle>by {{ project.authorName }}</ion-card-subtitle>
+      <ion-card-title>{{ project.title }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ project.description }}</p>
+    </ion-card-content>
+  </ion-card>
 
+  <ion-card mode="ios" *ngIf="project != null">
+    <ion-card-header>
+      <ion-card-subtitle>Technologies ({{ project.requirements.length }})</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let technology of project.requirements">
+          <ion-label>
+            {{ technology }}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card mode="ios" *ngIf="project != null">
+    <ion-card-header>
+      <ion-card-subtitle>Roles wanted ({{ project.requiredRoles.length }})</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let role of project.requiredRoles">
+          <ion-label>
+            {{ role }}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card mode="ios" *ngIf="project != null">
+    <ion-card-header>
+      <ion-card-subtitle>Participation</ion-card-subtitle>
+      <ion-card-subtitle>{{ project.usersSubmitted.length }} users submitted</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button color="success" *ngIf="project.usersSubmitted.indexOf(user.username) == -1" (click)="apply();">Apply</ion-button>
+      <ion-button color="danger" *ngIf="project.usersSubmitted.indexOf(user.username) != -1" (click)="apply();">Unapply</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  
+
+  <ion-card mode="ios" *ngIf="project != null">
+    <ion-card-header>
+      <ion-card-subtitle>Comments ({{ project.comments.length }})</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p *ngIf="project.comments.length == 0">No comments yet</p>
+
+      <ion-list>
+        <ion-item *ngFor="let comment of project.comments">
+          <ion-label>
+            {{ comment.author + ': ' + comment.text }}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

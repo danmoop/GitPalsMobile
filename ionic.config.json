@@ -1,7 +1,8 @@
 {
   "name": "GitPalsMobile",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

@@ -7,6 +7,77 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-text-center">
+  <ion-card mode="ios">
+    <ion-card-header>
+      <ion-card-subtitle>
+        Give some information about your project. What is this project? What technologies does it use? Describe your knowledge and mention what you expect to get from the audience.
+      </ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
 
+  
+  <ion-card mode="ios">
+    <ion-card-header>
+      <ion-card-subtitle>
+        Information
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-input [(ngModel)]="project.title" placeholder="Title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input [(ngModel)]="project.description" placeholder="Description"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input [(ngModel)]="project.githubProjectLink" placeholder="GitHub repo link"></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card mode="ios">
+    <ion-card-header>
+      <ion-card-subtitle>
+        Technologies, used in a project
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button size="small" (click)="addTech();" color="success">
+        Add New Technology
+      </ion-button>
+      <p *ngIf="project.requirements.length == 0">Nothing has been added yet</p>
+
+      <ion-list>
+        <ion-item *ngFor="let tech of project.requirements">
+          <ion-label>
+            {{ tech }}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card mode="ios">
+    <ion-card-header>
+      <ion-card-subtitle>
+        Roles, required for a project
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button size="small" (click)="addRole();" color="success">
+        Add New Role
+      </ion-button>
+      <p *ngIf="project.requiredRoles.length == 0">Nothing has been added yet</p>
+
+      <ion-list>
+        <ion-item *ngFor="let role of project.requiredRoles">
+          <ion-label>
+            {{ role }}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <ion-button (click)="submit();">Submit</ion-button>
 </ion-content>
