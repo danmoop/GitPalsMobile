@@ -17,7 +17,7 @@ export class SubmitProjectPage {
     description: '',
     githubProjectLink: '',
     authorName: '',
-    requirements: [],
+    technologies: [],
     usersSubmitted: [],
     comments: [],
     requiredRoles: [],
@@ -57,7 +57,7 @@ export class SubmitProjectPage {
         {
           text: 'Add',
           handler: (data) => {
-            this.project.requirements.push(data.tech);
+            this.project.technologies.push(data.tech);
           }
         }
       ]
@@ -94,7 +94,7 @@ export class SubmitProjectPage {
 
   areFieldsValid() {
     if(this.project.title.trim() == '' || this.project.description.trim() == '' 
-    || this.project.githubProjectLink.trim() == '' || this.project.requirements.length == 0
+    || this.project.githubProjectLink.trim() == '' || this.project.technologies.length == 0
     || this.project.requiredRoles.length == 0) {
       return false;
     }
