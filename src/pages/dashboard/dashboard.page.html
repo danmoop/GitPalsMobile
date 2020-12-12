@@ -38,14 +38,14 @@
   <ion-card mode="ios">
     <ion-card-header>
       <ion-card-subtitle>
-        Submitted {{ user.projects.length }} projects
+        Submitted {{ user.submittedProjects.length }} projects
       </ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
-      <p *ngIf="user.projects.length == 0">You haven't submitted anything yet</p>
+      <p *ngIf="user.submittedProjects.length == 0">You haven't submitted anything yet</p>
       <ion-list>
-        <ion-item *ngFor="let project of user.projects">
+        <ion-item *ngFor="let project of user.submittedProjects">
           <ion-label>{{ project }}</ion-label>
           <ion-button [routerLink]="'/view-project/' + project">Open</ion-button>
         </ion-item>

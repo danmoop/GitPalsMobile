@@ -15,6 +15,10 @@ export class DashboardPage {
     private alertCtrl: AlertController
   ) {}
 
+  ngOnInit() {
+    console.log(FolderPage.user);
+  }
+
   get user() {
     return FolderPage.user;
   }
@@ -42,7 +46,6 @@ export class DashboardPage {
   
               axios.post(`${API_URL}/users/addNewSkill`, obj) 
                 .then(response => {
-                  this.showAlert(response.data.status);
                   FolderPage.user.skillList.push(data.skill);
                 })
                 .catch(err => this.showAlert(err));

@@ -8,8 +8,8 @@
         <ion-icon slot="start" name="search-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title *ngIf="getUser == null">GitPals</ion-title>
-    <ion-title *ngIf="getUser != null">GitPals <strong>[{{getUser.username}}]</strong></ion-title>
+    <ion-title *ngIf="user == null">GitPals</ion-title>
+    <ion-title *ngIf="user != null">GitPals <strong>[{{user.username}}]</strong></ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -17,7 +17,7 @@
   <p class="ion-text-center"><b>Most recent projects: ({{ projects.length }})</b></p>
 
 
-  <ion-refresher slot="fixed" (ionRefresh)="getProjects($event);">
+  <ion-refresher slot="fixed" (ionRefresh)="refreshData($event);">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 

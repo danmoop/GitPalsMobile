@@ -19,8 +19,30 @@ export class FolderPage {
   ) {}
 
   ngOnInit() {
-    this.getProjects(null);
+    this.getProjects();
+    this.getUser();
+  }
 
+  get user() {
+    return FolderPage.user;
+  }
+
+  showAlert(msg) {
+    this.alertCtrl.create({
+      header: 'Message',
+      message: msg,
+      buttons: ['OK']
+    }).then(alert => alert.present());
+  }
+
+  getProjects() {
+    axios.get(`${API_URL}/projects/getAll`)
+      .then(response => {
+        this.projects = response.data.reverse();
+      });
+  }
+
+  getUser() {
     if(localStorage.getItem('jwt') != null) {
       axios.post(`${API_URL}/auth/get`, {
         token: localStorage.getItem('jwt')
@@ -39,26 +61,12 @@ export class FolderPage {
     }
   }
 
-  get getUser() {
-    return FolderPage.user;
-  }
-
-  showAlert(msg) {
-    this.alertCtrl.create({
-      header: 'Message',
-      message: msg,
-      buttons: ['OK']
-    }).then(alert => alert.present());
-  }
-
-  getProjects(event) {
-    axios.get(`${API_URL}/projects/getAll`)
-      .then(response => {
-        this.projects = response.data.reverse();
+  refreshData(event) {
+    this.getUser();
+    this.getProjects();
         
-        if(event != null) {
-          event.target.complete();
-        }
-      });
+    if(event != null) {
+      event.target.complete();
+    }
   }
 }

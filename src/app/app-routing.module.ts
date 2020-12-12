@@ -33,6 +33,10 @@ const routes: Routes = [
   {
     path: 'view-forum-post',
     loadChildren: () => import('../pages/view-forum-post/view-forum-post.module').then( m => m.ViewForumPostPageModule)
+  },
+  {
+    path: 'view-dialog/:name',
+    loadChildren: () => import('../pages/view-dialog/view-dialog.module').then( m => m.ViewDialogPageModule)
   }
 ];
 

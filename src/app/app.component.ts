@@ -85,6 +85,7 @@ export class AppComponent {
               } else {
                 const jwt = response.data.jwt;
                 localStorage.setItem('jwt', jwt);
+                localStorage.setItem('authKey', data.key);
 
                 axios.post(`${API_URL}/auth/get`, {token: jwt})  
                   .then(response => {

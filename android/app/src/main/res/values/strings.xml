@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">GitPals</string>
-    <string name="title_activity_main">GitPals</string>
-    <string name="package_name">com.danmoop.gitpals</string>
-    <string name="custom_url_scheme">com.danmoop.gitpals</string>
-</resources>

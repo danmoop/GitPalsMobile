@@ -4,7 +4,6 @@ import { API_URL } from '../../variables/constants';
 import { AlertController } from '@ionic/angular';
 import { FolderPage } from './../../app/folder/folder.page';
 import axios from 'axios';
-import { ifError } from 'assert';
 
 @Component({
   selector: 'app-view-project',
@@ -43,11 +42,16 @@ export class ViewProjectPage {
       jwt: localStorage.getItem('jwt'),
       projectName: this.project.title
     }).then(response => {
-      var index = this.project.appliedUsers.indexOf(this.user.username);
-      if(index == -1) {
+      var userIndex = this.project.appliedUsers.indexOf(this.user.username);
+      if(userIndex == -1) {
         this.project.appliedUsers.push(this.user.username);
+        
+        FolderPage.user.projectsAppliedTo.push(this.project.title);
       } else {
-        this.project.appliedUsers.splice(index, 1);
+        this.project.appliedUsers.splice(userIndex, 1);
+
+        var projectIndex = FolderPage.user.projectsAppliedTo.indexOf(this.project.title);
+        FolderPage.user.projectsAppliedTo.splice(projectIndex, 1);
       }
     })
     .catch(err => this.showAlert(err));
