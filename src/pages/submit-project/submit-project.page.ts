@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { FolderPage } from 'src/app/folder/folder.page';
 import { API_URL } from 'src/variables/constants';
-import axios from 'axios';
 import { Router } from '@angular/router';
+import { Project } from '../../model/Project';
+import axios from 'axios';
 
 @Component({
   selector: 'app-submit-project',
@@ -12,31 +13,25 @@ import { Router } from '@angular/router';
 })
 export class SubmitProjectPage {
 
-  project = {
-    title: '',
-    description: '',
-    githubProjectLink: '',
-    authorName: '',
-    technologies: [],
-    usersSubmitted: [],
-    comments: [],
-    requiredRoles: [],
-    isPromoted: false
-  };
-
   constructor(
     private alertCtrl: AlertController,
     private route: Router
   ) {}
 
+  project: Project = new Project();
+
   submit() {
     if(this.areFieldsValid()) {
       this.project.authorName = FolderPage.user.username;
+      console.log(this.project);
 
-      axios.post(`${API_URL}/projects/submitProject`, this.project)
+      axios.post(`${API_URL}/projects/submitProject`, {
+        jwt: localStorage.getItem('jwt'),
+        project: this.project
+      })
         .then(response => {
           if(response.data.status == 'OK') {
-            this.route.navigateByUrl(`/view-project/${this.project.title}`);
+            this.route.navigateByUrl(`/view-project/${this.project.title}`, { replaceUrl: true });
           }
         });
     } else {

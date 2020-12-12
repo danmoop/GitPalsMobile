@@ -46,10 +46,10 @@
       <ion-button size="small" (click)="addTech();" color="success">
         Add New Technology
       </ion-button>
-      <p *ngIf="project.requirements.length == 0">Nothing has been added yet</p>
+      <p *ngIf="project.technologies.length == 0">Nothing has been added yet</p>
 
       <ion-list>
-        <ion-item *ngFor="let tech of project.requirements">
+        <ion-item *ngFor="let tech of project.technologies">
           <ion-label>
             {{ tech }}
           </ion-label>

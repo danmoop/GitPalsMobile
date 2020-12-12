@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import axios from 'axios';
 import { ActionSheetController } from '@ionic/angular';
-import { API_URL } from './../src/variables/constants'
+import { API_URL } from '../../variables/constants';
 
 @Component({
   selector: 'app-search',

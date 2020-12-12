@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FolderPage } from './../src/app/folder/folder.page';
+import { FolderPage } from '../../app/folder/folder.page';
 
 @Component({
   selector: 'app-dialogs',

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import axios from 'axios';
 import { API_URL } from './../../variables/constants';
 import { AlertController } from '@ionic/angular';
+import axios from 'axios';
+import { Project } from 'src/model/Project';
 
 @Component({
   selector: 'app-folder',
@@ -10,7 +11,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class FolderPage {
 
-  projects = [];
+  projects: Array<Project> = [];
   static user: any;
 
   constructor(
@@ -18,10 +19,7 @@ export class FolderPage {
   ) {}
 
   ngOnInit() {
-    axios.get(`${API_URL}/projects/getAll`)
-      .then(response => {
-        this.projects = response.data;
-      });
+    this.getProjects(null);
 
     if(localStorage.getItem('jwt') != null) {
       axios.post(`${API_URL}/auth/get`, {
@@ -45,15 +43,22 @@ export class FolderPage {
     return FolderPage.user;
   }
 
-  alertCard(name) {
-    console.log(name);
-  }
-
   showAlert(msg) {
     this.alertCtrl.create({
       header: 'Message',
       message: msg,
       buttons: ['OK']
     }).then(alert => alert.present());
+  }
+
+  getProjects(event) {
+    axios.get(`${API_URL}/projects/getAll`)
+      .then(response => {
+        this.projects = response.data.reverse();
+        
+        if(event != null) {
+          event.target.complete();
+        }
+      });
   }
 }

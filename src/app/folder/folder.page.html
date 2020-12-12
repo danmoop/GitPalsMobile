@@ -16,6 +16,11 @@
 <ion-content [fullscreen]="true">
   <p class="ion-text-center"><b>Most recent projects: ({{ projects.length }})</b></p>
 
+
+  <ion-refresher slot="fixed" (ionRefresh)="getProjects($event);">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-card *ngFor="let project of projects" mode="ios">
     <ion-card-header>
       <ion-card-subtitle>by {{ project.authorName }}</ion-card-subtitle>
@@ -23,11 +28,15 @@
     </ion-card-header>
 
     <ion-card-content>
-      <strong>Techs: {{ project.requirements.join(', ') }}</strong>
+      <strong>Techs: {{ project.technologies }}</strong>
       <br>
-      <strong>Roles: {{ project.requiredRoles.join(', ') }}</strong>
+      <strong>Roles: {{ project.requiredRoles }}</strong>
     </ion-card-content>
   
-    <ion-button [routerLink]="'/view-project/' + project.title" shape="round" fill="clear" (click)="alertCard(project.title);">Explore</ion-button>
+    <ion-button [routerLink]="'/view-project/' + project.title" shape="round" fill="clear">Explore</ion-button>
   </ion-card>
+  
+
+
+  
 </ion-content>

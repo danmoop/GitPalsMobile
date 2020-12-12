@@ -8,31 +8,31 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadChildren: () => import('../../dashboard/dashboard.module').then( m => m.DashboardPageModule)
+    loadChildren: () => import('../pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
   },
   {
     path: 'search',
-    loadChildren: () => import('../../search/search.module').then( m => m.SearchPageModule)
+    loadChildren: () => import('../pages/search/search.module').then( m => m.SearchPageModule)
   },
   {
     path: 'dialogs',
-    loadChildren: () => import('../../dialogs/dialogs.module').then( m => m.DialogsPageModule)
+    loadChildren: () => import('../pages/dialogs/dialogs.module').then( m => m.DialogsPageModule)
   },
   {
     path: 'submit-project',
-    loadChildren: () => import('../../submit-project/submit-project.module').then( m => m.SubmitProjectPageModule)
+    loadChildren: () => import('../pages/submit-project/submit-project.module').then( m => m.SubmitProjectPageModule)
   },
   {
     path: 'view-project/:project',
-    loadChildren: () => import('../../view-project/view-project.module').then( m => m.ViewProjectPageModule)
+    loadChildren: () => import('../pages/view-project/view-project.module').then( m => m.ViewProjectPageModule)
   },
   {
     path: 'view-user',
-    loadChildren: () => import('../../view-user/view-user.module').then( m => m.ViewUserPageModule)
+    loadChildren: () => import('../pages/view-user/view-user.module').then( m => m.ViewUserPageModule)
   },
   {
     path: 'view-forum-post',
-    loadChildren: () => import('../../view-forum-post/view-forum-post.module').then( m => m.ViewForumPostPageModule)
+    loadChildren: () => import('../pages/view-forum-post/view-forum-post.module').then( m => m.ViewForumPostPageModule)
   }
 ];
 
