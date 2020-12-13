@@ -4,6 +4,7 @@
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="project != null">{{ project.title }}</ion-title>
+    <ion-button *ngIf="project != null && user.username == project.authorName" size="small" slot="end" color="danger" fill="outline" (click)="removeProject();">Remove</ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -75,6 +76,8 @@
       <ion-list>
         <ion-item *ngFor="let comment of project.comments">
           {{ comment.author + ': ' + comment.text }}
+
+          <ion-button *ngIf="user.username == comment.author" color="danger" size="small" fill="outline" slot="end" (click)="removeComment(comment);">Remove</ion-button>
         </ion-item>
       </ion-list>
     </ion-card-content>

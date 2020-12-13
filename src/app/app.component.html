@@ -19,10 +19,22 @@
               <ion-label>Sign In</ion-label>
             </ion-item>
             <div *ngIf="user != null">
-              <ion-item *ngFor="let item of authenticatedLinks" lines="none" detail="false" [routerLink]="item.link">
-                <ion-icon slot="start" [name]="item.icon"></ion-icon>
-                <ion-label>{{ item.title }}</ion-label>
+              <ion-item lines="none" detail="false" routerLink="/dashboard">
+                <ion-icon slot="start" name="person-outline"></ion-icon>
+                <ion-label>Dashboard</ion-label>
               </ion-item>
+              <ion-item lines="none" detail="false" routerLink="/dialogs">
+                <ion-icon slot="start" name="mail-outline"></ion-icon>
+                <ion-label>
+                  Dialogs
+                  <ion-badge *ngIf="getNumberOfUnreadMessage != 0" color="primary">{{ getNumberOfUnreadMessage }}</ion-badge>
+                </ion-label>
+              </ion-item>
+              <ion-item lines="none" detail="false" routerLink="/submit-project">
+                <ion-icon slot="start" name="code-outline"></ion-icon>
+                <ion-label>Submit Project</ion-label>
+              </ion-item>
+
               <ion-item (click)="logOut();" lines="none" detail="false">
                 <ion-icon slot="start" name="log-out-outline"></ion-icon>
                 <ion-label>Log Out</ion-label>

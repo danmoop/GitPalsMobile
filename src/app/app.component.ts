@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 
 import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -7,6 +7,7 @@ import { FolderPage } from './folder/folder.page';
 import { API_URL } from './../variables/constants';
 
 import axios from 'axios';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -15,46 +16,22 @@ import axios from 'axios';
 })
 export class AppComponent {
 
-  user: any;
-
-  authenticatedLinks = [
-    {
-      title: 'Dashboard',
-      icon: 'person-outline',
-      link: '/dashboard'
-    },
-    {
-      title: 'Dialogs',
-      icon: 'mail-outline',
-      link: '/dialogs'
-    },
-    {
-      title: 'Submit Project',
-      icon: 'code-outline',
-      link: '/submit-project'
-    }
-  ];
-  
-  constructor(
+   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private alertCtrl: AlertController,
+    private router: Router
   ) {
     this.initializeApp();
   }
+
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.backgroundColorByHexString("#ffffff");
       this.splashScreen.hide();
     });
-
-    var user = JSON.parse(localStorage.getItem('user'));
-
-    if(user != null) {
-      this.user = user;
-    }
   }
 
   signIn() {
@@ -93,7 +70,6 @@ export class AppComponent {
 
                     if(!user.banned) {
                       localStorage.setItem('user', JSON.stringify(user));
-                      this.user = user;
                       FolderPage.user = user;
                       this.showAlert('Authenticated!');
                     } else {
@@ -116,8 +92,9 @@ export class AppComponent {
 
   logOut() {
     localStorage.clear();
-    this.user = null;
     FolderPage.user = null;
+
+    this.router.navigateByUrl('/', { replaceUrl: true });
 
     this.showAlert('You logged out');
   }
@@ -128,5 +105,20 @@ export class AppComponent {
       message: msg,
       buttons: ['Ok']
     }).then(alertMsg => alertMsg.present());
+  }
+
+  get user() {
+    return FolderPage.user;
+  }
+
+  get getNumberOfUnreadMessage() {
+    var res = 0;
+    var dialogs = Object.keys(FolderPage.user.dialogs);
+
+    for(var i = 0; i < dialogs.length; i++) {
+      res += FolderPage.user.dialogs[dialogs[i]].key;
+    }
+    
+    return res;
   }
 }

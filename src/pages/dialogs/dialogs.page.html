@@ -12,7 +12,10 @@
   <strong>You have ({{ dialogs.length }}) dialogs</strong>
   <ion-list>
     <ion-item *ngFor="let name of dialogs">
-      <ion-label>{{ name }}</ion-label>
+      <ion-label>
+        {{ name }}
+        <ion-badge *ngIf="isNew(name)" color="primary">New Message</ion-badge>
+      </ion-label>
       <ion-button [routerLink]="'/view-dialog/' + name">Open</ion-button>
     </ion-item>
   </ion-list>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { API_URL } from '../../variables/constants';
 import { AlertController } from '@ionic/angular';
 import { FolderPage } from './../../app/folder/folder.page';
@@ -14,7 +14,11 @@ export class ViewProjectPage {
 
   project = null;
 
-  constructor(private route: ActivatedRoute, private alertCtrl: AlertController) {
+  constructor(
+      private route: ActivatedRoute, 
+      private alertCtrl: AlertController,
+      private router: Router
+    ) {
     var projectName = route.snapshot.params.project;
 
     axios.get(`${API_URL}/projects/get/${projectName}`)
@@ -84,6 +88,59 @@ export class ViewProjectPage {
                 }
               })
           }
+        }
+      ]
+    }).then(alert => alert.present());
+  }
+
+  removeComment(comment) {
+    this.alertCtrl.create({
+      message: 'Are you sure?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            axios.post(`${API_URL}/projects/removeComment`, {
+              jwt: localStorage.getItem('jwt'),
+              projectName: this.project.title,
+              commentText: comment.text
+            })
+            .then(response => {
+              if(response.data.status == 'OK') {
+                var commentIndex = this.project.comments.indexOf(comment);
+                if(commentIndex != -1) {
+                  this.project.comments.splice(commentIndex, 1);
+                }
+              }
+            });
+          }
+        },
+        {
+          text: 'No'
+        }
+      ]
+    }).then(alert => alert.present());
+  }
+
+  removeProject() {
+    this.alertCtrl.create({
+      message: "Are you sure?",
+      buttons: [
+        {
+          text: "Yes",
+          handler: () => {
+            axios.post(`${API_URL}/projects/deleteProject`, {
+              jwt: localStorage.getItem('jwt'),
+              projectName: this.project.title
+            }).then(response => {
+              if(response.data.status == 'OK') {
+                this.router.navigateByUrl('/', { replaceUrl: true });
+              }
+            })
+          }
+        },
+        {
+          text: 'No'
         }
       ]
     }).then(alert => alert.present());

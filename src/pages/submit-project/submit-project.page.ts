@@ -15,7 +15,7 @@ export class SubmitProjectPage {
 
   constructor(
     private alertCtrl: AlertController,
-    private route: Router
+    private router: Router
   ) {}
 
   project: Project = new Project();
@@ -23,7 +23,6 @@ export class SubmitProjectPage {
   submit() {
     if(this.areFieldsValid()) {
       this.project.authorName = FolderPage.user.username;
-      console.log(this.project);
 
       axios.post(`${API_URL}/projects/submitProject`, {
         jwt: localStorage.getItem('jwt'),
@@ -31,7 +30,7 @@ export class SubmitProjectPage {
       })
         .then(response => {
           if(response.data.status == 'OK') {
-            this.route.navigateByUrl(`/view-project/${this.project.title}`, { replaceUrl: true });
+            this.router.navigateByUrl(`/view-project/${this.project.title}`, { replaceUrl: true });
           }
         });
     } else {

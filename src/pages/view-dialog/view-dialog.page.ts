@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FolderPage } from './../../app/folder/folder.page';
-import { WS_URL } from '../../variables/constants';
+import { API_URL, WS_URL } from '../../variables/constants';
 import * as SockJS from '../../scripts/sockjs.min';
-import * as StompModule from '../../scripts/stomp.umd.min'
+import * as StompModule from '../../scripts/stomp.umd.min';
+import axios from 'axios';
 
 @Component({
   selector: 'app-view-dialog',
@@ -24,16 +25,22 @@ export class ViewDialogPage {
   }
 
   initWS() {
-    const serverUrl = WS_URL;
-    this.ws = new SockJS(serverUrl);
-    this.stompClient = StompModule.Stomp.over(this.ws);
-    const that = this;
+    if(FolderPage.user.dialogs[this.name].key != 0) {
+      FolderPage.user.dialogs[this.name].key = 0;
+      axios.post(`${API_URL}/messages/markDialogAsSeen`, {
+        jwt: localStorage.getItem('jwt'),
+        dialogName: this.name
+      });
+    }
 
-    this.stompClient.connect({}, function(frame) {
-      that.stompClient.subscribe(`/topic/messages/${localStorage.getItem('authKey')}`, (message) => {
+    this.ws = new SockJS(WS_URL);
+    this.stompClient = StompModule.Stomp.over(this.ws);
+
+    this.stompClient.connect({}, frame => {
+      this.stompClient.subscribe(`/topic/messages/${localStorage.getItem('authKey')}`, (message) => {
         if (message.body) {
           const msg = JSON.parse(message.body);
-          that.user.dialogs[that.name].value.push(msg);
+          this.user.dialogs[this.name].value.push(msg);
         }
       });
     });

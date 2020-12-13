@@ -9,7 +9,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title *ngIf="user == null">GitPals</ion-title>
-    <ion-title *ngIf="user != null">GitPals <strong>[{{user.username}}]</strong></ion-title>
+    <ion-title *ngIf="user != null">GitPals <strong>({{ user.username }})</strong></ion-title>
   </ion-toolbar>
 </ion-header>
 

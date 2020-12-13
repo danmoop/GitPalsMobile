@@ -15,10 +15,6 @@ export class DashboardPage {
     private alertCtrl: AlertController
   ) {}
 
-  ngOnInit() {
-    console.log(FolderPage.user);
-  }
-
   get user() {
     return FolderPage.user;
   }
@@ -69,7 +65,7 @@ export class DashboardPage {
             axios.post(`${API_URL}/users/removeSkill`, {
               skill: _skill,
               jwt: localStorage.getItem('jwt')
-            }).then(response => console.log(response.data.status))
+            }).then(response => {})
             .catch(err => this.showAlert(err));
           }
         },

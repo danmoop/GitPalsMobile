@@ -17,4 +17,8 @@ export class DialogsPage {
   get dialogs () {
     return Object.keys(this.user.dialogs);
   }
+
+  isNew(name) {
+    return FolderPage.user.dialogs[name].key != 0;
+  }
 }
