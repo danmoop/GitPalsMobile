@@ -4,7 +4,13 @@
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="project != null">{{ project.title }}</ion-title>
-    <ion-button *ngIf="project != null && user.username == project.authorName" size="small" slot="end" color="danger" fill="outline" (click)="removeProject();">Remove</ion-button>
+
+    <ion-buttons slot="end" *ngIf="project != null && user.username == project.authorName">
+      <ion-button (click)="openActionSheet();">
+        <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
@@ -60,8 +66,6 @@
       <ion-button color="danger" size="small" *ngIf="user != null && project.appliedUsers.indexOf(user.username) != -1" (click)="apply();">Unapply</ion-button>
     </ion-card-content>
   </ion-card>
-
-  
 
   <ion-card mode="ios" *ngIf="project != null">
     <ion-card-header>

@@ -37,6 +37,10 @@ const routes: Routes = [
   {
     path: 'view-dialog/:name',
     loadChildren: () => import('../pages/view-dialog/view-dialog.module').then( m => m.ViewDialogPageModule)
+  },
+  {
+    path: 'view-notifications',
+    loadChildren: () => import('../../view-notifications/view-notifications.module').then( m => m.ViewNotificationsPageModule)
   }
 ];
 

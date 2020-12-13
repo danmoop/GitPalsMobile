@@ -23,13 +23,24 @@
                 <ion-icon slot="start" name="person-outline"></ion-icon>
                 <ion-label>Dashboard</ion-label>
               </ion-item>
+
               <ion-item lines="none" detail="false" routerLink="/dialogs">
                 <ion-icon slot="start" name="mail-outline"></ion-icon>
                 <ion-label>
                   Dialogs
-                  <ion-badge *ngIf="getNumberOfUnreadMessage != 0" color="primary">{{ getNumberOfUnreadMessage }}</ion-badge>
+                  <ion-badge *ngIf="numberOfUnreadMessages != 0" color="primary">{{ getNumberOfUnreadMessage }}</ion-badge>
                 </ion-label>
               </ion-item>
+
+
+              <ion-item lines="none" detail="false">
+                <ion-icon slot="start" name="notifications-outline"></ion-icon>
+                <ion-label>
+                  Notifications
+                  <ion-badge *ngIf="numberOfUnreadNotifications != 0" color="primary">{{ numberOfUnreadNotifications }}</ion-badge>
+                </ion-label>
+              </ion-item>
+
               <ion-item lines="none" detail="false" routerLink="/submit-project">
                 <ion-icon slot="start" name="code-outline"></ion-icon>
                 <ion-label>Submit Project</ion-label>

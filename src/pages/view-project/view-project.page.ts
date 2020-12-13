@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { API_URL } from '../../variables/constants';
-import { AlertController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { FolderPage } from './../../app/folder/folder.page';
 import axios from 'axios';
 
@@ -17,6 +17,7 @@ export class ViewProjectPage {
   constructor(
       private route: ActivatedRoute, 
       private alertCtrl: AlertController,
+      private actionCtrl: ActionSheetController,
       private router: Router
     ) {
     var projectName = route.snapshot.params.project;
@@ -122,8 +123,32 @@ export class ViewProjectPage {
     }).then(alert => alert.present());
   }
 
+  openActionSheet() {
+    this.actionCtrl.create({
+      header: 'Actions',
+      buttons: [
+        {
+          text: 'Edit',
+          icon: 'create-outline',
+          handler: () => {
+
+          }
+        },
+        {
+          text: 'Delete Project',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.removeProject();
+          }
+        }
+    ]
+    }).then(alert => alert.present());
+  }
+
   removeProject() {
     this.alertCtrl.create({
+      header: 'Remove project',
       message: "Are you sure?",
       buttons: [
         {

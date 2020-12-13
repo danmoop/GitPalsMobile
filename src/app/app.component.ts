@@ -111,7 +111,7 @@ export class AppComponent {
     return FolderPage.user;
   }
 
-  get getNumberOfUnreadMessage() {
+  get numberOfUnreadMessages() {
     var res = 0;
     var dialogs = Object.keys(FolderPage.user.dialogs);
 
@@ -120,5 +120,9 @@ export class AppComponent {
     }
     
     return res;
+  }
+
+  get numberOfUnreadNotifications() {
+    return FolderPage.user.notifications.key;
   }
 }
