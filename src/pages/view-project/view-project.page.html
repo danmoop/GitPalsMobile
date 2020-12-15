@@ -15,6 +15,11 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="refreshProjectInfo($event);">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-card mode="ios" *ngIf="project != null">
     <ion-card-header>
       <ion-card-subtitle>by {{ project.authorName }}</ion-card-subtitle>
@@ -76,14 +81,19 @@
     </ion-card-header>
     <ion-card-content>
       <p *ngIf="project.comments.length == 0">No comments yet</p>
-
-      <ion-list>
-        <ion-item *ngFor="let comment of project.comments">
-          {{ comment.author + ': ' + comment.text }}
-
-          <ion-button *ngIf="user != null && user.username == comment.author" color="danger" size="small" fill="outline" slot="end" (click)="removeComment(comment);">Remove</ion-button>
-        </ion-item>
-      </ion-list>
+      <ion-card *ngFor="let comment of project.comments" mode='ios'>
+        <ion-card-header>
+          <ion-item>
+            <ion-label>{{ comment.author }}</ion-label>
+            <ion-button (click)="removeComment(comment);" *ngIf="user != null && user.username == comment.author" fill="clear" color="danger" size="small">
+              <ion-icon name="close-circle-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-card-header>
+        <ion-card-content>
+          <span>{{ comment.text }}</span>
+        </ion-card-content>
+      </ion-card>
     </ion-card-content>
   </ion-card>
 </ion-content>

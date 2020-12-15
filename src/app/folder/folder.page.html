@@ -16,7 +16,6 @@
 <ion-content [fullscreen]="true">
   <p class="ion-text-center"><b>Most recent projects: ({{ projects.length }})</b></p>
 
-
   <ion-refresher slot="fixed" (ionRefresh)="refreshData($event);">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -28,9 +27,9 @@
     </ion-card-header>
 
     <ion-card-content>
-      <strong>Techs: {{ project.technologies }}</strong>
-      <br>
-      <strong>Roles: {{ project.requiredRoles }}</strong>
+      <strong>Techs: {{ project.technologies.join(', ') }}</strong>
+      <br><br>
+      <strong>Roles: {{ project.requiredRoles.join(', ') }}</strong>
     </ion-card-content>
   
     <ion-button [routerLink]="'/view-project/' + project.title" shape="round" fill="clear">Explore</ion-button>

@@ -48,7 +48,7 @@ export class AppComponent {
         {
           name: 'key',
           type: 'password',
-          placeholder: 'Auth key'
+          placeholder: 'Password'
         }
       ],
       buttons: [

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { FolderPage } from 'src/app/folder/folder.page';
 import { API_URL } from 'src/variables/constants';

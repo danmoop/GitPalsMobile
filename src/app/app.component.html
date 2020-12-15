@@ -28,7 +28,7 @@
                 <ion-icon slot="start" name="mail-outline"></ion-icon>
                 <ion-label>
                   Dialogs
-                  <ion-badge *ngIf="numberOfUnreadMessages != 0" color="primary">{{ getNumberOfUnreadMessage }}</ion-badge>
+                  <ion-badge *ngIf="numberOfUnreadMessages != 0" color="secondary">{{ getNumberOfUnreadMessage }}</ion-badge>
                 </ion-label>
               </ion-item>
 
@@ -37,7 +37,7 @@
                 <ion-icon slot="start" name="notifications-outline"></ion-icon>
                 <ion-label>
                   Notifications
-                  <ion-badge *ngIf="numberOfUnreadNotifications != 0" color="primary">{{ numberOfUnreadNotifications }}</ion-badge>
+                  <ion-badge *ngIf="numberOfUnreadNotifications != 0" color="secondary">{{ numberOfUnreadNotifications }}</ion-badge>
                 </ion-label>
               </ion-item>
 

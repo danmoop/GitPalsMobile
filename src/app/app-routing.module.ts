@@ -41,6 +41,10 @@ const routes: Routes = [
   {
     path: 'view-notifications',
     loadChildren: () => import('../pages/view-notifications/view-notifications.module').then( m => m.ViewNotificationsPageModule)
+  },
+  {
+    path: 'edit-project/:id',
+    loadChildren: () => import('../pages/edit-project/edit-project.module').then( m => m.EditProjectPageModule)
   }
 ];
 

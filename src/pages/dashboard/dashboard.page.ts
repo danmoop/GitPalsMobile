@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FolderPage } from './../../app/folder/folder.page';
 import { AlertController } from '@ionic/angular';
 import axios from 'axios';

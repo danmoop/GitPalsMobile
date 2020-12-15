@@ -12,7 +12,7 @@ import axios from 'axios';
 })
 export class ViewProjectPage {
 
-  project = null;
+  project: any;
 
   constructor(
       private route: ActivatedRoute, 
@@ -21,11 +21,10 @@ export class ViewProjectPage {
       private router: Router
     ) {
     var projectName = route.snapshot.params.project;
-
+    
     axios.get(`${API_URL}/projects/get/${projectName}`)
       .then(response => {
         this.project = response.data;
-        console.log(this.project);
       })
       .catch(err => this.showAlert(err));
   }
@@ -40,6 +39,15 @@ export class ViewProjectPage {
 
   get user() {
     return FolderPage.user;
+  }
+
+  refreshProjectInfo(event) {
+    axios.get(`${API_URL}/projects/getById/${this.project.id}`)
+      .then(response => {
+        this.project = response.data;
+        event.target.complete();
+      })
+      .catch(err => this.showAlert(err));
   }
 
   apply() {
@@ -131,7 +139,7 @@ export class ViewProjectPage {
           text: 'Edit',
           icon: 'create-outline',
           handler: () => {
-
+            this.editProject();
           }
         },
         {
@@ -169,5 +177,9 @@ export class ViewProjectPage {
         }
       ]
     }).then(alert => alert.present());
+  }
+
+  editProject() {
+    this.router.navigateByUrl(`/edit-project/${this.project.id}`);
   }
 }

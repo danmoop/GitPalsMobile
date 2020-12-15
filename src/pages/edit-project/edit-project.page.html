@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="project != null">Edit {{ project.title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-text-center">
+  <ion-card mode='ios'>
+    <ion-card-header>
+      <ion-card-subtitle>Project Info</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item>
+        <span>Title: </span>
+        <ion-input *ngIf="project != null" [(ngModel)]="project.title" placeholder="Project Title" style="margin-left: 10px;"></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <span>Repository Link: </span>
+        <ion-input *ngIf="project != null" [(ngModel)]="project.githubProjectLink" placeholder="Repository Link" style="margin-left: 10px;"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <span>Description: </span>
+        <ion-input *ngIf="project != null" [(ngModel)]="project.description" placeholder="Description" style="margin-left: 10px;"></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card mode='ios'>
+    <ion-card-header>
+      <ion-card-subtitle>
+        Technologies
+      </ion-card-subtitle>
+
+      <ion-button fill="outline" size="small" (click)="addTech();">Add</ion-button>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <span *ngIf="project != null && project.technologies.length == 0">No technologies added</span>
+
+      <ion-list *ngIf="project != null">
+        <ion-item *ngFor="let tech of project.technologies">
+          <ion-label>{{ tech }}</ion-label>
+          <ion-button fill="clear" color="danger" (click)="removeTech(tech);">
+            <ion-icon name="close-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card mode='ios'>
+    <ion-card-header>
+      <ion-card-subtitle>
+        Required Roles
+      </ion-card-subtitle>
+
+      <ion-button fill="outline" size="small" (click)="addRole();">Add</ion-button>
+    </ion-card-header>
+
+    <ion-card-content>
+      <span *ngIf="project != null && project.requiredRoles.length == 0">No required roles added</span>
+
+      <ion-list *ngIf="project != null">
+        <ion-item *ngFor="let role of project.requiredRoles">
+          <ion-label>{{ role }}</ion-label>
+          <ion-button fill="clear" color="danger" (click)="removeRole(role);">
+            <ion-icon name="close-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button style="margin-bottom: 15px;" (click)="save();">Save</ion-button>
+</ion-content>

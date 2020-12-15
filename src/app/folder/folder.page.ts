@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { API_URL } from './../../variables/constants';
 import { AlertController } from '@ionic/angular';
-import axios from 'axios';
 import { Project } from 'src/model/Project';
+import axios from 'axios';
 
 @Component({
   selector: 'app-folder',

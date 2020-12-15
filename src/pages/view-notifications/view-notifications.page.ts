@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FolderPage } from '../../app/folder/folder.page';
-import axios from 'axios';
 import { API_URL } from 'src/variables/constants';
+import axios from 'axios';
 
 @Component({
   selector: 'app-view-notifications',

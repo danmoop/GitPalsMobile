@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import axios from 'axios';
 import { ActionSheetController } from '@ionic/angular';
 import { API_URL } from '../../variables/constants';
