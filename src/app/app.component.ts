@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -57,7 +57,7 @@ export class AppComponent {
           handler: (data) => {
             axios.post(`${API_URL}/auth/login`, {
               username: data.username,
-              password: md5(data.key)
+              password: md5(data.key).toString()
             }).then(response => {
               if(response.data.status != null && response.data.status == 'FAILED') {
                 this.showAlert('Invalid Credentials');
