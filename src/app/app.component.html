@@ -33,12 +33,17 @@
               </ion-item>
 
 
-              <ion-item lines="none" detail="false">
+              <ion-item lines="none" detail="false" routerLink="/view-notifications">
                 <ion-icon slot="start" name="notifications-outline"></ion-icon>
                 <ion-label>
                   Notifications
                   <ion-badge *ngIf="numberOfUnreadNotifications != 0" color="primary">{{ numberOfUnreadNotifications }}</ion-badge>
                 </ion-label>
+              </ion-item>
+
+              <ion-item lines="none" detail="false">
+                <ion-icon slot="start" name="document-text-outline"></ion-icon>
+                <ion-label>Forum</ion-label>
               </ion-item>
 
               <ion-item lines="none" detail="false" routerLink="/submit-project">

@@ -40,7 +40,7 @@ const routes: Routes = [
   },
   {
     path: 'view-notifications',
-    loadChildren: () => import('../../view-notifications/view-notifications.module').then( m => m.ViewNotificationsPageModule)
+    loadChildren: () => import('../pages/view-notifications/view-notifications.module').then( m => m.ViewNotificationsPageModule)
   }
 ];
 

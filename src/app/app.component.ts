@@ -5,9 +5,11 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { FolderPage } from './folder/folder.page';
 import { API_URL } from './../variables/constants';
+import { Router } from '@angular/router';
 
 import axios from 'axios';
-import { Router } from '@angular/router';
+import md5 from 'crypto-js/md5';
+
 
 @Component({
   selector: 'app-root',
@@ -51,11 +53,11 @@ export class AppComponent {
       ],
       buttons: [
         {
-          text: 'Ok',
+          text: 'OK',
           handler: (data) => {
             axios.post(`${API_URL}/auth/login`, {
               username: data.username,
-              password: data.key
+              password: md5(data.key)
             }).then(response => {
               if(response.data.status != null && response.data.status == 'FAILED') {
                 this.showAlert('Invalid Credentials');

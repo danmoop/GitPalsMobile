@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-icon name="notifications-outline"></ion-icon>
+      Notifications
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-text-center">
+
+  <p *ngIf="notificationsLength == 0">No notifications yet</p>
+
+  <ion-card mode="ios" *ngFor="let notification of notifications">
+    <ion-card-header>
+      <ion-card-subtitle>
+        <ion-icon name="notifications-outline"></ion-icon>
+        Notification
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <span>{{ notification.text }}</span>
+      <br>
+    </ion-card-content>
+    <ion-button fill="clear" color="danger" (click)="deleteNotification(notification);">Delete</ion-button>
+  </ion-card>
+
+</ion-content>
