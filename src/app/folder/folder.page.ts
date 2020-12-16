@@ -18,7 +18,7 @@ export class FolderPage {
     private alertCtrl: AlertController
   ) {}
 
-  ngOnInit() {
+  ionViewDidEnter() {
     this.getProjects();
     this.getUser();
   }

@@ -13,6 +13,7 @@ import axios from 'axios';
 export class ViewProjectPage {
 
   project: any;
+  projectName: string;
 
   constructor(
       private route: ActivatedRoute, 
@@ -20,13 +21,15 @@ export class ViewProjectPage {
       private actionCtrl: ActionSheetController,
       private router: Router
     ) {
-    var projectName = route.snapshot.params.project;
-    
-    axios.get(`${API_URL}/projects/get/${projectName}`)
+    this.projectName = route.snapshot.params.project;
+  }
+  
+  ionViewDidEnter() {
+    axios.get(`${API_URL}/projects/get/${this.projectName}`)
       .then(response => {
         this.project = response.data;
       })
-      .catch(err => this.showAlert(err));
+      .catch(err => this.showAlert(err))
   }
 
   showAlert(msg) {
@@ -83,19 +86,23 @@ export class ViewProjectPage {
         {
           text: 'Send',
           handler: (data) => {
-            var comment = {
-              jwt: localStorage.getItem('jwt'),
-              author: this.user.username,
-              text: data.text,
-              projectName: this.project.title
+            if(data.text.trim() != '') {
+              var comment = {
+                jwt: localStorage.getItem('jwt'),
+                author: this.user.username,
+                text: data.text,
+                projectName: this.project.title
+              }
+              
+              axios.post(`${API_URL}/projects/sendComment`, comment)
+                .then(response => {
+                  if(response.data.status == 'OK') {
+                    this.project.comments.push(comment);
+                  }
+                })
+            } else {
+              this.showAlert("Comment text can't be empty!");
             }
-            
-            axios.post(`${API_URL}/projects/sendComment`, comment)
-              .then(response => {
-                if(response.data.status == 'OK') {
-                  this.project.comments.push(comment);
-                }
-              })
           }
         }
       ]

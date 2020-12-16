@@ -16,18 +16,24 @@ export class ViewDialogPage {
   name: string;
   stompClient: any;
   ws: any;
+  messageKey: string;
   message: string = '';
 
   constructor(private route: ActivatedRoute) {
     var name = route.snapshot.params.name;
     this.name = name;
-    this.initWS();
+
+    axios.get(`${API_URL}/users/getMessageKey/${localStorage.getItem('jwt')}`)
+      .then(response => {
+        this.messageKey = response.data.key;
+        this.initWS();
+      });
   }
 
   initWS() {
     if(FolderPage.user.dialogs[this.name].key != 0) {
       FolderPage.user.dialogs[this.name].key = 0;
-      axios.post(`${API_URL}/messages/markDialogAsSeen`, {
+      axios.post(`${API_URL}/users/markDialogAsSeen`, {
         jwt: localStorage.getItem('jwt'),
         dialogName: this.name
       });
@@ -37,7 +43,7 @@ export class ViewDialogPage {
     this.stompClient = StompModule.Stomp.over(this.ws);
 
     this.stompClient.connect({}, frame => {
-      this.stompClient.subscribe(`/topic/messages/${localStorage.getItem('authKey')}`, (message) => {
+      this.stompClient.subscribe(`/topic/messages/${this.messageKey}`, (message) => {
         if (message.body) {
           const msg = JSON.parse(message.body);
           this.user.dialogs[this.name].value.push(msg);
@@ -49,6 +55,10 @@ export class ViewDialogPage {
   sendMessage() {
     this.stompClient.send("/app/messageTransmit", {}, JSON.stringify({'author': this.user.username, 'content': this.message, 'recipient':this.name, 'type':'REGULAR_MESSAGE'}));
     this.message = '';
+  }
+
+  disconnect() {
+    this.ws.close();
   }
 
   get user() {

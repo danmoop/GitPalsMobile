@@ -14,7 +14,12 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <p class="ion-text-center"><b>Most recent projects: ({{ projects.length }})</b></p>
+  <p class="ion-text-center">
+    <b>
+      Most recent projects: 
+      <ion-badge color="primary">{{ projects.length }}</ion-badge>
+    </b>
+  </p>
 
   <ion-refresher slot="fixed" (ionRefresh)="refreshData($event);">
     <ion-refresher-content></ion-refresher-content>

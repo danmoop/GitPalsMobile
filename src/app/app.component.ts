@@ -120,7 +120,7 @@ export class AppComponent {
     for(var i = 0; i < dialogs.length; i++) {
       res += FolderPage.user.dialogs[dialogs[i]].key;
     }
-    
+
     return res;
   }
 
