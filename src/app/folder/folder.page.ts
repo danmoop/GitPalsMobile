@@ -3,6 +3,7 @@ import { API_URL } from './../../variables/constants';
 import { AlertController } from '@ionic/angular';
 import { Project } from 'src/model/Project';
 import axios from 'axios';
+import { User } from 'src/model/User';
 
 @Component({
   selector: 'app-folder',
@@ -12,22 +13,22 @@ import axios from 'axios';
 export class FolderPage {
 
   projects: Array<Project> = [];
-  static user: any;
+  static user: User;
 
   constructor(
     private alertCtrl: AlertController
   ) {}
 
-  ionViewDidEnter() {
+  ionViewDidEnter(): void {
     this.getProjects();
     this.getUser();
   }
 
-  get user() {
+  get user(): User {
     return FolderPage.user;
   }
 
-  showAlert(msg) {
+  showAlert(msg): void {
     this.alertCtrl.create({
       header: 'Message',
       message: msg,
@@ -35,14 +36,14 @@ export class FolderPage {
     }).then(alert => alert.present());
   }
 
-  getProjects() {
+  getProjects(): void {
     axios.get(`${API_URL}/projects/getAll`)
       .then(response => {
         this.projects = response.data.reverse();
       });
   }
 
-  getUser() {
+  getUser(): void {
     if(localStorage.getItem('jwt') != null) {
       axios.post(`${API_URL}/auth/get`, {
         token: localStorage.getItem('jwt')
@@ -53,7 +54,6 @@ export class FolderPage {
         if (!user.banned) {
           localStorage.setItem('user', JSON.stringify(user));
           FolderPage.user = user;
-          console.log(user);
         } else {
           this.showAlert('You are banned');
           localStorage.clear();
@@ -64,7 +64,7 @@ export class FolderPage {
     }
   }
 
-  refreshData(event) {
+  refreshData(event): void {
     this.getUser();
     this.getProjects();
         

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { API_URL } from 'src/variables/constants';
 import axios from 'axios';
 import { AlertController } from '@ionic/angular';
@@ -13,7 +13,11 @@ export class EditProjectPage {
 
   project: any;
 
-  constructor(private route: ActivatedRoute, private alertCtrl: AlertController) {
+  constructor(
+      private route: ActivatedRoute, 
+      private alertCtrl: AlertController,
+      private router: Router
+    ) {
     var projectId = route.snapshot.params.id;
 
     axios.get(`${API_URL}/projects/getById/${projectId}`)
@@ -22,17 +26,17 @@ export class EditProjectPage {
       });
   }
 
-  removeTech(tech) {
+  removeTech(tech): void {
     var techIndex = this.project.technologies.indexOf(tech);
     this.project.technologies.splice(techIndex, 1);
   }
 
-  removeRole(role) {
+  removeRole(role): void {
     var roleIndex = this.project.requiredRoles.indexOf(role);
     this.project.requiredRoles.splice(roleIndex, 1);
   }
 
-  addTech() {
+  addTech(): void {
     this.alertCtrl.create({
       header: 'Add Technology',
       inputs: [
@@ -52,7 +56,7 @@ export class EditProjectPage {
     }).then(alert => alert.present());
   }
 
-  addRole() {
+  addRole(): void {
     this.alertCtrl.create({
       header: 'Add Role',
       inputs: [
@@ -72,18 +76,19 @@ export class EditProjectPage {
     }).then(alert => alert.present());
   }
 
-  save() {
+  save(): void {
     axios.post(`${API_URL}/projects/editProject`, {
       project: this.project,
       jwt: localStorage.getItem('jwt')
     }).then(response => {
       if(response.data.status == 'OK') {
         this.showAlert('Success!');
+        this.router.navigateByUrl(`/view-project/${this.project.title}`, {replaceUrl: true});
       }
     })
   }
 
-  showAlert(msg) {
+  showAlert(msg): void {
     this.alertCtrl.create({
       header: msg,
       buttons: ['OK']

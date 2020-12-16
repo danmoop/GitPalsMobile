@@ -3,6 +3,7 @@ import { FolderPage } from './../../app/folder/folder.page';
 import { AlertController } from '@ionic/angular';
 import axios from 'axios';
 import { API_URL } from 'src/variables/constants';
+import { User } from 'src/model/User';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,11 +16,11 @@ export class DashboardPage {
     private alertCtrl: AlertController
   ) {}
 
-  get user() {
+  get user(): User {
     return FolderPage.user;
   }
 
-  addNewSkill() {
+  addNewSkill(): void {
     this.alertCtrl.create({
       header: 'Add New Skill',
       inputs: [
@@ -53,7 +54,7 @@ export class DashboardPage {
     }).then(alert => alert.present());
   }
 
-  removeSkill(_skill) {
+  removeSkill(_skill): void {
     this.alertCtrl.create({
       message: `Are you sure you want to remove ${_skill}?`,
       buttons: [
@@ -74,7 +75,7 @@ export class DashboardPage {
     }).then(alert => alert.present());
   }
 
-  showAlert(msg) {
+  showAlert(msg): void {
     this.alertCtrl.create({
       header: 'Message',
       message: msg,

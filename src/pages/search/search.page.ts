@@ -10,9 +10,9 @@ import { API_URL } from '../../variables/constants';
 })
 export class SearchPage {;
 
-  activeMode = null;
-  results = null;
-  searchName = '';
+  activeMode: any = null;
+  results: any = null;
+  searchName: string = '';
 
   mods = [
     {
@@ -37,7 +37,7 @@ export class SearchPage {;
     private actionsCtrl: ActionSheetController
   ) {}
 
-  selectMode() {
+  selectMode(): void {
     this.actionsCtrl.create({
       header: 'Options',
       buttons: this.mods
@@ -46,7 +46,7 @@ export class SearchPage {;
     });
   }
 
-  find() {
+  find(): void {
     this.results = null;
     if(this.searchName.trim() != '') {
       axios.get(this.activeMode.link + this.searchName)

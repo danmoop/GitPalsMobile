@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { User } from 'src/model/User';
 import { FolderPage } from '../../app/folder/folder.page';
 
 @Component({
@@ -8,17 +9,17 @@ import { FolderPage } from '../../app/folder/folder.page';
 })
 export class DialogsPage {
 
-  constructor() {  }
+  constructor() {}
 
-  get user() {
+  get user(): User {
     return FolderPage.user;
   }
 
-  get dialogs () {
+  get dialogs(): string[] {
     return Object.keys(this.user.dialogs);
   }
 
-  isNew(name) {
+  isNew(name): boolean {
     return FolderPage.user.dialogs[name].key != 0;
   }
 }

@@ -5,6 +5,7 @@ import { API_URL, WS_URL } from '../../variables/constants';
 import * as SockJS from '../../scripts/sockjs.min';
 import * as StompModule from '../../scripts/stomp.umd.min';
 import axios from 'axios';
+import { User } from 'src/model/User';
 
 @Component({
   selector: 'app-view-dialog',
@@ -30,7 +31,7 @@ export class ViewDialogPage {
       });
   }
 
-  initWS() {
+  initWS(): void {
     if(FolderPage.user.dialogs[this.name].key != 0) {
       FolderPage.user.dialogs[this.name].key = 0;
       axios.post(`${API_URL}/users/markDialogAsSeen`, {
@@ -52,16 +53,16 @@ export class ViewDialogPage {
     });
   }
   
-  sendMessage() {
+  sendMessage(): void {
     this.stompClient.send("/app/messageTransmit", {}, JSON.stringify({'author': this.user.username, 'content': this.message, 'recipient':this.name, 'type':'REGULAR_MESSAGE'}));
     this.message = '';
   }
 
-  disconnect() {
+  disconnect(): void {
     this.ws.close();
   }
 
-  get user() {
+  get user(): User {
     return FolderPage.user;
   }
 }

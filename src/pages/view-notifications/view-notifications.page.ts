@@ -12,7 +12,7 @@ export class ViewNotificationsPage implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if(FolderPage.user.notifications.key != 0) {
       FolderPage.user.notifications.key = 0;
 
@@ -22,7 +22,7 @@ export class ViewNotificationsPage implements OnInit {
     }
   }
 
-  get notifications() {
+  get notifications(): object[] {
     var res = [];
     
     var notifications = Object.keys(FolderPage.user.notifications.value);
@@ -40,7 +40,7 @@ export class ViewNotificationsPage implements OnInit {
     return Object.keys(FolderPage.user.notifications.value);
   }
 
-  deleteNotification(notification) {
+  deleteNotification(notification): void {
 
     axios.post(`${API_URL}/users/removeNotification`, {
       jwt: localStorage.getItem('jwt'),

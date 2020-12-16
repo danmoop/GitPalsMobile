@@ -20,7 +20,7 @@ export class SubmitProjectPage {
 
   project: Project = new Project();
 
-  submit() {
+  submit(): void {
     if(this.areFieldsValid()) {
       this.project.authorName = FolderPage.user.username;
 
@@ -38,7 +38,7 @@ export class SubmitProjectPage {
     }
   }
 
-  addTech() {
+  addTech(): void {
     this.alertCtrl.create({
       header: 'Add',
       inputs: [
@@ -58,7 +58,7 @@ export class SubmitProjectPage {
     }).then(alert => alert.present());
   }
 
-  addRole() {
+  addRole(): void {
     this.alertCtrl.create({
       header: 'Add',
       inputs: [
@@ -78,7 +78,7 @@ export class SubmitProjectPage {
     }).then(alert => alert.present());
   }
 
-  showAlert() {
+  showAlert(): void {
     this.alertCtrl.create({
       header: 'All fields are required',
       message: 'You should fill all the requirements!',
@@ -86,7 +86,7 @@ export class SubmitProjectPage {
     }).then(alert => alert.present());
   }
 
-  areFieldsValid() {
+  areFieldsValid(): boolean {
     if(this.project.title.trim() == '' || this.project.description.trim() == '' 
     || this.project.githubProjectLink.trim() == '' || this.project.technologies.length == 0
     || this.project.requiredRoles.length == 0) {

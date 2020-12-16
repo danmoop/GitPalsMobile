@@ -6,7 +6,7 @@
     <ion-title *ngIf="project != null">{{ project.title }}</ion-title>
 
     <ion-buttons slot="end" *ngIf="project != null && user != null && user.username == project.authorName">
-      <ion-button (click)="openActionSheet();">
+      <ion-button (click)="openProjectActionSheet();">
         <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -85,9 +85,11 @@
         <ion-card-header>
           <ion-item>
             <ion-label>{{ comment.author }}</ion-label>
-            <ion-button (click)="removeComment(comment);" *ngIf="user != null && user.username == comment.author" fill="clear" color="danger" size="small">
-              <ion-icon name="close-circle-outline"></ion-icon>
-            </ion-button>
+            <ion-buttons slot="end" *ngIf="project != null && user != null && user.username == comment.author">
+              <ion-button (click)="openCommentActionSheet(comment);">
+                <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
+              </ion-button>
+            </ion-buttons>
           </ion-item>
         </ion-card-header>
         <ion-card-content>

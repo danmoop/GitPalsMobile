@@ -4,6 +4,7 @@ import { API_URL } from '../../variables/constants';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import { FolderPage } from './../../app/folder/folder.page';
 import axios from 'axios';
+import { User } from 'src/model/User';
 
 @Component({
   selector: 'app-view-project',
@@ -24,7 +25,7 @@ export class ViewProjectPage {
     this.projectName = route.snapshot.params.project;
   }
   
-  ionViewDidEnter() {
+  ionViewDidEnter(): void {
     axios.get(`${API_URL}/projects/get/${this.projectName}`)
       .then(response => {
         this.project = response.data;
@@ -32,7 +33,7 @@ export class ViewProjectPage {
       .catch(err => this.showAlert(err))
   }
 
-  showAlert(msg) {
+  showAlert(msg): void {
     this.alertCtrl.create({
       header: 'Message',
       message: msg,
@@ -40,11 +41,11 @@ export class ViewProjectPage {
     }).then(alert => alert.present());
   }
 
-  get user() {
+  get user(): User {
     return FolderPage.user;
   }
 
-  refreshProjectInfo(event) {
+  refreshProjectInfo(event): void {
     axios.get(`${API_URL}/projects/getById/${this.project.id}`)
       .then(response => {
         this.project = response.data;
@@ -53,7 +54,7 @@ export class ViewProjectPage {
       .catch(err => this.showAlert(err));
   }
 
-  apply() {
+  apply(): void {
     axios.post(`${API_URL}/projects/toggleApplicationToAProject`, {
       jwt: localStorage.getItem('jwt'),
       projectName: this.project.title
@@ -73,7 +74,7 @@ export class ViewProjectPage {
     .catch(err => this.showAlert(err));
   }
 
-  writeComment() {
+  writeComment(): void {
     this.alertCtrl.create({
       header: 'Comment',
       inputs: [
@@ -109,8 +110,9 @@ export class ViewProjectPage {
     }).then(alert => alert.present());
   }
 
-  removeComment(comment) {
+  removeComment(comment): void {
     this.alertCtrl.create({
+      header: 'Remove Comment',
       message: 'Are you sure?',
       buttons: [
         {
@@ -138,7 +140,7 @@ export class ViewProjectPage {
     }).then(alert => alert.present());
   }
 
-  openActionSheet() {
+  openProjectActionSheet(): void {
     this.actionCtrl.create({
       header: 'Actions',
       buttons: [
@@ -161,7 +163,23 @@ export class ViewProjectPage {
     }).then(alert => alert.present());
   }
 
-  removeProject() {
+  openCommentActionSheet(comment): void {
+    this.actionCtrl.create({
+      header: 'Actions',
+      buttons: [
+        {
+          text: 'Delete Comment',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.removeComment(comment);
+          }
+        }
+      ]
+    }).then(alert => alert.present());
+  }
+
+  removeProject(): void {
     this.alertCtrl.create({
       header: 'Remove project',
       message: "Are you sure?",
@@ -186,7 +204,7 @@ export class ViewProjectPage {
     }).then(alert => alert.present());
   }
 
-  editProject() {
+  editProject(): void {
     this.router.navigateByUrl(`/edit-project/${this.project.id}`);
   }
 }
