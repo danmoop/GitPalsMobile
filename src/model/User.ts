@@ -6,7 +6,7 @@ export class User {
     githubAccountLink: string;
     mobileAuthPassword: string;
 
-    skillList: Set<string>;
+    skillList: Array<string>;
     dialogs: Map<object, object>;
 
     submittedProjects: string[];

@@ -6,10 +6,9 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { FolderPage } from './folder/folder.page';
 import { API_URL } from './../variables/constants';
 import { Router } from '@angular/router';
+import { User } from '../model/User';
 
 import axios from 'axios';
-import md5 from 'crypto-js/md5';
-
 
 @Component({
   selector: 'app-root',
@@ -28,15 +27,14 @@ export class AppComponent {
     this.initializeApp();
   }
 
-
-  initializeApp() {
+  initializeApp(): void {
     this.platform.ready().then(() => {
       this.statusBar.backgroundColorByHexString("#ffffff");
       this.splashScreen.hide();
     });
   }
 
-  signIn() {
+  signIn(): void {
     this.alertCtrl.create({
       header: 'Sign In',
       inputs: [
@@ -57,7 +55,7 @@ export class AppComponent {
           handler: (data) => {
             axios.post(`${API_URL}/auth/login`, {
               username: data.username,
-              password: md5(data.key).toString()
+              password: data.key
             }).then(response => {
               if(response.data.status != null && response.data.status == 'FAILED') {
                 this.showAlert('Invalid Credentials');
@@ -92,7 +90,7 @@ export class AppComponent {
     }).then(alert => alert.present());
   }
 
-  logOut() {
+  logOut(): void {
     localStorage.clear();
     FolderPage.user = null;
 
@@ -101,7 +99,7 @@ export class AppComponent {
     this.showAlert('You logged out');
   }
 
-  showAlert(msg) {
+  showAlert(msg): void {
     this.alertCtrl.create({
       header: 'Message',
       message: msg,
@@ -109,11 +107,11 @@ export class AppComponent {
     }).then(alertMsg => alertMsg.present());
   }
 
-  get user() {
+  get user(): User {
     return FolderPage.user;
   }
 
-  get numberOfUnreadMessages() {
+  get numberOfUnreadMessages(): number {
     var res = 0;
     var dialogs = Object.keys(FolderPage.user.dialogs);
 
@@ -124,7 +122,7 @@ export class AppComponent {
     return res;
   }
 
-  get numberOfUnreadNotifications() {
+  get numberOfUnreadNotifications(): number {
     return FolderPage.user.notifications.key;
   }
 }
