@@ -13,7 +13,7 @@
 <ion-content class="ion-text-center">
   <br>
   <strong>You have ({{ dialogs.length }}) dialogs</strong>
-  <ion-list *ngFor="dialogs.length != 0">
+  <ion-list *ngIf="dialogs.length != 0">
     <ion-item *ngFor="let name of dialogs">
       <ion-label>
         {{ name }}

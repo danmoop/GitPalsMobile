@@ -45,9 +45,7 @@ export class FolderPage {
 
   getUser(): void {
     if(localStorage.getItem('jwt') != null) {
-      axios.post(`${API_URL}/auth/get`, {
-        token: localStorage.getItem('jwt')
-      })
+      axios.get(`${API_URL}/auth/getUserByJwt/${localStorage.getItem('jwt')}`)
       .then(response => {
         var user = response.data;
 
