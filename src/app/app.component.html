@@ -58,6 +58,12 @@
             </div>
           </ion-menu-toggle>
         </ion-list>
+
+        <ion-item>
+          <ion-label>Dark Theme</ion-label>
+          <ion-toggle [(ngModel)]="isDarkTheme" color="primary" (ionChange)="changeTheme($event);"></ion-toggle>
+        </ion-item>
+
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

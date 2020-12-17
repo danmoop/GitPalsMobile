@@ -52,7 +52,6 @@ export class FolderPage {
         var user = response.data;
 
         if (!user.banned) {
-          localStorage.setItem('user', JSON.stringify(user));
           FolderPage.user = user;
         } else {
           this.showAlert('You are banned');

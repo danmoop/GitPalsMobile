@@ -17,7 +17,9 @@ import axios from 'axios';
 })
 export class AppComponent {
 
-   constructor(
+  isDarkTheme: boolean;
+
+  constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
@@ -32,6 +34,16 @@ export class AppComponent {
       this.statusBar.backgroundColorByHexString("#ffffff");
       this.splashScreen.hide();
     });
+
+    var theme = localStorage.getItem('preferred-theme');
+
+    this.isDarkTheme = theme == 'dark';
+
+    if(localStorage.getItem('preferred-theme') == null) {
+      localStorage.setItem('preferred-theme', 'light');
+    }
+
+    document.body.setAttribute('color-theme', theme);
   }
 
   signIn(): void {
@@ -69,7 +81,6 @@ export class AppComponent {
                     var user = response.data;
 
                     if(!user.banned) {
-                      localStorage.setItem('user', JSON.stringify(user));
                       FolderPage.user = user;
                       this.showAlert('Authenticated!');
                     } else {
@@ -105,6 +116,15 @@ export class AppComponent {
       message: msg,
       buttons: ['Ok']
     }).then(alertMsg => alertMsg.present());
+  }
+
+  changeTheme(event): void {
+    if(event.target.checked) {
+      localStorage.setItem('preferred-theme', 'dark');
+    } else {
+      localStorage.setItem('preferred-theme', 'light');
+    }
+    document.body.setAttribute('color-theme', localStorage.getItem('preferred-theme'));
   }
 
   get user(): User {

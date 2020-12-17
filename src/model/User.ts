@@ -15,6 +15,7 @@ export class User {
     notifications: any;
     
     lastOnlineDate: number;
+    
     banned: boolean;
     hasSeenGlobalMessage: boolean;
     isAdmin: boolean;
