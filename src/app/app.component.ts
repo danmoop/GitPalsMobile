@@ -37,11 +37,11 @@ export class AppComponent {
 
     var theme = localStorage.getItem('preferred-theme');
 
-    this.isDarkTheme = theme == 'dark';
-
-    if(localStorage.getItem('preferred-theme') == null) {
+    if(theme == null) {
       localStorage.setItem('preferred-theme', 'light');
     }
+
+    this.isDarkTheme = theme == 'dark';
 
     document.body.setAttribute('color-theme', theme);
   }
