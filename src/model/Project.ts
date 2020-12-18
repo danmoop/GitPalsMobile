@@ -1,4 +1,5 @@
 export class Project {
+    id: string;
     title: string;
     description: string;
     githubProjectLink: string;
@@ -9,6 +10,7 @@ export class Project {
     requiredRoles: Array<string>;
 
     constructor() {
+        this.id = '';
         this.title = '';
         this.description = '';
         this.githubProjectLink = '';

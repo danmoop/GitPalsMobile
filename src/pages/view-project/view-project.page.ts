@@ -5,6 +5,7 @@ import { ActionSheetController, AlertController } from '@ionic/angular';
 import { FolderPage } from './../../app/folder/folder.page';
 import axios from 'axios';
 import { User } from 'src/model/User';
+import { Project } from 'src/model/Project';
 
 @Component({
   selector: 'app-view-project',
@@ -13,8 +14,8 @@ import { User } from 'src/model/User';
 })
 export class ViewProjectPage {
 
-  project: any;
-  projectName: string;
+  project: Project;
+  id: string;
 
   constructor(
       private route: ActivatedRoute, 
@@ -22,11 +23,11 @@ export class ViewProjectPage {
       private actionCtrl: ActionSheetController,
       private router: Router
     ) {
-    this.projectName = route.snapshot.params.project;
+    this.id = route.snapshot.params.id;
   }
   
   ionViewDidEnter(): void {
-    axios.get(`${API_URL}/projects/get/${this.projectName}`)
+    axios.get(`${API_URL}/projects/getById/${this.id}`)
       .then(response => {
         this.project = response.data;
       })

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { API_URL } from 'src/variables/constants';
 import axios from 'axios';
 import { AlertController } from '@ionic/angular';
+import { Project } from 'src/model/Project';
 
 @Component({
   selector: 'app-edit-project',
@@ -11,7 +12,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class EditProjectPage {
 
-  project: any;
+  project: Project;
 
   constructor(
       private route: ActivatedRoute, 
@@ -83,10 +84,10 @@ export class EditProjectPage {
     }).then(response => {
       if(response.data.status == 'OK') {
         this.showAlert('Success!');
-        this.router.navigateByUrl(`/view-project/${this.project.title}`, {replaceUrl: true});
+        this.router.navigateByUrl(`/view-project/${this.project.id}`, {replaceUrl: true});
       }
     })
-  }
+  }s
 
   showAlert(msg): void {
     this.alertCtrl.create({
