@@ -99,11 +99,10 @@ export class AppComponent {
   }
 
   logOut(): void {
-    localStorage.clear();
+    localStorage.removeItem('jwt');
     FolderPage.user = null;
-
+    
     this.router.navigateByUrl('/', { replaceUrl: true });
-
     this.showAlert('You logged out');
   }
 
