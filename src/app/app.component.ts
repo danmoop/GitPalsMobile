@@ -22,7 +22,6 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
     private alertCtrl: AlertController,
     private router: Router
   ) {
@@ -31,7 +30,6 @@ export class AppComponent {
 
   initializeApp(): void {
     this.platform.ready().then(() => {
-      this.statusBar.backgroundColorByHexString("#ffffff");
       this.splashScreen.hide();
     });
 
