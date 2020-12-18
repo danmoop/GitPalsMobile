@@ -14,8 +14,8 @@ import { Project } from 'src/model/Project';
 })
 export class ViewProjectPage {
 
-  project: Project;
-  id: string;
+  project: Project = null;
+  projectTitle: string;
 
   constructor(
       private route: ActivatedRoute, 
@@ -23,15 +23,23 @@ export class ViewProjectPage {
       private actionCtrl: ActionSheetController,
       private router: Router
     ) {
-    this.id = route.snapshot.params.id;
+    this.projectTitle = route.snapshot.params.projectTitle;
   }
   
   ionViewDidEnter(): void {
-    axios.get(`${API_URL}/projects/getById/${this.id}`)
+    if(this.project != null) {
+      axios.get(`${API_URL}/projects/getById/${this.project.id}`)
       .then(response => {
         this.project = response.data;
       })
       .catch(err => this.showAlert(err))
+    } else {
+      axios.get(`${API_URL}/projects/getByTitle/${this.projectTitle}`)
+      .then(response => {
+        this.project = response.data;
+      })
+      .catch(err => this.showAlert(err))
+    }
   }
 
   showAlert(msg): void {

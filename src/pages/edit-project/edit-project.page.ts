@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { API_URL } from 'src/variables/constants';
-import axios from 'axios';
 import { AlertController } from '@ionic/angular';
 import { Project } from 'src/model/Project';
+import { Location } from '@angular/common'
+import axios from 'axios';
+
 
 @Component({
   selector: 'app-edit-project',
@@ -15,9 +17,10 @@ export class EditProjectPage {
   project: Project;
 
   constructor(
+      private router: Router,
       private route: ActivatedRoute, 
       private alertCtrl: AlertController,
-      private router: Router
+      private location: Location
     ) {
     var projectId = route.snapshot.params.id;
 
@@ -84,10 +87,10 @@ export class EditProjectPage {
     }).then(response => {
       if(response.data.status == 'OK') {
         this.showAlert('Success!');
-        this.router.navigateByUrl(`/view-project/${this.project.id}`, {replaceUrl: true});
+        this.location.back();
       }
     })
-  }s
+  }
 
   showAlert(msg): void {
     this.alertCtrl.create({
