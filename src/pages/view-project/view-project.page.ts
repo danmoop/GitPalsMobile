@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { API_URL } from '../../variables/constants';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import { FolderPage } from './../../app/folder/folder.page';
-import axios from 'axios';
 import { User } from 'src/model/User';
 import { Project } from 'src/model/Project';
+import axios from 'axios';
 
 @Component({
   selector: 'app-view-project',
@@ -110,7 +110,7 @@ export class ViewProjectPage {
                     this.project.comments.push(comment);
                   }
                 })
-		.catch(err => this.showAlert(err));
+                .catch(err => this.showAlert(err));
             } else {
               this.showAlert("Comment text can't be empty!");
             }
@@ -141,7 +141,7 @@ export class ViewProjectPage {
                 }
               }
             })
-	    .catch(err => this.showAlert(err));
+            .catch(err => this.showAlert(err));
           }
         },
         {
@@ -206,7 +206,7 @@ export class ViewProjectPage {
                 this.router.navigateByUrl('/', { replaceUrl: true });
               }
             })
-	    .catch(err => this.showAlert(err));
+	          .catch(err => this.showAlert(err));
           }
         },
         {

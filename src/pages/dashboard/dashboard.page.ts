@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FolderPage } from './../../app/folder/folder.page';
 import { AlertController } from '@ionic/angular';
-import axios from 'axios';
 import { API_URL } from 'src/variables/constants';
 import { User } from 'src/model/User';
+import axios from 'axios';
 
 @Component({
   selector: 'app-dashboard',
