@@ -28,13 +28,14 @@ export class SubmitProjectPage {
         jwt: localStorage.getItem('jwt'),
         project: this.project
       })
-        .then(response => {
-          if(response.data.status == 'OK') {
-            this.router.navigateByUrl(`/view-project/${this.project.title}`, { replaceUrl: true });
-          }
-        });
+      .then(response => {
+        if(response.data.status == 'OK') {
+	  this.router.navigateByUrl(`/view-project/${this.project.title}`, { replaceUrl: true });
+        }
+      })
+      .catch(err => this.showAlert(err));
     } else {
-      this.showAlert();
+      this.showAlert('All fields are required!');
     }
   }
 
@@ -78,10 +79,10 @@ export class SubmitProjectPage {
     }).then(alert => alert.present());
   }
 
-  showAlert(): void {
+  showAlert(msg): void {
     this.alertCtrl.create({
-      header: 'All fields are required',
-      message: 'You should fill all the requirements!',
+      header: 'Message',
+      message: msg,
       buttons: ['OK']
     }).then(alert => alert.present());
   }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import axios from 'axios';
 import { ActionSheetController } from '@ionic/angular';
 import { API_URL } from '../../variables/constants';
+import axios from 'axios';
 
 @Component({
   selector: 'app-search',
@@ -56,6 +56,9 @@ export class SearchPage {;
       .catch(err => console.log(err));
 
       this.searchName = '';
+    } else {
+      //TODO: replace alert with AlertController later
+      alert("Search parameters can't be empty!");
     }
   }
 }

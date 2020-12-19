@@ -1,21 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { User } from '../model/User';
+import { API_URL } from '../variables/constants';
+import axios from 'axios';
 
 @Component({
   selector: 'app-view-user',
   templateUrl: './view-user.page.html',
   styleUrls: ['./view-user.page.scss'],
 })
-export class ViewUserPage implements OnInit {
+export class ViewUserPage {
 
-  user: any;
+  user: User;
 
   constructor(private route: ActivatedRoute) {
-    var username = route.snapshot.params.username;
+    let username = route.snapshot.params.username;
 
-    
-  }
-
-  ngOnInit() {
+    axios.get(`${API_URL}/users/get/${username}`)
+      .then(response => this.user = response.data)
+      //TODO: replace alert with AlertController
+      .catch(err => alert(err));
   }
 }

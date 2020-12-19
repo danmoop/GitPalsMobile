@@ -40,7 +40,8 @@ export class FolderPage {
     axios.get(`${API_URL}/projects/getAll`)
       .then(response => {
         this.projects = response.data.reverse();
-      });
+      })
+      .catch(err => this.showAlert(err));
   }
 
   getUser(): void {

@@ -13,6 +13,11 @@ export class ViewNotificationsPage implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
+    /* If user has new unread messages, send a message to the server
+       to tell that now they are read, so the badge with messages
+       counter would dissapear from the notifications page
+    */
     if(FolderPage.user.notifications.key != 0) {
       FolderPage.user.notifications.key = 0;
 
@@ -31,6 +36,7 @@ export class ViewNotificationsPage implements OnInit {
       res.push(FolderPage.user.notifications.value[notifications[i]]);
     }
 
+    // Show latest notification on top
     res.reverse();
 
     return res;
@@ -45,7 +51,9 @@ export class ViewNotificationsPage implements OnInit {
     axios.post(`${API_URL}/users/removeNotification`, {
       jwt: localStorage.getItem('jwt'),
       notificationKey: notification.key
-    });
+    })
+    // TODO: replace alert with AlertController
+    .catch(err => alert(err));
 
     delete FolderPage.user.notifications.value[notification.key];
   }

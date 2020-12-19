@@ -28,7 +28,9 @@ export class ViewDialogPage {
       .then(response => {
         this.messageKey = response.data.key;
         this.initWS();
-      });
+      })
+      // TODO: replace alert with AlertController
+      .catch(err => alert(err));
   }
 
   initWS(): void {
@@ -37,7 +39,9 @@ export class ViewDialogPage {
       axios.post(`${API_URL}/users/markDialogAsSeen`, {
         jwt: localStorage.getItem('jwt'),
         dialogName: this.name
-      });
+      })
+      //TODO: replace alert with AlertController
+      .catch(err => alert(err));
     }
 
     this.ws = new SockJS(WS_URL);

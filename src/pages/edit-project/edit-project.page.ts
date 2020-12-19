@@ -27,7 +27,8 @@ export class EditProjectPage {
     axios.get(`${API_URL}/projects/getById/${projectId}`)
       .then(response => {
         this.project = response.data;
-      });
+      })
+      .catch(err => this.showAlert(err));
   }
 
   removeTech(tech): void {
@@ -84,12 +85,14 @@ export class EditProjectPage {
     axios.post(`${API_URL}/projects/editProject`, {
       project: this.project,
       jwt: localStorage.getItem('jwt')
-    }).then(response => {
+    })
+    .then(response => {
       if(response.data.status == 'OK') {
         this.showAlert('Success!');
         this.location.back();
       }
     })
+    .catch(err => this.showAlert(err));
   }
 
   showAlert(msg): void {

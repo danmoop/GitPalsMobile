@@ -110,6 +110,7 @@ export class ViewProjectPage {
                     this.project.comments.push(comment);
                   }
                 })
+		.catch(err => this.showAlert(err));
             } else {
               this.showAlert("Comment text can't be empty!");
             }
@@ -139,7 +140,8 @@ export class ViewProjectPage {
                   this.project.comments.splice(commentIndex, 1);
                 }
               }
-            });
+            })
+	    .catch(err => this.showAlert(err));
           }
         },
         {
@@ -204,6 +206,7 @@ export class ViewProjectPage {
                 this.router.navigateByUrl('/', { replaceUrl: true });
               }
             })
+	    .catch(err => this.showAlert(err));
           }
         },
         {

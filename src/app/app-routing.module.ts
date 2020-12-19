@@ -45,6 +45,10 @@ const routes: Routes = [
   {
     path: 'edit-project/:id',
     loadChildren: () => import('../pages/edit-project/edit-project.module').then( m => m.EditProjectPageModule)
+  },
+  {
+    path: 'forum',
+    loadChildren: () => import('../../forum/forum.module').then( m => m.ForumPageModule)
   }
 ];
 
