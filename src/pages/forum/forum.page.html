@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Forum</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openActionSheet();">
+        <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let post of posts" mode='ios'>
+    <ion-card-header>
+      <ion-card-subtitle>By {{ post.author }}</ion-card-subtitle>
+      <ion-card-title>{{ post.title }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <span>Published on {{ post.timeStamp }}</span> 
+      <br><br>
+      <span>Views: <ion-badge color="primary">{{ post.viewSet.length }}</ion-badge></span>
+      <br><br>
+      <span>Comments: <ion-badge color="primary">{{ post.comments.length }}</ion-badge></span>
+    </ion-card-content>
+    <ion-button fill="clear">Explore</ion-button>
+  </ion-card>
+</ion-content>

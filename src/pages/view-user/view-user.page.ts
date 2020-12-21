@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { User } from '../model/User';
-import { API_URL } from '../variables/constants';
+import { User } from '../../model/User';
+import { API_URL } from '../../variables/constants';
 import axios from 'axios';
 
 @Component({
