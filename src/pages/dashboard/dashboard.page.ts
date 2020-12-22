@@ -12,9 +12,7 @@ import axios from 'axios';
 })
 export class DashboardPage {
 
-  constructor(
-    private alertCtrl: AlertController
-  ) {}
+  constructor(private alertCtrl: AlertController) {}
 
   get user(): User {
     return FolderPage.user;
@@ -70,7 +68,9 @@ export class DashboardPage {
             .catch(err => this.showAlert(err));
           }
         },
-        'No'
+        {
+          text: 'No'
+        }
       ]
     }).then(alert => alert.present());
   }

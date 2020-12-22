@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { API_URL } from './../../variables/constants';
 import { AlertController } from '@ionic/angular';
 import { Project } from 'src/model/Project';
-import axios from 'axios';
 import { User } from 'src/model/User';
+import axios from 'axios';
 
 @Component({
   selector: 'app-folder',
@@ -15,9 +15,7 @@ export class FolderPage {
   projects: Array<Project> = [];
   static user: User;
 
-  constructor(
-    private alertCtrl: AlertController
-  ) {}
+  constructor(private alertCtrl: AlertController) {}
 
   ionViewDidEnter(): void {
     this.getProjects();
@@ -58,7 +56,10 @@ export class FolderPage {
           FolderPage.user = null;
         }
       })
-      .catch(err => this.showAlert(err));
+      .catch(err => {
+        localStorage.removeItem('jwt');
+        this.showAlert('Please sign in again');
+      });
     }
   }
 

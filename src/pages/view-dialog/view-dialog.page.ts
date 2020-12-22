@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FolderPage } from './../../app/folder/folder.page';
 import { API_URL, WS_URL } from '../../variables/constants';
+import { User } from 'src/model/User';
+import { AlertController } from '@ionic/angular';
 import * as SockJS from '../../scripts/sockjs.min';
 import * as StompModule from '../../scripts/stomp.umd.min';
 import axios from 'axios';
-import { User } from 'src/model/User';
 
 @Component({
   selector: 'app-view-dialog',
@@ -20,7 +21,7 @@ export class ViewDialogPage {
   messageKey: string;
   message: string = '';
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private alertCtrl: AlertController, private route: ActivatedRoute) {
     var name = route.snapshot.params.name;
     this.name = name;
 
@@ -29,8 +30,11 @@ export class ViewDialogPage {
         this.messageKey = response.data.key;
         this.initWS();
       })
-      // TODO: replace alert with AlertController
-      .catch(err => alert(err));
+      .catch(err => this.showAlert(err));
+  }
+
+  ionViewWillLeave() {
+    this.disconnect();
   }
 
   initWS(): void {
@@ -40,8 +44,7 @@ export class ViewDialogPage {
         jwt: localStorage.getItem('jwt'),
         dialogName: this.name
       })
-      //TODO: replace alert with AlertController
-      .catch(err => alert(err));
+      .catch(err => this.showAlert(err));
     }
 
     this.ws = new SockJS(WS_URL);
@@ -68,5 +71,13 @@ export class ViewDialogPage {
 
   get user(): User {
     return FolderPage.user;
+  }
+
+  showAlert(msg) {
+    this.alertCtrl.create({
+      header: 'Message',
+      message: msg,
+      buttons: ['OK']
+    }).then(alert => alert.present());
   }
 }

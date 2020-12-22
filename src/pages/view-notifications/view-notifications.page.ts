@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FolderPage } from '../../app/folder/folder.page';
 import { API_URL } from 'src/variables/constants';
+import { AlertController } from '@ionic/angular';
 import axios from 'axios';
 
 @Component({
@@ -10,7 +11,7 @@ import axios from 'axios';
 })
 export class ViewNotificationsPage implements OnInit {
 
-  constructor() { }
+  constructor(private alertCtrl: AlertController) { }
 
   ngOnInit(): void {
 
@@ -52,9 +53,16 @@ export class ViewNotificationsPage implements OnInit {
       jwt: localStorage.getItem('jwt'),
       notificationKey: notification.key
     })
-    // TODO: replace alert with AlertController
-    .catch(err => alert(err));
+    .catch(err => this.showAlert(err));
 
     delete FolderPage.user.notifications.value[notification.key];
+  }
+
+  showAlert(msg) {
+    this.alertCtrl.create({
+      header: 'Message',
+      message: msg,
+      buttons: ['OK']
+    }).then(alert => alert.present());
   }
 }

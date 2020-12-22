@@ -206,7 +206,7 @@ export class ViewProjectPage {
                 this.router.navigateByUrl('/', { replaceUrl: true });
               }
             })
-	          .catch(err => this.showAlert(err));
+	    .catch(err => this.showAlert(err));
           }
         },
         {

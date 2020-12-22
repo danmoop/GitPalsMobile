@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../../model/User';
 import { API_URL } from '../../variables/constants';
+import { AlertController } from '@ionic/angular';
 import axios from 'axios';
 
 @Component({
@@ -13,12 +14,19 @@ export class ViewUserPage {
 
   user: User;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private alertCtrl: AlertController, private route: ActivatedRoute) {
     let username = route.snapshot.params.username;
 
     axios.get(`${API_URL}/users/get/${username}`)
       .then(response => this.user = response.data)
-      //TODO: replace alert with AlertController
-      .catch(err => alert(err));
+      .catch(err => this.showAlert(err));
+  }
+
+  showAlert(msg) {
+    this.alertCtrl.create({
+      header: 'Message',
+      message: msg,
+      buttons: ['OK']
+    }).then(alert => alert.present());
   }
 }
