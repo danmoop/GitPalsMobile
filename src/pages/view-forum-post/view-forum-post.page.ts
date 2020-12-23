@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { API_URL } from 'src/variables/constants';
-
+import { User } from 'src/model/User';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import { FolderPage } from 'src/app/folder/folder.page';
 
@@ -26,7 +26,7 @@ export class ViewForumPostPage {
       .catch(err => this.showAlert(err));
   }
 
-  refreshForumInfo(event) {
+  refreshForumInfo(event): void {
     axios.get(`${API_URL}/forum/getForumPostById/${this.post.key}`)
       .then(response => {
         this.post = response.data;
@@ -35,7 +35,7 @@ export class ViewForumPostPage {
       .catch(err => this.showAlert(err));
   }
 
-  showAlert(msg) {
+  showAlert(msg): void {
     this.alertCtrl.create({
       header: 'Message',
       message: msg,
@@ -101,7 +101,7 @@ export class ViewForumPostPage {
     }).then(alert => alert.present());
   }
 
-  editComment(comment) {
+  editComment(comment): void {
     this.alertCtrl.create({
       header: 'Edit',
       inputs: [
@@ -163,7 +163,7 @@ export class ViewForumPostPage {
     }).then(alert => alert.present());
   }
   
-  get user() {
+  get user(): User {
     return FolderPage.user;
   }
 }

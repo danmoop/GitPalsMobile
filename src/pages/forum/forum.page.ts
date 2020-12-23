@@ -19,7 +19,7 @@ export class ForumPage implements OnInit {
     private actionSheetCtrl: ActionSheetController,
     private router: Router) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     axios.get(`${API_URL}/forum/getAll`)
       .then(response => {
         this.posts = response.data;
@@ -27,7 +27,7 @@ export class ForumPage implements OnInit {
       .catch(err => this.showAlert(err));
   }
 
-  openActionSheet() {
+  openActionSheet(): void {
     this.actionSheetCtrl.create({
       header: 'Actions',
       buttons: [
@@ -41,7 +41,7 @@ export class ForumPage implements OnInit {
     }).then(alert => alert.present());
   }
 
-  showAlert(msg) {
+  showAlert(msg): void {
     this.alertCtrl.create({
       header: 'Message',
       message: msg,
@@ -49,7 +49,7 @@ export class ForumPage implements OnInit {
     }).then(alert => alert.present());
   }
 
-  openPost(key) {
+  openPost(key): void {
     this.router.navigateByUrl(`/view-forum-post/${key}`);
   }
 }

@@ -6,7 +6,6 @@ import { Project } from 'src/model/Project';
 import { Location } from '@angular/common'
 import axios from 'axios';
 
-
 @Component({
   selector: 'app-edit-project',
   templateUrl: './edit-project.page.html',

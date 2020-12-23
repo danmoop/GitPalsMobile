@@ -63,7 +63,7 @@ export class SearchPage {;
     }
   }
 
-  showAlert(msg) {
+  showAlert(msg): void {
     this.alertCtrl.create({
       header: 'Message',
       message: msg,

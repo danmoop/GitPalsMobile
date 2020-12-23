@@ -22,7 +22,7 @@ export class ViewUserPage {
       .catch(err => this.showAlert(err));
   }
 
-  showAlert(msg) {
+  showAlert(msg): void {
     this.alertCtrl.create({
       header: 'Message',
       message: msg,

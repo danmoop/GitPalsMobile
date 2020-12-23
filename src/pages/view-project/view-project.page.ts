@@ -221,7 +221,7 @@ export class ViewProjectPage {
     }).then(alert => alert.present());
   }
 
-  editComment(comment) {
+  editComment(comment): void {
     this.alertCtrl.create({
       header: 'Edit',
       inputs: [

@@ -33,7 +33,7 @@ export class ViewDialogPage {
       .catch(err => this.showAlert(err));
   }
 
-  ionViewWillLeave() {
+  ionViewWillLeave(): void {
     this.disconnect();
   }
 
@@ -73,7 +73,7 @@ export class ViewDialogPage {
     return FolderPage.user;
   }
 
-  showAlert(msg) {
+  showAlert(msg): void {
     this.alertCtrl.create({
       header: 'Message',
       message: msg,

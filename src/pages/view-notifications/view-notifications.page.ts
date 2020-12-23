@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FolderPage } from '../../app/folder/folder.page';
 import { API_URL } from 'src/variables/constants';
 import { AlertController } from '@ionic/angular';
+import { User } from 'src/model/User';
 import axios from 'axios';
 
 @Component({
@@ -43,8 +44,8 @@ export class ViewNotificationsPage implements OnInit {
     return res;
   }
 
-  get notificationsLength() {
-    return Object.keys(FolderPage.user.notifications.value);
+  get notificationsLength(): number {
+    return Object.keys(FolderPage.user.notifications.value).length;
   }
 
   deleteNotification(notification): void {
@@ -58,7 +59,7 @@ export class ViewNotificationsPage implements OnInit {
     delete FolderPage.user.notifications.value[notification.key];
   }
 
-  showAlert(msg) {
+  showAlert(msg): void {
     this.alertCtrl.create({
       header: 'Message',
       message: msg,
