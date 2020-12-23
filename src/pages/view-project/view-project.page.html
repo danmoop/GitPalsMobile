@@ -93,6 +93,8 @@
           </ion-item>
         </ion-card-header>
         <ion-card-content>
+          <ion-badge color="primary" *ngIf="comment.edited">Edited</ion-badge>
+          <br>
           <span>{{ comment.text }}</span>
         </ion-card-content>
       </ion-card>

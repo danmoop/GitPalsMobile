@@ -3,6 +3,7 @@ import { API_URL } from '../../variables/constants';
 import { ActionSheetController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import axios from 'axios';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forum',
@@ -13,7 +14,10 @@ export class ForumPage implements OnInit {
 
   posts: Array<object>;
 
-  constructor(private alertCtrl: AlertController, private actionSheetCtrl: ActionSheetController) {}
+  constructor(
+    private alertCtrl: AlertController, 
+    private actionSheetCtrl: ActionSheetController,
+    private router: Router) {}
 
   ngOnInit() {
     axios.get(`${API_URL}/forum/getAll`)
@@ -43,5 +47,9 @@ export class ForumPage implements OnInit {
       message: msg,
       buttons: ['OK']
     }).then(alert => alert.present());
+  }
+
+  openPost(key) {
+    this.router.navigateByUrl(`/view-forum-post/${key}`);
   }
 }

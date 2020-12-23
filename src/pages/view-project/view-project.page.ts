@@ -106,9 +106,7 @@ export class ViewProjectPage {
               
               axios.post(`${API_URL}/projects/sendComment`, comment)
                 .then(response => {
-                  if(response.data.status == 'OK') {
-                    this.project.comments.push(comment);
-                  }
+                  this.project.comments.push(response.data);
                 })
                 .catch(err => this.showAlert(err));
             } else {
@@ -179,6 +177,13 @@ export class ViewProjectPage {
       header: 'Actions',
       buttons: [
         {
+          text: 'Edit',
+          icon: 'create-outline',
+          handler: () => {
+            this.editComment(comment);
+          }
+        },
+        {
           text: 'Delete Comment',
           role: 'destructive',
           icon: 'trash',
@@ -206,11 +211,42 @@ export class ViewProjectPage {
                 this.router.navigateByUrl('/', { replaceUrl: true });
               }
             })
-	    .catch(err => this.showAlert(err));
+	          .catch(err => this.showAlert(err));
           }
         },
         {
           text: 'No'
+        }
+      ]
+    }).then(alert => alert.present());
+  }
+
+  editComment(comment) {
+    this.alertCtrl.create({
+      header: 'Edit',
+      inputs: [
+        {
+          name: 'text',
+          value: comment.text
+        }
+      ],
+      buttons: [
+        {
+          text: 'Save',
+          handler: (data) => {
+            axios.post(`${API_URL}/projects/editProjectComment`, {
+              jwt: localStorage.getItem('jwt'),
+              projectName: this.project.title,
+              text: data.text,
+              commentKey: comment.key
+            })
+            .then(response => {
+              if(response.data.status == 'OK') {
+                comment.text = data.text;
+                comment.edited = true;
+              }
+            })
+          }
         }
       ]
     }).then(alert => alert.present());

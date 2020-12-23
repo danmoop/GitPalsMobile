@@ -49,7 +49,12 @@ const routes: Routes = [
   {
     path: 'forum',
     loadChildren: () => import('../pages/forum/forum.module').then( m => m.ForumPageModule)
+  },
+  {
+    path: 'view-forum-post/:key',
+    loadChildren: () => import('../pages/view-forum-post/view-forum-post.module').then( m => m.ViewForumPostPageModule)
   }
+
 ];
 
 @NgModule({

@@ -1,9 +1,54 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>viewForumPost</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="post != undefined">{{ post.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-refresher slot="fixed" (ionRefresh)="refreshForumInfo($event);">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
+  <ion-card mode="ios" *ngIf="post != null">
+    <ion-card-header>
+      <ion-card-subtitle>by {{ post.author }}</ion-card-subtitle>
+      <ion-card-title>{{ post.title }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ post.content }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card mode="ios" *ngIf="post != null">
+    <ion-card-header>
+      <ion-card-subtitle>
+        Comments ({{ post.comments.length }})
+        <ion-button *ngIf="user != null" size="small" fill="outline" (click)="writeComment();">Add</ion-button>
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p *ngIf="post.comments.length == 0">No comments yet</p>
+      <ion-card *ngFor="let comment of post.comments" mode='ios'>
+        <ion-card-header>
+          <ion-item>
+            <ion-label>{{ comment.author }}</ion-label>
+            <ion-buttons slot="end" *ngIf="post != null && user != null && user.username == comment.author">
+              <ion-button (click)="openCommentActionSheet(comment);">
+                <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-badge color="primary" *ngIf="comment.edited">Edited</ion-badge>
+          <br>
+          <span>{{ comment.text }}</span>
+        </ion-card-content>
+      </ion-card>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

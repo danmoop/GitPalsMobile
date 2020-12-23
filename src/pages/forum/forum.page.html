@@ -26,6 +26,6 @@
       <br><br>
       <span>Comments: <ion-badge color="primary">{{ post.comments.length }}</ion-badge></span>
     </ion-card-content>
-    <ion-button fill="clear">Explore</ion-button>
+    <ion-button fill="clear" (click)="openPost(post.key);">Explore</ion-button>
   </ion-card>
 </ion-content>

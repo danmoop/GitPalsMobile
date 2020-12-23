@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { API_URL } from '../../variables/constants';
 import axios from 'axios';
 
@@ -17,7 +17,7 @@ export class SearchPage {;
   mods = [
     {
       text: 'Find users by username',
-      link: `${API_URL}/search/matchByUsername/`,
+      link: `${API_URL}/search/matchUsersByUsername/`,
       handler: () => {
         this.activeMode = this.mods[0];
         this.results = null;
@@ -25,7 +25,7 @@ export class SearchPage {;
     },
     {
       text: 'Find projects by project name',
-      link: `${API_URL}/search/matchByProjectName/`,
+      link: `${API_URL}/search/matchProjectsByProjectName/`,
       handler: () => {
         this.activeMode = this.mods[1];
         this.results = null;
@@ -34,7 +34,8 @@ export class SearchPage {;
   ];
 
   constructor(
-    private actionsCtrl: ActionSheetController
+    private actionsCtrl: ActionSheetController,
+    private alertCtrl: AlertController
   ) {}
 
   selectMode(): void {
@@ -52,13 +53,21 @@ export class SearchPage {;
       axios.get(this.activeMode.link + this.searchName)
       .then(response => {
         this.results = response.data;
+        console.log(this.results);
       })
       .catch(err => console.log(err));
 
       this.searchName = '';
     } else {
-      //TODO: replace alert with AlertController later
-      alert("Search parameters can't be empty!");
+      this.showAlert("Search parameters can't be empty!");
     }
+  }
+
+  showAlert(msg) {
+    this.alertCtrl.create({
+      header: 'Message',
+      message: msg,
+      buttons: ['OK']
+    }).then(alert => alert.present());
   }
 }
