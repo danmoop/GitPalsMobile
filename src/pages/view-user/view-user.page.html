@@ -22,6 +22,8 @@
 
     <ion-card-content>
       <strong *ngIf="user != null && user.bio != null">Info: {{ user.bio }}</strong>
+      <br>
+      <ion-button routerLink="/view-dialog/{{ user.username }}" fill="clear" *ngIf="user != null">Start a dialog with {{ user.username }}</ion-button>
     </ion-card-content>
   </ion-card>
 

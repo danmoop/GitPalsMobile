@@ -4,8 +4,10 @@ import { FolderPage } from './../../app/folder/folder.page';
 import { API_URL, WS_URL } from '../../variables/constants';
 import { User } from 'src/model/User';
 import { AlertController } from '@ionic/angular';
+
 import * as SockJS from '../../scripts/sockjs.min';
 import * as StompModule from '../../scripts/stomp.umd.min';
+
 import axios from 'axios';
 
 @Component({
@@ -28,7 +30,7 @@ export class ViewDialogPage {
     axios.get(`${API_URL}/users/getMessageKey/${localStorage.getItem('jwt')}`)
       .then(response => {
         this.messageKey = response.data.key;
-        this.initWS();
+	this.initWS();
       })
       .catch(err => this.showAlert(err));
   }
@@ -38,6 +40,15 @@ export class ViewDialogPage {
   }
 
   initWS(): void {
+    if(FolderPage.user.dialogs[this.name] == undefined) {
+      let pair = {
+	key: 0,
+	value: []
+      };
+
+      FolderPage.user.dialogs[this.name] = pair;
+    }
+
     if(FolderPage.user.dialogs[this.name].key != 0) {
       FolderPage.user.dialogs[this.name].key = 0;
       axios.post(`${API_URL}/users/markDialogAsSeen`, {
@@ -46,7 +57,7 @@ export class ViewDialogPage {
       })
       .catch(err => this.showAlert(err));
     }
-
+    
     this.ws = new SockJS(WS_URL);
     this.stompClient = StompModule.Stomp.over(this.ws);
 
@@ -54,7 +65,7 @@ export class ViewDialogPage {
       this.stompClient.subscribe(`/topic/messages/${this.messageKey}`, (message) => {
         if (message.body) {
           const msg = JSON.parse(message.body);
-          this.user.dialogs[this.name].value.push(msg);
+	  FolderPage.user.dialogs[this.name].value.push(msg);
         }
       });
     });

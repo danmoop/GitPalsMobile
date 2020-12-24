@@ -3,12 +3,12 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ name }}</ion-title>
+    <ion-title *ngIf="name != null">{{ name }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <ion-list *ngIf="user != null">
     <ion-item *ngFor="let message of user.dialogs[name].value">
       <ion-label>{{ message.author + ": " + message.content }}</ion-label>
     </ion-item>
