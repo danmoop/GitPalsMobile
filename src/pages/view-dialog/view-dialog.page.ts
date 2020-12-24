@@ -30,7 +30,7 @@ export class ViewDialogPage {
     axios.get(`${API_URL}/users/getMessageKey/${localStorage.getItem('jwt')}`)
       .then(response => {
         this.messageKey = response.data.key;
-	this.initWS();
+        this.initWS();
       })
       .catch(err => this.showAlert(err));
   }
@@ -42,8 +42,8 @@ export class ViewDialogPage {
   initWS(): void {
     if(FolderPage.user.dialogs[this.name] == undefined) {
       let pair = {
-	key: 0,
-	value: []
+        key: 0,
+        value: []
       };
 
       FolderPage.user.dialogs[this.name] = pair;
@@ -65,14 +65,18 @@ export class ViewDialogPage {
       this.stompClient.subscribe(`/topic/messages/${this.messageKey}`, (message) => {
         if (message.body) {
           const msg = JSON.parse(message.body);
-	  FolderPage.user.dialogs[this.name].value.push(msg);
+	        FolderPage.user.dialogs[this.name].value.push(msg);
         }
       });
     });
   }
   
   sendMessage(): void {
-    this.stompClient.send("/app/messageTransmit", {}, JSON.stringify({'author': this.user.username, 'content': this.message, 'recipient':this.name, 'type':'REGULAR_MESSAGE'}));
+    if(this.message.trim() == '') {
+      this.showAlert("Message can't be empty!");
+    } else {
+      this.stompClient.send("/app/messageTransmit", {}, JSON.stringify({'author': this.user.username, 'content': this.message, 'recipient':this.name, 'type':'REGULAR_MESSAGE'}));
+    }
     this.message = '';
   }
 
