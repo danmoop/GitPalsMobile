@@ -22,7 +22,7 @@
 
   <ion-card mode="ios" *ngIf="project != null">
     <ion-card-header>
-      <ion-card-subtitle>by {{ project.authorName }}</ion-card-subtitle>
+      <ion-card-subtitle>by <span style="color: #3880ff" routerLink="/view-user/{{ project.authorName }}">{{ project.authorName }}</span></ion-card-subtitle>
       <ion-card-title>{{ project.title }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
