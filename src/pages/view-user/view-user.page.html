@@ -1,9 +1,42 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>viewUser</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="user != null">{{ user.username }}'s profile</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="openActionSheet();">
+        <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-card mode="ios">
+    <ion-card-header>
+      <ion-card-subtitle *ngIf="user != null && user.country != null">Location: {{ user.country }}</ion-card-subtitle>
+      <ion-card-title *ngIf="user != null">{{ user.username }}</ion-card-title>
+    </ion-card-header>
 
+    <ion-card-content>
+      <strong *ngIf="user != null && user.bio != null">Info: {{ user.bio }}</strong>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card mode="ios">
+    <ion-card-header>
+      <ion-card-subtitle *ngIf="user != null">
+        {{ user.username }}'s skills ({{ user.skillList.length }})
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list *ngIf="user != null">
+        <ion-item *ngFor="let skill of user.skillList">
+          <ion-label>{{ skill }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

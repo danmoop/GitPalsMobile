@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../../model/User';
 import { API_URL } from '../../variables/constants';
-import { AlertController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import axios from 'axios';
 
 @Component({
@@ -14,7 +14,10 @@ export class ViewUserPage {
 
   user: User;
 
-  constructor(private alertCtrl: AlertController, private route: ActivatedRoute) {
+  constructor(
+    private alertCtrl: AlertController, 
+    private route: ActivatedRoute,
+    private actionSheetCtrl: ActionSheetController) {
     let username = route.snapshot.params.username;
 
     axios.get(`${API_URL}/users/get/${username}`)
@@ -27,6 +30,20 @@ export class ViewUserPage {
       header: 'Message',
       message: msg,
       buttons: ['OK']
+    }).then(alert => alert.present());
+  }
+
+  openActionSheet(): void {
+    this.actionSheetCtrl.create({
+      header: 'Actions',
+      buttons: [
+        {
+          text: 'Start a dialog',
+          icon: 'create-outline',
+          handler: () => {
+          }
+        }
+    ]
     }).then(alert => alert.present());
   }
 }

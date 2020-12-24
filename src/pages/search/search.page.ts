@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import { API_URL } from '../../variables/constants';
 import axios from 'axios';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -30,12 +31,21 @@ export class SearchPage {;
         this.activeMode = this.mods[1];
         this.results = null;
       }
+    },
+    {
+      text: 'Find forum posts by title',
+      link: `${API_URL}/search/matchForumPostsByTitle/`,
+      handler: () => {
+        this.activeMode = this.mods[2];
+        this.results = null;
+      }
     }
   ];
 
   constructor(
     private actionsCtrl: ActionSheetController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private router: Router
   ) {}
 
   selectMode(): void {
@@ -53,13 +63,27 @@ export class SearchPage {;
       axios.get(this.activeMode.link + this.searchName)
       .then(response => {
         this.results = response.data;
-        console.log(this.results);
+        console.log(response.data);
       })
       .catch(err => console.log(err));
 
       this.searchName = '';
     } else {
       this.showAlert("Search parameters can't be empty!");
+    }
+  }
+
+  openResult(result) {
+    console.log(result);
+
+    if(this.activeMode == this.mods[0]) {
+      this.router.navigateByUrl(`/view-user/${result.username}`);
+    }
+    else if(this.activeMode == this.mods[1]) {
+      this.router.navigateByUrl(`/view-project/${result.title}`);
+    }
+    else if(this.activeMode == this.mods[2]) {
+      this.router.navigateByUrl(`/view-forum-post/${result.key}`);
     }
   }
 

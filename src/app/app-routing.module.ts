@@ -27,7 +27,7 @@ const routes: Routes = [
     loadChildren: () => import('../pages/view-project/view-project.module').then( m => m.ViewProjectPageModule)
   },
   {
-    path: 'view-user',
+    path: 'view-user/:username',
     loadChildren: () => import('../pages/view-user/view-user.module').then( m => m.ViewUserPageModule)
   },
   {
