@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-list *ngIf="user != null">
+  <ion-list *ngIf="user != null && user.dialogs[name] != undefined">
     <ion-item *ngFor="let message of user.dialogs[name].value">
       <ion-label>{{ message.author + ": " + message.content }}</ion-label>
     </ion-item>
