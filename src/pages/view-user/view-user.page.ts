@@ -32,18 +32,4 @@ export class ViewUserPage {
       buttons: ['OK']
     }).then(alert => alert.present());
   }
-
-  openActionSheet(): void {
-    this.actionSheetCtrl.create({
-      header: 'Actions',
-      buttons: [
-        {
-          text: 'Start a dialog',
-          icon: 'create-outline',
-          handler: () => {
-          }
-        }
-    ]
-    }).then(alert => alert.present());
-  }
 }

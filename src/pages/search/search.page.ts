@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { ActionSheetController, AlertController } from '@ionic/angular';
+import { ActionSheetController, AlertController, LoadingController } from '@ionic/angular';
 import { API_URL } from '../../variables/constants';
-import axios from 'axios';
 import { Router } from '@angular/router';
+import axios from 'axios';
 
 @Component({
   selector: 'app-search',
@@ -45,6 +45,7 @@ export class SearchPage {;
   constructor(
     private actionsCtrl: ActionSheetController,
     private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController,
     private router: Router
   ) {}
 
@@ -58,24 +59,25 @@ export class SearchPage {;
   }
 
   find(): void {
+    this.loadingCtrl.create({
+      message: 'Please Wait'
+    }).then(alert => alert.present());
+
     this.results = null;
     if(this.searchName.trim() != '') {
       axios.get(this.activeMode.link + this.searchName)
       .then(response => {
         this.results = response.data;
-        console.log(response.data);
+        this.loadingCtrl.dismiss();
+        this.searchName = '';
       })
-      .catch(err => console.log(err));
-
-      this.searchName = '';
+      .catch(err => this.showAlert(err));
     } else {
       this.showAlert("Search parameters can't be empty!");
     }
   }
 
   openResult(result) {
-    console.log(result);
-
     if(this.activeMode == this.mods[0]) {
       this.router.navigateByUrl(`/view-user/${result.username}`);
     }
