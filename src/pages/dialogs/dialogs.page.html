@@ -15,7 +15,7 @@
   <strong>You have ({{ dialogs.length }}) dialogs</strong>
   <ion-list *ngIf="dialogs.length != 0">
     <ion-item *ngFor="let name of dialogs">
-      <ion-label>
+      <ion-label style="color: #388fff" routerLink="/view-user/{{ name }}">
         {{ name }}
         <ion-badge *ngIf="isNew(name)" color="primary">New Message</ion-badge>
       </ion-label>

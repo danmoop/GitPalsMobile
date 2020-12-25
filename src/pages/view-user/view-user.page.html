@@ -21,6 +21,22 @@
     <ion-button routerLink="/view-dialog/{{ user.username }}" fill="clear" *ngIf="user != null">Start a dialog with {{ user.username }}</ion-button>
   </ion-card>
 
+  <ion-card *ngIf="user != null" mode="ios">
+    <ion-card-header>
+      <ion-card-subtitle>
+          Project submitted by {{ user.username }} ({{ user.submittedProjects.length }})
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+        <ion-list>
+            <ion-item style="color: #388fff;" *ngFor="let project of user.submittedProjects" routerLink="/view-project/{{ project }}">
+                {{ project }}
+            </ion-item>
+        </ion-list>
+    </ion-card-content>
+  </ion-card>
+
   <ion-card mode="ios">
     <ion-card-header>
       <ion-card-subtitle *ngIf="user != null">
