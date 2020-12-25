@@ -24,16 +24,16 @@
   <ion-card *ngIf="user != null" mode="ios">
     <ion-card-header>
       <ion-card-subtitle>
-          Project submitted by {{ user.username }} ({{ user.submittedProjects.length }})
+        Project submitted by {{ user.username }} ({{ user.submittedProjects.length }})
       </ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
-        <ion-list>
-            <ion-item style="color: #388fff;" *ngFor="let project of user.submittedProjects" routerLink="/view-project/{{ project }}">
-                {{ project }}
-            </ion-item>
-        </ion-list>
+      <ion-list>
+        <ion-item style="color: #388fff;" *ngFor="let project of user.submittedProjects" routerLink="/view-project/{{ project }}">
+          {{ project }}
+        </ion-item>
+      </ion-list>
     </ion-card-content>
   </ion-card>
 
