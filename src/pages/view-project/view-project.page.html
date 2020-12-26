@@ -76,7 +76,7 @@
     <ion-card-header>
       <ion-card-subtitle>
         Comments ({{ project.comments.length }})
-        <ion-button *ngIf="user != null" size="small" fill="outline" (click)="writeComment()">Add</ion-button>
+        <ion-button *ngIf="user != null" size="small" (click)="writeComment()">Add</ion-button>
       </ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>

@@ -15,11 +15,10 @@ export class FolderPage {
   projects: Array<Project> = [];
   static user: User;
 
-  constructor(private alertCtrl: AlertController, private loadingCtrl: LoadingController,) {}
+  constructor(private alertCtrl: AlertController, private loadingCtrl: LoadingController) {}
 
   ionViewDidEnter(): void {
-    this.getProjects();
-    this.getUser();
+    this.refreshData(null);
   }
 
   get user(): User {

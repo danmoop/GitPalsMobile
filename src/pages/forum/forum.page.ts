@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './forum.page.html',
   styleUrls: ['./forum.page.scss'],
 })
-export class ForumPage implements OnInit {
+export class ForumPage {
 
   posts: Array<object>;
 
@@ -19,7 +19,7 @@ export class ForumPage implements OnInit {
     private actionSheetCtrl: ActionSheetController,
     private router: Router) {}
 
-  ngOnInit(): void {
+  ionViewDidEnter(): void {
     axios.get(`${API_URL}/forum/getAll`)
       .then(response => {
         this.posts = response.data.reverse();

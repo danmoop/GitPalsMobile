@@ -3,7 +3,17 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="post != undefined">{{ post.title }}</ion-title>
+    <ion-title *ngIf="post != undefined">
+      <ion-icon name="document-text-outline"></ion-icon>
+      {{ post.title }}
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="openPostActionSheet();">
+        <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
@@ -19,7 +29,8 @@
       <ion-card-title>{{ post.title }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>{{ post.content }}</p>
+      <p>Published on {{ post.timeStamp }}</p>
+      <span>{{ post.content }}</span>
     </ion-card-content>
   </ion-card>
 

@@ -12,7 +12,7 @@
 
 <ion-content class="ion-text-center">
 
-  <p *ngIf="notificationsLength == 0">No notifications yet</p>
+  <p *ngIf="notificationsLength == 0" style="margin-top: 20px;">No notifications yet</p>
 
   <ion-card mode="ios" *ngFor="let notification of notifications">
     <ion-card-header>

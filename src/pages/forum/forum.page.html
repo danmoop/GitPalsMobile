@@ -3,7 +3,10 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>Forum</ion-title>
+    <ion-title>
+      <ion-icon name="document-text-outline"></ion-icon>
+      Forum
+    </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openActionSheet();">
         <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
@@ -13,6 +16,9 @@
 </ion-header>
 
 <ion-content>
+
+  <p class="ion-text-center" *ngIf="posts != null && posts.length == 0" style="margin-top: 20px;">No posts added yet</p>
+
   <ion-card *ngFor="let post of posts" mode='ios'>
     <ion-card-header>
         <ion-card-subtitle>By 

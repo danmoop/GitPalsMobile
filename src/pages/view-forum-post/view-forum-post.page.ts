@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { API_URL } from 'src/variables/constants';
 import { User } from 'src/model/User';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import { FolderPage } from 'src/app/folder/folder.page';
-
 import axios from 'axios';
 
 @Component({
@@ -16,12 +15,23 @@ export class ViewForumPostPage {
 
   post: any;
 
-  constructor(private actionCtrl: ActionSheetController, private alertCtrl: AlertController, private route: ActivatedRoute) {
+  constructor(
+    private actionCtrl: ActionSheetController, 
+    private alertCtrl: AlertController, 
+    private route: ActivatedRoute,
+    private router: Router) {
     var key = route.snapshot.params.key;
 
     axios.get(`${API_URL}/forum/getForumPostById/${key}`)
       .then(response => {
         this.post = response.data;
+
+        if(this.user != null && this.post.viewSet.indexOf(this.user.username) == -1) {
+          axios.post(`${API_URL}/forum/addUserToViewSet`, {
+            jwt: localStorage.getItem('jwt'),
+            postKey: key
+          });
+        }
       })
       .catch(err => this.showAlert(err));
   }
@@ -96,6 +106,47 @@ export class ViewForumPostPage {
           handler: () => {
             this.removeComment(comment);
           }
+        }
+      ]
+    }).then(alert => alert.present());
+  }
+
+  openPostActionSheet(): void {
+    this.actionCtrl.create({
+      header: 'Actions',
+      buttons: [
+        {
+          text: 'Delete Post',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.removePost();
+          }
+        }
+    ]
+    }).then(alert => alert.present());
+  }
+
+  removePost(): void {
+    this.alertCtrl.create({
+      header: 'Delete',
+      message: 'Are you sure?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            axios.post(`${API_URL}/forum/deleteForumPost`, {
+              jwt: localStorage.getItem('jwt'),
+              postKey: this.post.key
+            }).then(response => {
+              if(response.data.status == 'OK') {
+                this.router.navigateByUrl('/forum', {replaceUrl: true});
+              }
+            }).catch(err => this.showAlert(err));
+          }
+        },
+        {
+          text: 'No'
         }
       ]
     }).then(alert => alert.present());
