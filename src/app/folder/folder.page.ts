@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { API_URL } from './../../variables/constants';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { Project } from 'src/model/Project';
 import { User } from 'src/model/User';
 import axios from 'axios';
@@ -15,7 +15,7 @@ export class FolderPage {
   projects: Array<Project> = [];
   static user: User;
 
-  constructor(private alertCtrl: AlertController) {}
+  constructor(private alertCtrl: AlertController, private loadingCtrl: LoadingController,) {}
 
   ionViewDidEnter(): void {
     this.getProjects();

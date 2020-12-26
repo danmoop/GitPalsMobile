@@ -22,7 +22,7 @@ export class ForumPage implements OnInit {
   ngOnInit(): void {
     axios.get(`${API_URL}/forum/getAll`)
       .then(response => {
-        this.posts = response.data;
+        this.posts = response.data.reverse();
       })
       .catch(err => this.showAlert(err));
   }
@@ -35,6 +35,7 @@ export class ForumPage implements OnInit {
           text: 'Publish Post',
           icon: 'create-outline',
           handler: () => {
+            this.router.navigateByUrl('/publish-forum-post');
           }
         }
     ]

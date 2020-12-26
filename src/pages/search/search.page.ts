@@ -68,8 +68,8 @@ export class SearchPage {;
       axios.get(this.activeMode.link + this.searchName)
       .then(response => {
         this.results = response.data;
-        this.loadingCtrl.dismiss();
         this.searchName = '';
+        this.loadingCtrl.dismiss();
       })
       .catch(err => this.showAlert(err));
     } else {
@@ -77,7 +77,7 @@ export class SearchPage {;
     }
   }
 
-  openResult(result) {
+  openResult(result): void {
     if(this.activeMode == this.mods[0]) {
       this.router.navigateByUrl(`/view-user/${result.username}`);
     }

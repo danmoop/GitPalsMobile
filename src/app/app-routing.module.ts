@@ -53,8 +53,11 @@ const routes: Routes = [
   {
     path: 'view-forum-post/:key',
     loadChildren: () => import('../pages/view-forum-post/view-forum-post.module').then( m => m.ViewForumPostPageModule)
+  },
+  {
+    path: 'publish-forum-post',
+    loadChildren: () => import('../pages/publish-forum-post/publish-forum-post.module').then( m => m.PublishForumPostPageModule)
   }
-
 ];
 
 @NgModule({

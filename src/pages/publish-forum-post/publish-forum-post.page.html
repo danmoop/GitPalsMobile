@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Publish Forum Post</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-text-center">
+
+  <ion-item>
+    <ion-label position="floating">Post Title</ion-label>
+    <ion-input [(ngModel)]="title"></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="floating">Post Description</ion-label>
+    <ion-textarea [(ngModel)]="description" rows="14"></ion-textarea>
+  </ion-item>
+
+  <ion-button style="margin-top: 25px;" (click)="publish();">Publish</ion-button>
+</ion-content>
