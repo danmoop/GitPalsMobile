@@ -30,7 +30,12 @@ export class ViewDialogPage {
     axios.get(`${API_URL}/users/getMessageKey/${localStorage.getItem('jwt')}`)
       .then(response => {
         this.messageKey = response.data.key;
-        this.initWS();
+
+        if(this.messageKey == undefined) {
+          this.showAlert('Failed to initialize a connection');
+        } else {
+          this.initWS();
+        }
       })
       .catch(err => this.showAlert(err));
   }
@@ -54,6 +59,10 @@ export class ViewDialogPage {
       axios.post(`${API_URL}/users/markDialogAsSeen`, {
         jwt: localStorage.getItem('jwt'),
         dialogName: this.name
+      }).then(response => {
+        if(response.data.status != 'OK') {
+          this.showAlert(response.data.status);
+        }
       })
       .catch(err => this.showAlert(err));
     }
@@ -65,7 +74,7 @@ export class ViewDialogPage {
       this.stompClient.subscribe(`/topic/messages/${this.messageKey}`, (message) => {
         if (message.body) {
           const msg = JSON.parse(message.body);
-	        FolderPage.user.dialogs[this.name].value.push(msg);
+	  FolderPage.user.dialogs[this.name].value.push(msg);
         }
       });
     });

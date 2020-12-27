@@ -31,7 +31,11 @@ export class PublishForumPostPage {
         title: this.title,
         description: this.description
       }).then(response => {
-        this.router.navigateByUrl(`/view-forum-post/${response.data.key}`, {replaceUrl: true});
+        if(response.data.key == null) {
+          this.showAlert('Failed to add a post');
+        } else {
+          this.router.navigateByUrl(`/view-forum-post/${response.data.key}`, {replaceUrl: true});
+        }
       }).catch(err => this.showAlert(err));
     }
   }

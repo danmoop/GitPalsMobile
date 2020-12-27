@@ -64,16 +64,20 @@ export class ViewProjectPage {
       jwt: localStorage.getItem('jwt'),
       projectName: this.project.title
     }).then(response => {
-      var userIndex = this.project.appliedUsers.indexOf(this.user.username);
-      if(userIndex == -1) {
-        this.project.appliedUsers.push(this.user.username);
+      if(response.data.status == 'OK') {
+        var userIndex = this.project.appliedUsers.indexOf(this.user.username);
+        if(userIndex == -1) {
+          this.project.appliedUsers.push(this.user.username);
         
-        FolderPage.user.projectsAppliedTo.push(this.project.title);
-      } else {
-        this.project.appliedUsers.splice(userIndex, 1);
+         FolderPage.user.projectsAppliedTo.push(this.project.title);
+        } else {
+          this.project.appliedUsers.splice(userIndex, 1);
 
-        var projectIndex = FolderPage.user.projectsAppliedTo.indexOf(this.project.title);
-        FolderPage.user.projectsAppliedTo.splice(projectIndex, 1);
+          var projectIndex = FolderPage.user.projectsAppliedTo.indexOf(this.project.title);
+          FolderPage.user.projectsAppliedTo.splice(projectIndex, 1);
+        }
+      } else {
+        this.showAlert(response.data.status);
       }
     })
     .catch(err => this.showAlert(err));
@@ -102,7 +106,12 @@ export class ViewProjectPage {
               
               axios.post(`${API_URL}/projects/sendComment`, comment)
                 .then(response => {
-                  this.project.comments.push(response.data);
+                  let comment = response.data;
+                  if(comment.key != undefined) {
+                    this.project.comments.push(comment);
+                  } else {
+                    this.showAlert('Unable to send a comment');
+                  }
                 })
                 .catch(err => this.showAlert(err));
             } else {
@@ -211,7 +220,7 @@ export class ViewProjectPage {
                 this.showAlert(response.data.status);
               }
             })
-	     .catch(err => this.showAlert(err));
+	    .catch(err => this.showAlert(err));
           }
         },
         {
@@ -248,6 +257,7 @@ export class ViewProjectPage {
                 this.showAlert(response.data.status);
               }
             })
+            .catch(err => this.showAlert(err));
           }
         }
       ]

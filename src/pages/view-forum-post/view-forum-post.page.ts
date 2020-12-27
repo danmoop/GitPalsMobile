@@ -30,7 +30,9 @@ export class ViewForumPostPage {
           axios.post(`${API_URL}/forum/addUserToViewSet`, {
             jwt: localStorage.getItem('jwt'),
             postKey: key
-          });
+          }).then(response => {
+            if(response.data.status != 'OK') this.showAlert(response.data.status);
+          }).catch(err => this.showAlert(err));
         }
       })
       .catch(err => this.showAlert(err));
@@ -76,7 +78,12 @@ export class ViewForumPostPage {
               
               axios.post(`${API_URL}/forum/addComment`, comment)
                 .then(response => {
-                  this.post.comments.push(response.data);
+                  let comment = response.data;
+                  if(comment.key == undefined) {
+                    this.showAlert('Unable to send a comment');
+                  } else {
+                    this.post.comments.push(comment);
+                  }
                 })
                 .catch(err => this.showAlert(err));
             } else {
@@ -181,6 +188,7 @@ export class ViewForumPostPage {
                 this.showAlert(response.data.status);
               }
             })
+            .catch(err => this.showAlert(err));
           }
         }
       ]

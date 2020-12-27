@@ -41,7 +41,11 @@ export class DashboardPage {
   
               axios.post(`${API_URL}/users/addNewSkill`, obj) 
                 .then(response => {
-                  FolderPage.user.skillList.push(data.skill);
+                  if(response.data.status == 'OK') {
+                    FolderPage.user.skillList.push(data.skill);
+                  } else {
+                    this.showAlert(response.data.status);
+                  }
                 })
                 .catch(err => this.showAlert(err));
             }

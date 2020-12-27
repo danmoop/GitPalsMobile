@@ -54,6 +54,11 @@ export class ViewNotificationsPage implements OnInit {
       jwt: localStorage.getItem('jwt'),
       notificationKey: notification.key
     })
+    .then(response => {
+      if(response.data.status != 'OK') {
+        this.showAlert(response.data.status);
+      }
+    })
     .catch(err => this.showAlert(err));
 
     delete FolderPage.user.notifications.value[notification.key];
