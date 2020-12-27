@@ -4,6 +4,12 @@
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="user != null">{{ user.username }}'s profile</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="openActionSheet();">
+        <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -11,14 +17,15 @@
   <ion-card mode="ios">
     <ion-card-header>
       <ion-card-subtitle *ngIf="user != null && user.country != null">Location: {{ user.country }}</ion-card-subtitle>
+      <span *ngIf="user != null && user.country == null">No location provided</span>
       <ion-card-title *ngIf="user != null">{{ user.username }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
       <strong *ngIf="user != null && user.bio != null">Info: {{ user.bio }}</strong>
+      <span *ngIf="user != null && user.bio == null">No information given</span>
       <br>
     </ion-card-content>
-    <ion-button routerLink="/view-dialog/{{ user.username }}" fill="clear" *ngIf="user != null">Start a dialog with {{ user.username }}</ion-button>
   </ion-card>
 
   <ion-card *ngIf="user != null" mode="ios">
@@ -29,6 +36,7 @@
     </ion-card-header>
 
     <ion-card-content>
+      <span *ngIf="user != null && user.submittedProjects.length == 0">No projects submitted yet</span>
       <ion-list>
         <ion-item style="color: #388fff;" *ngFor="let project of user.submittedProjects" routerLink="/view-project/{{ project }}">
           {{ project }}

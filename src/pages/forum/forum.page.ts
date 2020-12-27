@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { API_URL } from '../../variables/constants';
 import { ActionSheetController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
-import axios from 'axios';
 import { Router } from '@angular/router';
+import axios from 'axios';
+import { User } from 'src/model/User';
+import { FolderPage } from 'src/app/folder/folder.page';
 
 @Component({
   selector: 'app-forum',
@@ -52,5 +54,9 @@ export class ForumPage {
 
   openPost(key): void {
     this.router.navigateByUrl(`/view-forum-post/${key}`);
+  }
+
+  get user(): User {
+    return FolderPage.user;
   }
 }

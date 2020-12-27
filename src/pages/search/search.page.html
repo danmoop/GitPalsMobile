@@ -21,22 +21,37 @@
   <div *ngIf="activeMode != null">
     <br>
 
-    <strong>{{ activeMode.text }}</strong>
+    <span>{{ activeMode.text }}</span>
 
-    <div>
+    <div *ngIf="activeMode != mods[2]">
       <ion-buttons slot="end">
       <ion-searchbar [(ngModel)]="searchName"></ion-searchbar>
         <ion-button color="primary" (click)="find();">Find</ion-button>
       </ion-buttons>
     </div>
 
+    <div *ngIf="activeMode == mods[2]" style="margin-top: 20px;" class="ion-text-center">
+      <span *ngIf="items.length == 0">No items added yet</span>
+      <ion-list>
+        <ion-item *ngFor="let item of items">
+          <ion-label>{{ item }}</ion-label>
+          <ion-button fill="clear" color="danger" (click)="removeItem(item);">
+            <ion-icon name="close-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+      <ion-buttons>
+        <ion-button (click)="addItem();">Add Item</ion-button>  
+        <ion-button color="primary" (click)="find();">Find</ion-button>
+      </ion-buttons>
+    </div>
   </div>
-
+  
   <ion-list *ngIf="results != null">
     <p>{{ results.length }} results</p>
     <ion-item *ngFor="let result of results">
       <ion-label *ngIf="activeMode == mods[0]">{{ result.username }}</ion-label>
-      <ion-label *ngIf="activeMode == mods[1] || activeMode == mods[2]">{{ result.title }}</ion-label>
+      <ion-label *ngIf="activeMode != mods[0]">{{ result.title }}</ion-label>
 
       <ion-button (click)="openResult(result);">Open</ion-button>
     </ion-item>

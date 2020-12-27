@@ -50,10 +50,6 @@ export class ViewProjectPage {
     }).then(alert => alert.present());
   }
 
-  get user(): User {
-    return FolderPage.user;
-  }
-
   refreshProjectInfo(event): void {
     axios.get(`${API_URL}/projects/getById/${this.project.id}`)
       .then(response => {
@@ -137,6 +133,8 @@ export class ViewProjectPage {
                 if(commentIndex != -1) {
                   this.project.comments.splice(commentIndex, 1);
                 }
+              } else {
+                this.showAlert(response.data.status);
               }
             })
             .catch(err => this.showAlert(err));
@@ -209,9 +207,11 @@ export class ViewProjectPage {
             }).then(response => {
               if(response.data.status == 'OK') {
                 this.router.navigateByUrl('/', { replaceUrl: true });
+              } else {
+                this.showAlert(response.data.status);
               }
             })
-	          .catch(err => this.showAlert(err));
+	     .catch(err => this.showAlert(err));
           }
         },
         {
@@ -244,6 +244,8 @@ export class ViewProjectPage {
               if(response.data.status == 'OK') {
                 comment.text = data.text;
                 comment.edited = true;
+              } else {
+                this.showAlert(response.data.status);
               }
             })
           }
@@ -254,5 +256,9 @@ export class ViewProjectPage {
 
   editProject(): void {
     this.router.navigateByUrl(`/edit-project/${this.project.id}`);
+  }
+
+  get user(): User {
+    return FolderPage.user;
   }
 }

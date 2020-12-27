@@ -1,14 +1,14 @@
-<ion-header>
+<ion-header *ngIf="post != undefined">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="post != undefined">
+    <ion-title>
       <ion-icon name="document-text-outline"></ion-icon>
       {{ post.title }}
     </ion-title>
 
-    <ion-buttons slot="end">
+    <ion-buttons slot="end" *ngIf="user != null && user.username == post.author">
       <ion-button (click)="openPostActionSheet();">
         <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
       </ion-button>
@@ -38,7 +38,7 @@
     <ion-card-header>
       <ion-card-subtitle>
         Comments ({{ post.comments.length }})
-        <ion-button *ngIf="user != null" size="small" fill="outline" (click)="writeComment();">Add</ion-button>
+        <ion-button *ngIf="user != null" size="small" (click)="writeComment();">Add</ion-button>
       </ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>

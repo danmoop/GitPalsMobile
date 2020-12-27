@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { FolderPage } from './folder/folder.page';
 import { FormsModule } from '@angular/forms';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { FormsModule } from '@angular/forms';
     StatusBar,
     SplashScreen,
     FolderPage,
+    InAppBrowser,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

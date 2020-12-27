@@ -14,14 +14,16 @@ export class SearchPage {;
   activeMode: any = null;
   results: any = null;
   searchName: string = '';
+  items: string[] = [];
 
-  mods = [
+  mods: object[] = [
     {
       text: 'Find users by username',
       link: `${API_URL}/search/matchUsersByUsername/`,
       handler: () => {
         this.activeMode = this.mods[0];
         this.results = null;
+        this.items = [];
       }
     },
     {
@@ -30,14 +32,24 @@ export class SearchPage {;
       handler: () => {
         this.activeMode = this.mods[1];
         this.results = null;
+        this.items = [];
+      }
+    },
+    {
+      text: 'Find projects by technologies used in them',
+      link: `${API_URL}/search/matchProjectsByTechnologies/`,
+      handler: () => {
+        this.activeMode = this.mods[2];
+        this.results = null;
       }
     },
     {
       text: 'Find forum posts by title',
       link: `${API_URL}/search/matchForumPostsByTitle/`,
       handler: () => {
-        this.activeMode = this.mods[2];
+        this.activeMode = this.mods[3];
         this.results = null;
+        this.items = [];
       }
     }
   ];
@@ -45,8 +57,8 @@ export class SearchPage {;
   constructor(
     private actionsCtrl: ActionSheetController,
     private alertCtrl: AlertController,
-    private loadingCtrl: LoadingController,
-    private router: Router
+    private router: Router,
+    private loadingCtrl: LoadingController
   ) {}
 
   selectMode(): void {
@@ -59,22 +71,26 @@ export class SearchPage {;
   }
 
   find(): void {
+    this.results = null;
+
     this.loadingCtrl.create({
       message: 'Please Wait'
     }).then(alert => alert.present());
 
-    this.results = null;
-    if(this.searchName.trim() != '') {
-      axios.get(this.activeMode.link + this.searchName)
-      .then(response => {
-        this.results = response.data;
-        this.searchName = '';
-        this.loadingCtrl.dismiss();
-      })
-      .catch(err => this.showAlert(err));
+    if(this.activeMode != this.mods[2]) {
+      axios.get(`${this.activeMode.link}${this.searchName}`)
+        .then(response => {
+          this.results = response.data;
+          this.searchName = '';
+          this.loadingCtrl.dismiss();
+        })
     } else {
-      this.showAlert("Search parameters can't be empty!");
-    }
+      axios.post(`${this.activeMode.link}`, this.items)
+        .then(response => {
+          this.results = response.data;
+          this.loadingCtrl.dismiss();
+        }).catch(err => this.showAlert(err));
+    } 
   }
 
   openResult(result): void {
@@ -84,7 +100,7 @@ export class SearchPage {;
     else if(this.activeMode == this.mods[1]) {
       this.router.navigateByUrl(`/view-project/${result.title}`);
     }
-    else if(this.activeMode == this.mods[2]) {
+    else if(this.activeMode == this.mods[3]) {
       this.router.navigateByUrl(`/view-forum-post/${result.key}`);
     }
   }
@@ -95,5 +111,33 @@ export class SearchPage {;
       message: msg,
       buttons: ['OK']
     }).then(alert => alert.present());
+  }
+
+  addItem(): void {
+    this.alertCtrl.create({
+      header: 'Add item',
+      inputs: [
+        {
+          name: 'item',
+          placeholder: 'Item'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Add',
+          handler: (data) => {
+            this.items.push(data.item);
+          }
+        }
+      ]
+    }).then(alert => alert.present());
+  }
+
+  removeItem(item): void {
+    let index = this.items.indexOf(item);
+
+    if(index != -1) {
+      this.items.splice(index, 1);
+    }
   }
 }

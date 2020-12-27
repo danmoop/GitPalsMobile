@@ -89,6 +89,8 @@ export class EditProjectPage {
       if(response.data.status == 'OK') {
         this.showAlert('Success!');
         this.location.back();
+      } else {
+        this.showAlert(response.data.status);
       }
     })
     .catch(err => this.showAlert(err));

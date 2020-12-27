@@ -7,7 +7,7 @@
       <ion-icon name="document-text-outline"></ion-icon>
       Forum
     </ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons slot="end" *ngIf="user != null">
       <ion-button (click)="openActionSheet();">
         <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
       </ion-button>

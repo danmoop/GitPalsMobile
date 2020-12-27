@@ -59,12 +59,16 @@ export class DashboardPage {
         {
           text: 'Yes',
           handler: () => {
-            FolderPage.user.skillList.splice(FolderPage.user.skillList.indexOf(_skill), 1);
-
             axios.post(`${API_URL}/users/removeSkill`, {
               skill: _skill,
               jwt: localStorage.getItem('jwt')
-            }).then(response => {})
+            }).then(response => {
+              if(response.data.status == 'OK') {
+                FolderPage.user.skillList.splice(FolderPage.user.skillList.indexOf(_skill), 1);
+              } else {
+                this.showAlert(response.data.status);
+              }
+            })
             .catch(err => this.showAlert(err));
           }
         },

@@ -141,6 +141,8 @@ export class ViewForumPostPage {
             }).then(response => {
               if(response.data.status == 'OK') {
                 this.router.navigateByUrl('/forum', {replaceUrl: true});
+              } else {
+                this.showAlert(response.data.status);
               }
             }).catch(err => this.showAlert(err));
           }
@@ -175,6 +177,8 @@ export class ViewForumPostPage {
               if(response.data.status == 'OK') {
                 comment.text = data.text;
                 comment.edited = true;
+              } else {
+                this.showAlert(response.data.status);
               }
             })
           }
@@ -202,6 +206,8 @@ export class ViewForumPostPage {
                 if(commentIndex != -1) {
                   this.post.comments.splice(commentIndex, 1);
                 }
+              } else {
+                this.showAlert(response.data.status);
               }
             })
             .catch(err => this.showAlert(err));

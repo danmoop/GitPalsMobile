@@ -31,6 +31,8 @@ export class SubmitProjectPage {
       .then(response => {
         if(response.data.status == 'OK') {
           this.router.navigateByUrl(`/view-project/${this.project.title}`, { replaceUrl: true });
+        } else {
+          this.showAlert(response.data.status);
         }
       })
       .catch(err => this.showAlert(err));
