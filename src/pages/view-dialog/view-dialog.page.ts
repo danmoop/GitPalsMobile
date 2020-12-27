@@ -88,7 +88,7 @@ export class ViewDialogPage {
     return FolderPage.user;
   }
 
-  showAlert(msg): void {
+  showAlert(msg: string): void {
     this.alertCtrl.create({
       header: 'Message',
       message: msg,

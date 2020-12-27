@@ -19,7 +19,7 @@ export class DialogsPage {
     return Object.keys(this.user.dialogs);
   }
 
-  isNew(name): boolean {
+  isNew(name: string): boolean {
     return FolderPage.user.dialogs[name].key != 0;
   }
 }

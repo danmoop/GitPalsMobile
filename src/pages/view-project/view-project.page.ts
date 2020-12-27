@@ -42,7 +42,7 @@ export class ViewProjectPage {
     }
   }
 
-  showAlert(msg): void {
+  showAlert(msg: string): void {
     this.alertCtrl.create({
       header: 'Message',
       message: msg,

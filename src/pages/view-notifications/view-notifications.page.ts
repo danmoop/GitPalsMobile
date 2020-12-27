@@ -59,7 +59,7 @@ export class ViewNotificationsPage implements OnInit {
     delete FolderPage.user.notifications.value[notification.key];
   }
 
-  showAlert(msg): void {
+  showAlert(msg: string): void {
     this.alertCtrl.create({
       header: 'Message',
       message: msg,

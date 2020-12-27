@@ -36,7 +36,7 @@ export class PublishForumPostPage {
     }
   }
 
-  showAlert(msg): void {
+  showAlert(msg: string): void {
     this.alertCtrl.create({
       header: 'Message',
       message: msg,

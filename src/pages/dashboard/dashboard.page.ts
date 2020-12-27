@@ -52,7 +52,7 @@ export class DashboardPage {
     }).then(alert => alert.present());
   }
 
-  removeSkill(_skill): void {
+  removeSkill(_skill: string): void {
     this.alertCtrl.create({
       message: `Are you sure you want to remove ${_skill}?`,
       buttons: [
@@ -79,7 +79,7 @@ export class DashboardPage {
     }).then(alert => alert.present());
   }
 
-  showAlert(msg): void {
+  showAlert(msg: string): void {
     this.alertCtrl.create({
       header: 'Message',
       message: msg,

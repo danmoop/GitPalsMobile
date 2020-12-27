@@ -30,12 +30,12 @@ export class EditProjectPage {
       .catch(err => this.showAlert(err));
   }
 
-  removeTech(tech): void {
+  removeTech(tech: string): void {
     var techIndex = this.project.technologies.indexOf(tech);
     this.project.technologies.splice(techIndex, 1);
   }
 
-  removeRole(role): void {
+  removeRole(role: string): void {
     var roleIndex = this.project.requiredRoles.indexOf(role);
     this.project.requiredRoles.splice(roleIndex, 1);
   }
@@ -96,7 +96,7 @@ export class EditProjectPage {
     .catch(err => this.showAlert(err));
   }
 
-  showAlert(msg): void {
+  showAlert(msg: string): void {
     this.alertCtrl.create({
       header: msg,
       buttons: ['OK']

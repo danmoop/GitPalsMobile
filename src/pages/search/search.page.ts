@@ -41,13 +41,23 @@ export class SearchPage {;
       handler: () => {
         this.activeMode = this.mods[2];
         this.results = null;
+        this.items = [];
+      }
+    },
+    {
+      text: 'Find users by their skills',
+      link: `${API_URL}/search/matchUsersBySkills/`,
+      handler: () => {
+        this.activeMode = this.mods[3];
+        this.results = null;
+        this.items = [];
       }
     },
     {
       text: 'Find forum posts by title',
       link: `${API_URL}/search/matchForumPostsByTitle/`,
       handler: () => {
-        this.activeMode = this.mods[3];
+        this.activeMode = this.mods[4];
         this.results = null;
         this.items = [];
       }
@@ -77,7 +87,7 @@ export class SearchPage {;
       message: 'Please Wait'
     }).then(alert => alert.present());
 
-    if(this.activeMode != this.mods[2]) {
+    if(this.activeMode != this.mods[2] && this.activeMode != this.mods[3]) {
       axios.get(`${this.activeMode.link}${this.searchName}`)
         .then(response => {
           this.results = response.data;
@@ -94,10 +104,10 @@ export class SearchPage {;
   }
 
   openResult(result): void {
-    if(this.activeMode == this.mods[0]) {
+    if(this.activeMode == this.mods[0] || this.activeMode == this.mods[3]) {
       this.router.navigateByUrl(`/view-user/${result.username}`);
     }
-    else if(this.activeMode == this.mods[1]) {
+    else if(this.activeMode == this.mods[1] || this.activeMode == this.mods[2]) {
       this.router.navigateByUrl(`/view-project/${result.title}`);
     }
     else if(this.activeMode == this.mods[3]) {
@@ -105,7 +115,7 @@ export class SearchPage {;
     }
   }
 
-  showAlert(msg): void {
+  showAlert(msg: string): void {
     this.alertCtrl.create({
       header: 'Message',
       message: msg,
@@ -133,7 +143,7 @@ export class SearchPage {;
     }).then(alert => alert.present());
   }
 
-  removeItem(item): void {
+  removeItem(item: string): void {
     let index = this.items.indexOf(item);
 
     if(index != -1) {

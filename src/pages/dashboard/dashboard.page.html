@@ -30,9 +30,8 @@
     <ion-card-content>
       <p *ngIf="user.projectsAppliedTo.length == 0">You haven't applied to anything yet</p>
       <ion-list>
-        <ion-item *ngFor="let project of user.projectsAppliedTo">
-          <ion-label>{{ project }}</ion-label>
-          <ion-button [routerLink]="'/view-project/' + project">Open</ion-button>
+        <ion-item style="color: #388fff;" *ngFor="let project of user.projectsAppliedTo" routerLink="/view-project/{{ project }}">
+        {{ project }}
         </ion-item>
       </ion-list>
     </ion-card-content>
@@ -44,15 +43,14 @@
         Submitted {{ user.submittedProjects.length }} projects
       </ion-card-subtitle>
     </ion-card-header>
-
+    
     <ion-card-content>
-      <p *ngIf="user.submittedProjects.length == 0">You haven't submitted anything yet</p>
       <ion-list>
-        <ion-item *ngFor="let project of user.submittedProjects">
-          <ion-label>{{ project }}</ion-label>
-          <ion-button [routerLink]="'/view-project/' + project">Open</ion-button>
+        <ion-item style="color: #388fff;" *ngFor="let project of user.submittedProjects" routerLink="/view-project/{{ project }}">
+        {{ project }}
         </ion-item>
       </ion-list>
+      <p *ngIf="user.submittedProjects.length == 0">You haven't submitted anything yet</p>
     </ion-card-content>
   </ion-card>
 
