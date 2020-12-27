@@ -42,6 +42,26 @@ export class AppComponent {
     this.isDarkTheme = theme == 'dark';
 
     document.body.setAttribute('color-theme', theme);
+  
+    this.platform.backButton.subscribe(() => {
+      if(this.router.url == '/') {
+        this.alertCtrl.create({
+          header: 'Exit',
+          message: 'Are you sure you want to exit?',
+          buttons: [
+            {
+              text: 'Yes',
+              handler: () => {
+                navigator['app'].exitApp();
+              }
+            },
+            {
+              text: 'No'
+            }
+          ]
+        }).then(alert => alert.present());
+      }
+    });
   }
 
   signIn(): void {

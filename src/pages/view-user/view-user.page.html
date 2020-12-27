@@ -4,28 +4,30 @@
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="user != null">{{ user.username }}'s profile</ion-title>
-
-    <ion-buttons slot="end">
-      <ion-button (click)="openActionSheet();">
-        <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card mode="ios">
+  <ion-card mode="ios" *ngIf="user != null">
     <ion-card-header>
-      <ion-card-subtitle *ngIf="user != null && user.country != null">Location: {{ user.country }}</ion-card-subtitle>
-      <span *ngIf="user != null && user.country == null">No location provided</span>
-      <ion-card-title *ngIf="user != null">{{ user.username }}</ion-card-title>
+      <ion-card-subtitle *ngIf="user.country != null">Location: {{ user.country }}</ion-card-subtitle>
+      <span *ngIf="user.country == null">No location provided</span>
+      <ion-card-title>{{ user.username }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
-      <strong *ngIf="user != null && user.bio != null">Info: {{ user.bio }}</strong>
-      <span *ngIf="user != null && user.bio == null">No information given</span>
+      <strong *ngIf="user.bio != null">Info: {{ user.bio }}</strong>
+      <span *ngIf="user.bio == null">No information given</span>
       <br>
     </ion-card-content>
+    <ion-button fill="clear" color="primary" (click)="viewGithubProfile();">
+      <ion-icon name="logo-github"></ion-icon>
+      View Github Profile
+    </ion-button>
+    <ion-button fill="clear" color="primary" *ngIf="auth != null" routerLink="/view-dialog/{{ user.username }}">
+      <ion-icon name="create-outline"></ion-icon>
+      Start A Dialog
+    </ion-button>
   </ion-card>
 
   <ion-card *ngIf="user != null" mode="ios">

@@ -37,34 +37,11 @@ export class ViewUserPage {
     }).then(alert => alert.present());
   }
 
-  openActionSheet(): void {
-    let btns = [
-      {
-        text: 'View Github Profile',
-        icon: 'logo-github',
-        handler: () => {
-          this.iab.create(`https://github.com/${this.user.username}`);
-        }
-      },
-    ];
-
-    if(this.auth != null) {
-      btns.push({
-        text: 'Start a dialog',
-        icon: 'create-outline',
-        handler: () => {
-          this.router.navigateByUrl(`/view-dialog/${this.user.username}`, {replaceUrl: true});
-        }
-      });
-    }
-
-    this.actionCtrl.create({
-      header: 'Actions',
-      buttons: btns
-    }).then(alert => alert.present());
-  }
-
   get auth(): User {
     return FolderPage.user;
+  }
+
+  viewGithubProfile(): void {
+    this.iab.create(`https://github.com/${this.user.username}`);
   }
 }

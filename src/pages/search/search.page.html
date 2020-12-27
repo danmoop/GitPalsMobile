@@ -20,14 +20,12 @@
 
   <div *ngIf="activeMode != null">
     <br>
-
     <ion-card>
       <ion-card-header>
         <span>{{ activeMode.text }}</span>
       </ion-card-header>
       <ion-card-content>
         <div *ngIf="activeMode == mods[2] || activeMode == mods[3]" style="margin-top: 20px;" class="ion-text-center">
-          <span *ngIf="items.length == 0">No items added yet</span>
           <ion-list>
             <ion-item *ngFor="let item of items">
               <ion-label style="font-weight: 600;">{{ item }}</ion-label>

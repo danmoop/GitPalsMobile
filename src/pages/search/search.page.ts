@@ -93,14 +93,20 @@ export class SearchPage {;
           this.results = response.data;
           this.searchName = '';
           this.loadingCtrl.dismiss();
+        }).catch(err => {
+          this.showAlert(err);
+          this.loadingCtrl.dismiss();
         })
     } else {
       axios.post(`${this.activeMode.link}`, this.items)
         .then(response => {
           this.results = response.data;
           this.loadingCtrl.dismiss();
-        }).catch(err => this.showAlert(err));
-    } 
+        }).catch(err => {
+          this.showAlert(err);
+          this.loadingCtrl.dismiss();
+        });
+    }
   }
 
   openResult(result): void {
