@@ -22,7 +22,8 @@
 
   <ion-card mode="ios" *ngIf="project != null">
     <ion-card-header>
-      <ion-card-subtitle>by <span style="color: #3880ff" routerLink="/view-user/{{ project.authorName }}">{{ project.authorName }}</span></ion-card-subtitle>
+      <ion-card-subtitle>by <span style="color: #3880ff"
+          routerLink="/view-user/{{ project.authorName }}">{{ project.authorName }}</span></ion-card-subtitle>
       <ion-card-title>{{ project.title }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
@@ -67,8 +68,10 @@
     </ion-card-header>
     <ion-card-content>
       <p *ngIf="user == null">Please sign in to apply to this project</p>
-      <ion-button color="success" size="small" *ngIf="user != null && project.appliedUsers.indexOf(user.username) == -1" (click)="apply();">Apply</ion-button>
-      <ion-button color="danger" size="small" *ngIf="user != null && project.appliedUsers.indexOf(user.username) != -1" (click)="apply();">Unapply</ion-button>
+      <ion-button color="success" size="small" *ngIf="user != null && project.appliedUsers.indexOf(user.username) == -1"
+        (click)="apply();">Apply</ion-button>
+      <ion-button color="danger" size="small" *ngIf="user != null && project.appliedUsers.indexOf(user.username) != -1"
+        (click)="apply();">Unapply</ion-button>
     </ion-card-content>
   </ion-card>
 

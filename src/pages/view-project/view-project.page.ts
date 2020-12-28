@@ -18,27 +18,27 @@ export class ViewProjectPage {
   projectTitle: string;
 
   constructor(
-      private route: ActivatedRoute, 
-      private alertCtrl: AlertController,
-      private actionCtrl: ActionSheetController,
-      private router: Router
-    ) {
+    private route: ActivatedRoute,
+    private alertCtrl: AlertController,
+    private actionCtrl: ActionSheetController,
+    private router: Router
+  ) {
     this.projectTitle = route.snapshot.params.projectTitle;
   }
-  
+
   ionViewDidEnter(): void {
-    if(this.project != null) {
+    if (this.project != null) {
       axios.get(`${API_URL}/projects/getById/${this.project.id}`)
-      .then(response => {
-        this.project = response.data;
-      })
-      .catch(err => this.showAlert(err))
+        .then(response => {
+          this.project = response.data;
+        })
+        .catch(err => this.showAlert(err))
     } else {
       axios.get(`${API_URL}/projects/getByTitle/${this.projectTitle}`)
-      .then(response => {
-        this.project = response.data;
-      })
-      .catch(err => this.showAlert(err))
+        .then(response => {
+          this.project = response.data;
+        })
+        .catch(err => this.showAlert(err))
     }
   }
 
@@ -64,12 +64,12 @@ export class ViewProjectPage {
       jwt: localStorage.getItem('jwt'),
       projectName: this.project.title
     }).then(response => {
-      if(response.data.status == 'OK') {
+      if (response.data.status == 'OK') {
         var userIndex = this.project.appliedUsers.indexOf(this.user.username);
-        if(userIndex == -1) {
+        if (userIndex == -1) {
           this.project.appliedUsers.push(this.user.username);
-        
-         FolderPage.user.projectsAppliedTo.push(this.project.title);
+
+          FolderPage.user.projectsAppliedTo.push(this.project.title);
         } else {
           this.project.appliedUsers.splice(userIndex, 1);
 
@@ -80,7 +80,7 @@ export class ViewProjectPage {
         this.showAlert(response.data.status);
       }
     })
-    .catch(err => this.showAlert(err));
+      .catch(err => this.showAlert(err));
   }
 
   writeComment(): void {
@@ -96,18 +96,18 @@ export class ViewProjectPage {
         {
           text: 'Send',
           handler: (data) => {
-            if(data.text.trim() != '') {
+            if (data.text.trim() != '') {
               var comment = {
                 jwt: localStorage.getItem('jwt'),
                 author: this.user.username,
                 text: data.text,
                 projectName: this.project.title
               }
-              
+
               axios.post(`${API_URL}/projects/sendComment`, comment)
                 .then(response => {
                   let comment = response.data;
-                  if(comment.key != undefined) {
+                  if (comment.key != undefined) {
                     this.project.comments.push(comment);
                   } else {
                     this.showAlert('Unable to send a comment');
@@ -136,17 +136,17 @@ export class ViewProjectPage {
               projectName: this.project.title,
               commentText: comment.text
             })
-            .then(response => {
-              if(response.data.status == 'OK') {
-                var commentIndex = this.project.comments.indexOf(comment);
-                if(commentIndex != -1) {
-                  this.project.comments.splice(commentIndex, 1);
+              .then(response => {
+                if (response.data.status == 'OK') {
+                  var commentIndex = this.project.comments.indexOf(comment);
+                  if (commentIndex != -1) {
+                    this.project.comments.splice(commentIndex, 1);
+                  }
+                } else {
+                  this.showAlert(response.data.status);
                 }
-              } else {
-                this.showAlert(response.data.status);
-              }
-            })
-            .catch(err => this.showAlert(err));
+              })
+              .catch(err => this.showAlert(err));
           }
         },
         {
@@ -175,7 +175,7 @@ export class ViewProjectPage {
             this.removeProject();
           }
         }
-    ]
+      ]
     }).then(alert => alert.present());
   }
 
@@ -214,13 +214,13 @@ export class ViewProjectPage {
               jwt: localStorage.getItem('jwt'),
               projectName: this.project.title
             }).then(response => {
-              if(response.data.status == 'OK') {
+              if (response.data.status == 'OK') {
                 this.router.navigateByUrl('/', { replaceUrl: true });
               } else {
                 this.showAlert(response.data.status);
               }
             })
-	    .catch(err => this.showAlert(err));
+              .catch(err => this.showAlert(err));
           }
         },
         {
@@ -249,15 +249,15 @@ export class ViewProjectPage {
               text: data.text,
               commentKey: comment.key
             })
-            .then(response => {
-              if(response.data.status == 'OK') {
-                comment.text = data.text;
-                comment.edited = true;
-              } else {
-                this.showAlert(response.data.status);
-              }
-            })
-            .catch(err => this.showAlert(err));
+              .then(response => {
+                if (response.data.status == 'OK') {
+                  comment.text = data.text;
+                  comment.edited = true;
+                } else {
+                  this.showAlert(response.data.status);
+                }
+              })
+              .catch(err => this.showAlert(err));
           }
         }
       ]

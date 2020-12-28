@@ -16,11 +16,11 @@ export class EditProjectPage {
   project: Project;
 
   constructor(
-      private router: Router,
-      private route: ActivatedRoute, 
-      private alertCtrl: AlertController,
-      private location: Location
-    ) {
+    private router: Router,
+    private route: ActivatedRoute,
+    private alertCtrl: AlertController,
+    private location: Location
+  ) {
     var projectId = route.snapshot.params.id;
 
     axios.get(`${API_URL}/projects/getById/${projectId}`)
@@ -85,15 +85,15 @@ export class EditProjectPage {
       project: this.project,
       jwt: localStorage.getItem('jwt')
     })
-    .then(response => {
-      if(response.data.status == 'OK') {
-        this.showAlert('Success!');
-        this.location.back();
-      } else {
-        this.showAlert(response.data.status);
-      }
-    })
-    .catch(err => this.showAlert(err));
+      .then(response => {
+        if (response.data.status == 'OK') {
+          this.showAlert('Success!');
+          this.location.back();
+        } else {
+          this.showAlert(response.data.status);
+        }
+      })
+      .catch(err => this.showAlert(err));
   }
 
   showAlert(msg: string): void {

@@ -21,14 +21,14 @@
 
   <ion-card *ngFor="let post of posts" mode='ios'>
     <ion-card-header>
-        <ion-card-subtitle>By 
-            <span style="color: #388fff" routerLink="/view-user/{{ post.author }}">{{ post.author }}</span>
-        </ion-card-subtitle>
+      <ion-card-subtitle>By
+        <span style="color: #388fff" routerLink="/view-user/{{ post.author }}">{{ post.author }}</span>
+      </ion-card-subtitle>
       <ion-card-title>{{ post.title }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
-      <span>Published on {{ post.timeStamp }}</span> 
+      <span>Published on {{ post.timeStamp }}</span>
       <br><br>
       <span>Views: <ion-badge color="primary">{{ post.viewSet.length }}</ion-badge></span>
       <br><br>

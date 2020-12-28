@@ -25,7 +25,8 @@
         <span>{{ activeMode.text }}</span>
       </ion-card-header>
       <ion-card-content>
-        <div *ngIf="activeMode == mods[2] || activeMode == mods[3]" style="margin-top: 20px;" class="ion-text-center">
+        <div *ngIf="activeMode == mods[2] || activeMode == mods[3] || activeMode == mods[4]" style="margin-top: 20px;"
+          class="ion-text-center">
           <ion-list>
             <ion-item *ngFor="let item of items">
               <ion-label style="font-weight: 600;">{{ item }}</ion-label>
@@ -35,11 +36,11 @@
             </ion-item>
           </ion-list>
           <ion-buttons>
-            <ion-button (click)="addItem();" style="margin: 0px auto;">Add Item</ion-button>  
+            <ion-button (click)="addItem();" style="margin: 0px auto;">Add Item</ion-button>
             <ion-button color="primary" (click)="find();" style="margin: 0px auto;">Find</ion-button>
           </ion-buttons>
         </div>
-        <div *ngIf="activeMode != mods[2] && activeMode != mods[3]">
+        <div *ngIf="activeMode != mods[2] && activeMode != mods[3] && activeMode != mods[4]">
           <ion-buttons slot="end">
             <ion-searchbar [(ngModel)]="searchName"></ion-searchbar>
             <ion-button color="primary" (click)="find();">Find</ion-button>
@@ -50,14 +51,16 @@
   </div>
 
   <ion-card *ngIf="results != null && results.length != 0">
-    <ion-card-content> 
+    <ion-card-content>
       <ion-list *ngIf="results != null">
         <p>{{ results.length }} results</p>
         <ion-item *ngFor="let result of results">
-          <ion-label (click)="openResult(result);" style="font-weight: 600; color: #388fff;" *ngIf="activeMode == mods[0] || activeMode == mods[3]">{{ result.username }}</ion-label>
-          <ion-label (click)="openResult(result);" style="font-weight: 600; color: #388fff;" *ngIf="activeMode != mods[0] && activeMode != mods[3]">{{ result.title }}</ion-label>
+          <ion-label (click)="openResult(result);" style="font-weight: 600; color: #388fff;"
+            *ngIf="activeMode == mods[0] || activeMode == mods[4]">{{ result.username }}</ion-label>
+          <ion-label (click)="openResult(result);" style="font-weight: 600; color: #388fff;"
+            *ngIf="activeMode != mods[0] && activeMode != mods[4]">{{ result.title }}</ion-label>
         </ion-item>
-      </ion-list> 
+      </ion-list>
     </ion-card-content>
   </ion-card>
 </ion-content>

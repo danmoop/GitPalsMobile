@@ -9,7 +9,7 @@ import { FolderPage } from '../../app/folder/folder.page';
 })
 export class DialogsPage {
 
-  constructor() {}
+  constructor() { }
 
   get user(): User {
     return FolderPage.user;

@@ -20,7 +20,7 @@ export class ViewNotificationsPage implements OnInit {
        to tell that now they are read, so the badge with messages
        counter would dissapear from the notifications page
     */
-    if(FolderPage.user.notifications.key != 0) {
+    if (FolderPage.user.notifications.key != 0) {
       FolderPage.user.notifications.key = 0;
 
       axios.post(`${API_URL}/users/markNotificationsAsSeen`, {
@@ -31,10 +31,10 @@ export class ViewNotificationsPage implements OnInit {
 
   get notifications(): object[] {
     var res = [];
-    
+
     var notifications = Object.keys(FolderPage.user.notifications.value);
-    
-    for(var i = 0; i < notifications.length; i++) {
+
+    for (var i = 0; i < notifications.length; i++) {
       res.push(FolderPage.user.notifications.value[notifications[i]]);
     }
 
@@ -54,12 +54,12 @@ export class ViewNotificationsPage implements OnInit {
       jwt: localStorage.getItem('jwt'),
       notificationKey: notification.key
     })
-    .then(response => {
-      if(response.data.status != 'OK') {
-        this.showAlert(response.data.status);
-      }
-    })
-    .catch(err => this.showAlert(err));
+      .then(response => {
+        if (response.data.status != 'OK') {
+          this.showAlert(response.data.status);
+        }
+      })
+      .catch(err => this.showAlert(err));
 
     delete FolderPage.user.notifications.value[notification.key];
   }

@@ -40,7 +40,8 @@
     <ion-card-content>
       <span *ngIf="user != null && user.submittedProjects.length == 0">No projects submitted yet</span>
       <ion-list>
-        <ion-item style="color: #388fff;" *ngFor="let project of user.submittedProjects" routerLink="/view-project/{{ project }}">
+        <ion-item style="color: #388fff;" *ngFor="let project of user.submittedProjects"
+          routerLink="/view-project/{{ project }}">
           {{ project }}
         </ion-item>
       </ion-list>

@@ -16,14 +16,14 @@ export class PublishForumPostPage {
   title: string = '';
   description: string = '';
 
-  constructor(private alertCtrl: AlertController, private router: Router) {}
+  constructor(private alertCtrl: AlertController, private router: Router) { }
 
   get user(): User {
     return FolderPage.user;
   }
 
   publish(): void {
-    if(this.title.trim() == '' || this.description.trim() == '') {
+    if (this.title.trim() == '' || this.description.trim() == '') {
       this.showAlert('All fields are required to be filled in!');
     } else {
       axios.post(`${API_URL}/forum/addForumPost`, {
@@ -31,10 +31,10 @@ export class PublishForumPostPage {
         title: this.title,
         description: this.description
       }).then(response => {
-        if(response.data.key == null) {
+        if (response.data.key == null) {
           this.showAlert('Failed to add a post');
         } else {
-          this.router.navigateByUrl(`/view-forum-post/${response.data.key}`, {replaceUrl: true});
+          this.router.navigateByUrl(`/view-forum-post/${response.data.key}`, { replaceUrl: true });
         }
       }).catch(err => this.showAlert(err));
     }

@@ -16,8 +16,8 @@ export class ViewForumPostPage {
   post: any;
 
   constructor(
-    private actionCtrl: ActionSheetController, 
-    private alertCtrl: AlertController, 
+    private actionCtrl: ActionSheetController,
+    private alertCtrl: AlertController,
     private route: ActivatedRoute,
     private router: Router) {
     var key = route.snapshot.params.key;
@@ -26,12 +26,12 @@ export class ViewForumPostPage {
       .then(response => {
         this.post = response.data;
 
-        if(this.user != null && this.post.viewSet.indexOf(this.user.username) == -1) {
+        if (this.user != null && this.post.viewSet.indexOf(this.user.username) == -1) {
           axios.post(`${API_URL}/forum/addUserToViewSet`, {
             jwt: localStorage.getItem('jwt'),
             postKey: key
           }).then(response => {
-            if(response.data.status != 'OK') this.showAlert(response.data.status);
+            if (response.data.status != 'OK') this.showAlert(response.data.status);
           }).catch(err => this.showAlert(err));
         }
       })
@@ -54,7 +54,7 @@ export class ViewForumPostPage {
       buttons: ['OK']
     }).then(alert => alert.present());
   }
-  
+
   writeComment(): void {
     this.alertCtrl.create({
       header: 'Comment',
@@ -68,18 +68,18 @@ export class ViewForumPostPage {
         {
           text: 'Send',
           handler: (data) => {
-            if(data.text.trim() != '') {
+            if (data.text.trim() != '') {
               var comment = {
                 jwt: localStorage.getItem('jwt'),
                 author: this.user.username,
                 text: data.text,
                 postKey: this.post.key
               }
-              
+
               axios.post(`${API_URL}/forum/addComment`, comment)
                 .then(response => {
                   let comment = response.data;
-                  if(comment.key == undefined) {
+                  if (comment.key == undefined) {
                     this.showAlert('Unable to send a comment');
                   } else {
                     this.post.comments.push(comment);
@@ -94,7 +94,7 @@ export class ViewForumPostPage {
       ]
     }).then(alert => alert.present());
   }
-  
+
   openCommentActionSheet(comment): void {
     this.actionCtrl.create({
       header: 'Actions',
@@ -130,7 +130,7 @@ export class ViewForumPostPage {
             this.removePost();
           }
         }
-    ]
+      ]
     }).then(alert => alert.present());
   }
 
@@ -146,8 +146,8 @@ export class ViewForumPostPage {
               jwt: localStorage.getItem('jwt'),
               postKey: this.post.key
             }).then(response => {
-              if(response.data.status == 'OK') {
-                this.router.navigateByUrl('/forum', {replaceUrl: true});
+              if (response.data.status == 'OK') {
+                this.router.navigateByUrl('/forum', { replaceUrl: true });
               } else {
                 this.showAlert(response.data.status);
               }
@@ -180,15 +180,15 @@ export class ViewForumPostPage {
               commentText: data.text,
               commentKey: comment.key
             })
-            .then(response => {
-              if(response.data.status == 'OK') {
-                comment.text = data.text;
-                comment.edited = true;
-              } else {
-                this.showAlert(response.data.status);
-              }
-            })
-            .catch(err => this.showAlert(err));
+              .then(response => {
+                if (response.data.status == 'OK') {
+                  comment.text = data.text;
+                  comment.edited = true;
+                } else {
+                  this.showAlert(response.data.status);
+                }
+              })
+              .catch(err => this.showAlert(err));
           }
         }
       ]
@@ -208,17 +208,17 @@ export class ViewForumPostPage {
               postKey: this.post.key,
               commentKey: comment.key
             })
-            .then(response => {
-              if(response.data.status == 'OK') {
-                var commentIndex = this.post.comments.indexOf(comment);
-                if(commentIndex != -1) {
-                  this.post.comments.splice(commentIndex, 1);
+              .then(response => {
+                if (response.data.status == 'OK') {
+                  var commentIndex = this.post.comments.indexOf(comment);
+                  if (commentIndex != -1) {
+                    this.post.comments.splice(commentIndex, 1);
+                  }
+                } else {
+                  this.showAlert(response.data.status);
                 }
-              } else {
-                this.showAlert(response.data.status);
-              }
-            })
-            .catch(err => this.showAlert(err));
+              })
+              .catch(err => this.showAlert(err));
           }
         },
         {
@@ -227,7 +227,7 @@ export class ViewForumPostPage {
       ]
     }).then(alert => alert.present());
   }
-  
+
   get user(): User {
     return FolderPage.user;
   }

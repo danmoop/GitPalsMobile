@@ -22,10 +22,11 @@
   <ion-refresher slot="fixed" (ionRefresh)="refreshForumInfo($event);">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  
+
   <ion-card mode="ios" *ngIf="post != null">
     <ion-card-header>
-        <ion-card-subtitle>by <span style="color: #388fff" routerLink="/view-user/{{ post.author }}">{{ post.author }}</span></ion-card-subtitle>
+      <ion-card-subtitle>by <span style="color: #388fff"
+          routerLink="/view-user/{{ post.author }}">{{ post.author }}</span></ion-card-subtitle>
       <ion-card-title>{{ post.title }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
@@ -46,7 +47,8 @@
       <ion-card *ngFor="let comment of post.comments" mode='ios'>
         <ion-card-header>
           <ion-item>
-              <ion-label style="color: #388fff" routerLink="/view-user/{{ comment.author }}">{{ comment.author }}</ion-label>
+            <ion-label style="color: #388fff" routerLink="/view-user/{{ comment.author }}">{{ comment.author }}
+            </ion-label>
             <ion-buttons slot="end" *ngIf="post != null && user != null && user.username == comment.author">
               <ion-button (click)="openCommentActionSheet(comment);">
                 <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>

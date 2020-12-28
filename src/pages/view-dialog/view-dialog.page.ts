@@ -31,7 +31,7 @@ export class ViewDialogPage {
       .then(response => {
         this.messageKey = response.data.key;
 
-        if(this.messageKey == undefined) {
+        if (this.messageKey == undefined) {
           this.showAlert('Failed to initialize a connection');
         } else {
           this.initWS();
@@ -45,7 +45,7 @@ export class ViewDialogPage {
   }
 
   initWS(): void {
-    if(FolderPage.user.dialogs[this.name] == undefined) {
+    if (FolderPage.user.dialogs[this.name] == undefined) {
       let pair = {
         key: 0,
         value: []
@@ -54,19 +54,19 @@ export class ViewDialogPage {
       FolderPage.user.dialogs[this.name] = pair;
     }
 
-    if(FolderPage.user.dialogs[this.name].key != 0) {
+    if (FolderPage.user.dialogs[this.name].key != 0) {
       FolderPage.user.dialogs[this.name].key = 0;
       axios.post(`${API_URL}/users/markDialogAsSeen`, {
         jwt: localStorage.getItem('jwt'),
         dialogName: this.name
       }).then(response => {
-        if(response.data.status != 'OK') {
+        if (response.data.status != 'OK') {
           this.showAlert(response.data.status);
         }
       })
-      .catch(err => this.showAlert(err));
+        .catch(err => this.showAlert(err));
     }
-    
+
     this.ws = new SockJS(WS_URL);
     this.stompClient = StompModule.Stomp.over(this.ws);
 
@@ -74,17 +74,17 @@ export class ViewDialogPage {
       this.stompClient.subscribe(`/topic/messages/${this.messageKey}`, (message) => {
         if (message.body) {
           const msg = JSON.parse(message.body);
-	  FolderPage.user.dialogs[this.name].value.push(msg);
+          FolderPage.user.dialogs[this.name].value.push(msg);
         }
       });
     });
   }
-  
+
   sendMessage(): void {
-    if(this.message.trim() == '') {
+    if (this.message.trim() == '') {
       this.showAlert("Message can't be empty!");
     } else {
-      this.stompClient.send("/app/messageTransmit", {}, JSON.stringify({'author': this.user.username, 'content': this.message, 'recipient':this.name, 'type':'REGULAR_MESSAGE'}));
+      this.stompClient.send("/app/messageTransmit", {}, JSON.stringify({ 'author': this.user.username, 'content': this.message, 'recipient': this.name, 'type': 'REGULAR_MESSAGE' }));
     }
     this.message = '';
   }

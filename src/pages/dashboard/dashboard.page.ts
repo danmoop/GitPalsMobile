@@ -12,7 +12,7 @@ import axios from 'axios';
 })
 export class DashboardPage {
 
-  constructor(private alertCtrl: AlertController) {}
+  constructor(private alertCtrl: AlertController) { }
 
   get user(): User {
     return FolderPage.user;
@@ -31,17 +31,17 @@ export class DashboardPage {
         {
           text: 'Add',
           handler: (data) => {
-            if(data.skill.trim() == '') {
+            if (data.skill.trim() == '') {
               this.showAlert("Skill text shouldn't be empty!");
             } else {
               var obj = {
                 jwt: localStorage.getItem('jwt'),
                 skill: data.skill
               }
-  
-              axios.post(`${API_URL}/users/addNewSkill`, obj) 
+
+              axios.post(`${API_URL}/users/addNewSkill`, obj)
                 .then(response => {
-                  if(response.data.status == 'OK') {
+                  if (response.data.status == 'OK') {
                     FolderPage.user.skillList.push(data.skill);
                   } else {
                     this.showAlert(response.data.status);
@@ -67,13 +67,13 @@ export class DashboardPage {
               skill: _skill,
               jwt: localStorage.getItem('jwt')
             }).then(response => {
-              if(response.data.status == 'OK') {
+              if (response.data.status == 'OK') {
                 FolderPage.user.skillList.splice(FolderPage.user.skillList.indexOf(_skill), 1);
               } else {
                 this.showAlert(response.data.status);
               }
             })
-            .catch(err => this.showAlert(err));
+              .catch(err => this.showAlert(err));
           }
         },
         {

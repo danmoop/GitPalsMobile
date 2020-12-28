@@ -9,8 +9,7 @@ import axios from 'axios';
   templateUrl: './search.page.html',
   styleUrls: ['./search.page.scss'],
 })
-export class SearchPage {;
-
+export class SearchPage {
   activeMode: any = null;
   results: any = null;
   searchName: string = '';
@@ -36,7 +35,7 @@ export class SearchPage {;
       }
     },
     {
-      text: 'Find projects by technologies used in them',
+      text: 'Match projects by technologies used in them',
       link: `${API_URL}/search/matchProjectsByTechnologies/`,
       handler: () => {
         this.activeMode = this.mods[2];
@@ -45,10 +44,19 @@ export class SearchPage {;
       }
     },
     {
-      text: 'Find users by their skills',
-      link: `${API_URL}/search/matchUsersBySkills/`,
+      text: 'Match projects by required roles',
+      link: `${API_URL}/search/matchProjectsByRoles`,
       handler: () => {
         this.activeMode = this.mods[3];
+        this.results = null;
+        this.items = [];
+      }
+    },
+    {
+      text: 'Match users by their skills',
+      link: `${API_URL}/search/matchUsersBySkills/`,
+      handler: () => {
+        this.activeMode = this.mods[4];
         this.results = null;
         this.items = [];
       }
@@ -57,7 +65,7 @@ export class SearchPage {;
       text: 'Find forum posts by title',
       link: `${API_URL}/search/matchForumPostsByTitle/`,
       handler: () => {
-        this.activeMode = this.mods[4];
+        this.activeMode = this.mods[5];
         this.results = null;
         this.items = [];
       }
@@ -69,7 +77,7 @@ export class SearchPage {;
     private alertCtrl: AlertController,
     private router: Router,
     private loadingCtrl: LoadingController
-  ) {}
+  ) { }
 
   selectMode(): void {
     this.actionsCtrl.create({
@@ -85,38 +93,43 @@ export class SearchPage {;
 
     this.loadingCtrl.create({
       message: 'Please Wait'
-    }).then(alert => alert.present());
-
-    if(this.activeMode != this.mods[2] && this.activeMode != this.mods[3]) {
-      axios.get(`${this.activeMode.link}${this.searchName}`)
-        .then(response => {
-          this.results = response.data;
-          this.searchName = '';
+    }).then(alert => {
+      alert.present();
+      if (this.activeMode != this.mods[2] && this.activeMode != this.mods[3] && this.activeMode != this.mods[4]) {
+        if (this.searchName.trim() != '') {
+          axios.get(`${this.activeMode.link}${this.searchName}`)
+            .then(response => {
+              this.results = response.data;
+              this.searchName = '';
+              this.loadingCtrl.dismiss();
+            }).catch(err => {
+              this.showAlert(err);
+              this.loadingCtrl.dismiss();
+            })
+        } else {
+          this.showAlert('There should be a search parameter!');
           this.loadingCtrl.dismiss();
-        }).catch(err => {
-          this.showAlert(err);
-          this.loadingCtrl.dismiss();
-        })
-    } else {
-      axios.post(`${this.activeMode.link}`, this.items)
-        .then(response => {
-          this.results = response.data;
-          this.loadingCtrl.dismiss();
-        }).catch(err => {
-          this.showAlert(err);
-          this.loadingCtrl.dismiss();
-        });
-    }
+        }
+      } else {
+        axios.post(`${this.activeMode.link}`, this.items)
+          .then(response => {
+            this.results = response.data;
+            this.loadingCtrl.dismiss();
+            console.log(response.data);
+          }).catch(err => {
+            this.showAlert(err);
+            this.loadingCtrl.dismiss();
+          });
+      }
+    });
   }
 
   openResult(result): void {
-    if(this.activeMode == this.mods[0] || this.activeMode == this.mods[3]) {
+    if (this.activeMode == this.mods[0] || this.activeMode == this.mods[4]) {
       this.router.navigateByUrl(`/view-user/${result.username}`);
-    }
-    else if(this.activeMode == this.mods[1] || this.activeMode == this.mods[2]) {
+    } else if (this.activeMode == this.mods[1] || this.activeMode == this.mods[2] || this.activeMode == this.mods[3]) {
       this.router.navigateByUrl(`/view-project/${result.title}`);
-    }
-    else if(this.activeMode == this.mods[3]) {
+    } else {
       this.router.navigateByUrl(`/view-forum-post/${result.key}`);
     }
   }
@@ -152,7 +165,7 @@ export class SearchPage {;
   removeItem(item: string): void {
     let index = this.items.indexOf(item);
 
-    if(index != -1) {
+    if (index != -1) {
       this.items.splice(index, 1);
     }
   }

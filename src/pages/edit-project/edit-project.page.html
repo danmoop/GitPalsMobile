@@ -16,17 +16,20 @@
     <ion-card-content>
       <ion-item>
         <span>Title: </span>
-        <ion-input *ngIf="project != null" [(ngModel)]="project.title" placeholder="Project Title" style="margin-left: 10px;"></ion-input>
+        <ion-input *ngIf="project != null" [(ngModel)]="project.title" placeholder="Project Title"
+          style="margin-left: 10px;"></ion-input>
       </ion-item>
-      
+
       <ion-item>
         <span>Repository Link: </span>
-        <ion-input *ngIf="project != null" [(ngModel)]="project.githubProjectLink" placeholder="Repository Link" style="margin-left: 10px;"></ion-input>
+        <ion-input *ngIf="project != null" [(ngModel)]="project.githubProjectLink" placeholder="Repository Link"
+          style="margin-left: 10px;"></ion-input>
       </ion-item>
 
       <ion-item>
         <span>Description: </span>
-        <ion-input *ngIf="project != null" [(ngModel)]="project.description" placeholder="Description" style="margin-left: 10px;"></ion-input>
+        <ion-input *ngIf="project != null" [(ngModel)]="project.description" placeholder="Description"
+          style="margin-left: 10px;"></ion-input>
       </ion-item>
     </ion-card-content>
   </ion-card>

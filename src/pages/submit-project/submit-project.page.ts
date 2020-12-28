@@ -16,26 +16,26 @@ export class SubmitProjectPage {
   constructor(
     private alertCtrl: AlertController,
     private router: Router
-  ) {}
+  ) { }
 
   project: Project = new Project();
 
   submit(): void {
-    if(this.areFieldsValid()) {
+    if (this.areFieldsValid()) {
       this.project.authorName = FolderPage.user.username;
 
       axios.post(`${API_URL}/projects/submitProject`, {
         jwt: localStorage.getItem('jwt'),
         project: this.project
       })
-      .then(response => {
-        if(response.data.status == 'OK') {
-          this.router.navigateByUrl(`/view-project/${this.project.title}`, { replaceUrl: true });
-        } else {
-          this.showAlert(response.data.status);
-        }
-      })
-      .catch(err => this.showAlert(err));
+        .then(response => {
+          if (response.data.status == 'OK') {
+            this.router.navigateByUrl(`/view-project/${this.project.title}`, { replaceUrl: true });
+          } else {
+            this.showAlert(response.data.status);
+          }
+        })
+        .catch(err => this.showAlert(err));
     } else {
       this.showAlert('All fields are required!');
     }
@@ -90,9 +90,9 @@ export class SubmitProjectPage {
   }
 
   areFieldsValid(): boolean {
-    if(this.project.title.trim() == '' || this.project.description.trim() == '' 
-    || this.project.githubProjectLink.trim() == '' || this.project.technologies.length == 0
-    || this.project.requiredRoles.length == 0) {
+    if (this.project.title.trim() == '' || this.project.description.trim() == ''
+      || this.project.githubProjectLink.trim() == '' || this.project.technologies.length == 0
+      || this.project.requiredRoles.length == 0) {
       return false;
     }
 

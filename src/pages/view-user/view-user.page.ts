@@ -17,7 +17,7 @@ export class ViewUserPage {
   user: User;
 
   constructor(
-    private alertCtrl: AlertController, 
+    private alertCtrl: AlertController,
     private route: ActivatedRoute,
     private router: Router,
     private iab: InAppBrowser,

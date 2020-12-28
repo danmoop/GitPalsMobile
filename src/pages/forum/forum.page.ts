@@ -17,9 +17,9 @@ export class ForumPage {
   posts: Array<object>;
 
   constructor(
-    private alertCtrl: AlertController, 
+    private alertCtrl: AlertController,
     private actionSheetCtrl: ActionSheetController,
-    private router: Router) {}
+    private router: Router) { }
 
   ionViewDidEnter(): void {
     axios.get(`${API_URL}/forum/getAll`)
@@ -40,7 +40,7 @@ export class ForumPage {
             this.router.navigateByUrl('/publish-forum-post');
           }
         }
-    ]
+      ]
     }).then(alert => alert.present());
   }
 
