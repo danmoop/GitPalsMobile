@@ -24,8 +24,7 @@ export class ViewDialogPage {
   message: string = '';
 
   constructor(private alertCtrl: AlertController, private route: ActivatedRoute) {
-    var name = route.snapshot.params.name;
-    this.name = name;
+    this.name = route.snapshot.params.name;
 
     axios.get(`${API_URL}/users/getMessageKey/${localStorage.getItem('jwt')}`)
       .then(response => {
@@ -84,7 +83,14 @@ export class ViewDialogPage {
     if (this.message.trim() == '') {
       this.showAlert("Message can't be empty!");
     } else {
-      this.stompClient.send("/app/messageTransmit", {}, JSON.stringify({ 'author': this.user.username, 'content': this.message, 'recipient': this.name, 'type': 'REGULAR_MESSAGE' }));
+      var outMessage = {
+        'author': this.user.username, 
+        'content': this.message, 
+        'recipient': this.name, 
+        'type': 'REGULAR_MESSAGE' 
+      };
+
+      this.stompClient.send("/app/messageTransmit", {}, JSON.stringify(outMessage));
     }
     this.message = '';
   }

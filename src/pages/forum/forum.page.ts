@@ -3,9 +3,9 @@ import { API_URL } from '../../variables/constants';
 import { ActionSheetController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import axios from 'axios';
 import { User } from 'src/model/User';
 import { FolderPage } from 'src/app/folder/folder.page';
+import axios from 'axios';
 
 @Component({
   selector: 'app-forum',

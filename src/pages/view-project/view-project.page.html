@@ -87,7 +87,8 @@
       <ion-card *ngFor="let comment of project.comments" mode='ios'>
         <ion-card-header>
           <ion-item>
-            <ion-label>{{ comment.author }}</ion-label>
+            <ion-label style="color: #3880ff" 
+              routerLink="/view-user/{{ comment.author }}">{{ comment.author }}</ion-label>
             <ion-buttons slot="end" *ngIf="project != null && user != null && user.username == comment.author">
               <ion-button (click)="openCommentActionSheet(comment);">
                 <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>

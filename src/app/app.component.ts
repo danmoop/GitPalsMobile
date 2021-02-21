@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -7,7 +6,6 @@ import { FolderPage } from './folder/folder.page';
 import { API_URL } from './../variables/constants';
 import { Router } from '@angular/router';
 import { User } from '../model/User';
-
 import axios from 'axios';
 
 @Component({
