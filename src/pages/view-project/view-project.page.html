@@ -64,7 +64,9 @@
   <ion-card mode="ios" *ngIf="project != null">
     <ion-card-header>
       <ion-card-subtitle>Participation</ion-card-subtitle>
-      <ion-card-subtitle>{{ project.appliedUsers.length }} users submitted</ion-card-subtitle>
+      <ion-card-subtitle>
+        {{ project.appliedUsers.length }} users submitted
+      </ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
       <p *ngIf="user == null">Please sign in to apply to this project</p>
@@ -72,6 +74,17 @@
         (click)="apply();">Apply</ion-button>
       <ion-button color="danger" size="small" *ngIf="user != null && project.appliedUsers.indexOf(user.username) != -1"
         (click)="apply();">Unapply</ion-button>
+      <ion-button size="small" (click)="showAppliedUsers();">Show</ion-button>
+
+      <ion-list *ngIf="appliedUsersShown">
+        <span *ngIf="this.project.appliedUsers.length == 0">No users applied yet</span>
+        <ion-item *ngFor="let appliedUser of project.appliedUsers">
+          <ion-label style="color: #3880ff" routerLink="/view-user/{{ appliedUser }}">
+            {{ appliedUser }}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
     </ion-card-content>
   </ion-card>
 

@@ -16,6 +16,7 @@ export class ViewProjectPage {
 
   project: Project = null;
   projectTitle: string;
+  appliedUsersShown: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -270,5 +271,9 @@ export class ViewProjectPage {
 
   get user(): User {
     return FolderPage.user;
+  }
+
+  showAppliedUsers(): void {
+    this.appliedUsersShown = !this.appliedUsersShown;
   }
 }
