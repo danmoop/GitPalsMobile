@@ -74,7 +74,9 @@
         (click)="apply();">Apply</ion-button>
       <ion-button color="danger" size="small" *ngIf="user != null && project.appliedUsers.indexOf(user.username) != -1"
         (click)="apply();">Unapply</ion-button>
-      <ion-button size="small" (click)="showAppliedUsers();">Show</ion-button>
+      <ion-button size="small" (click)="showAppliedUsers();">
+        {{ appliedUsersShown ? 'Hide' : 'Show' }}
+      </ion-button>
 
       <ion-list *ngIf="appliedUsersShown">
         <span *ngIf="this.project.appliedUsers.length == 0">No users applied yet</span>

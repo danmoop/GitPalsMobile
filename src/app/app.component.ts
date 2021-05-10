@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { FolderPage } from './folder/folder.page';
 import { API_URL } from './../variables/constants';
 import { Router } from '@angular/router';
 import { User } from '../model/User';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import axios from 'axios';
 
 @Component({
@@ -21,7 +21,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private alertCtrl: AlertController,
-    private router: Router
+    private router: Router,
+    private iab: InAppBrowser
   ) {
     this.initializeApp();
   }
@@ -69,7 +70,7 @@ export class AppComponent {
         {
           name: 'username',
           type: 'text',
-          placeholder: 'Username'
+          placeholder: 'Github Username'
         },
         {
           name: 'key',
@@ -106,6 +107,23 @@ export class AppComponent {
               }
             })
             .catch(err => this.showAlert(err));
+          }
+        },
+        {
+          text: 'Get Password',
+          handler: () => {
+            this.alertCtrl.create({
+              header: 'Message',
+              message: '1. Go to gitpals.com\n2. Sign in via Github\n3. Set up your password in dashboard',
+              buttons: [
+                {
+                  text: 'Open Gitpals.com',
+                  handler: () => {    
+                    this.iab.create(`https://www.gitpals.com/`);
+                  }
+                }
+              ]
+            }).then(alert => alert.present());
           }
         },
         {
