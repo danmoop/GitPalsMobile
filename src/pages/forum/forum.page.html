@@ -32,7 +32,7 @@
       <br><br>
       <span>Views: <ion-badge color="primary">{{ post.viewSet.length }}</ion-badge></span>
       <br><br>
-      <span>Comments: <ion-badge color="primary">{{ post.comments.length }}</ion-badge></span>
+      <span *ngIf="post != null">Comments: <ion-badge color="primary">{{ getNumOfComments(post) }}</ion-badge></span>
     </ion-card-content>
     <ion-button fill="clear" (click)="openPost(post.key);">Explore</ion-button>
   </ion-card>

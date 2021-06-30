@@ -82,7 +82,7 @@ export class ViewForumPostPage {
                   if (comment.key == undefined) {
                     this.showAlert('Unable to send a comment');
                   } else {
-                    this.post.comments.push(comment);
+                    this.post.comments[comment.key] = comment;
                   }
                 })
                 .catch(err => this.showAlert(err));
@@ -210,9 +210,8 @@ export class ViewForumPostPage {
             })
               .then(response => {
                 if (response.data.status == 'OK') {
-                  var commentIndex = this.post.comments.indexOf(comment);
-                  if (commentIndex != -1) {
-                    this.post.comments.splice(commentIndex, 1);
+                  if (this.post.comments[comment.key] != undefined) {
+                    delete this.post.comments[comment.key];
                   }
                 } else {
                   this.showAlert(response.data.status);
@@ -230,5 +229,9 @@ export class ViewForumPostPage {
 
   get user(): User {
     return FolderPage.user;
+  }
+
+  getNumOfComments(): number {
+    return Object.keys(this.post.comments).length;
   }
 }

@@ -109,7 +109,7 @@ export class ViewProjectPage {
                 .then(response => {
                   let comment = response.data;
                   if (comment.key != undefined) {
-                    this.project.comments.push(comment);
+                    this.project.comments[comment.key] = comment;
                   } else {
                     this.showAlert('Unable to send a comment');
                   }
@@ -125,6 +125,7 @@ export class ViewProjectPage {
   }
 
   removeComment(comment): void {
+    console.log(comment);
     this.alertCtrl.create({
       header: 'Remove Comment',
       message: 'Are you sure?',
@@ -135,13 +136,12 @@ export class ViewProjectPage {
             axios.post(`${API_URL}/projects/removeComment`, {
               jwt: localStorage.getItem('jwt'),
               projectName: this.project.title,
-              commentText: comment.text
+              commentKey: comment.key
             })
               .then(response => {
                 if (response.data.status == 'OK') {
-                  var commentIndex = this.project.comments.indexOf(comment);
-                  if (commentIndex != -1) {
-                    this.project.comments.splice(commentIndex, 1);
+                  if (this.project.comments[comment.key] != undefined) {
+                    delete this.project.comments[comment.key];
                   }
                 } else {
                   this.showAlert(response.data.status);
@@ -275,5 +275,9 @@ export class ViewProjectPage {
 
   showAppliedUsers(): void {
     this.appliedUsersShown = !this.appliedUsersShown;
+  }
+
+  getNumOfComments(): number {
+    return Object.keys(this.project.comments).length;
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "GitPalsMobile",
-  "version": "0.0.1",
+  "version": "1.2",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -31,6 +31,7 @@
     "cordova-android": "9.0.0",
     "crypto-js": "^4.0.0",
     "rxjs": "~6.5.5",
+    "tmp": "^0.2.1",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
   },

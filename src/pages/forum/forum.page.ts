@@ -59,4 +59,8 @@ export class ForumPage {
   get user(): User {
     return FolderPage.user;
   }
+
+  getNumOfComments(post): number {
+    return Object.keys(post.comments).length;
+  }
 }

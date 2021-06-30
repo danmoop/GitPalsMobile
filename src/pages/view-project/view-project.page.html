@@ -93,28 +93,28 @@
   <ion-card mode="ios" *ngIf="project != null">
     <ion-card-header>
       <ion-card-subtitle>
-        Comments ({{ project.comments.length }})
+        Comments ({{ getNumOfComments() }})
         <ion-button *ngIf="user != null" size="small" (click)="writeComment()">Add</ion-button>
       </ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
       <p *ngIf="project.comments.length == 0">No comments yet</p>
-      <ion-card *ngFor="let comment of project.comments" mode='ios'>
+      <ion-card *ngFor="let comment of project.comments | keyvalue" mode='ios'>
         <ion-card-header>
           <ion-item>
             <ion-label style="color: #3880ff" 
-              routerLink="/view-user/{{ comment.author }}">{{ comment.author }}</ion-label>
-            <ion-buttons slot="end" *ngIf="project != null && user != null && user.username == comment.author">
-              <ion-button (click)="openCommentActionSheet(comment);">
+              routerLink="/view-user/{{ comment.value.author }}">{{ comment.value.author }}</ion-label>
+            <ion-buttons slot="end" *ngIf="project != null && user != null && user.username == comment.value.author">
+              <ion-button (click)="openCommentActionSheet(comment.value);">
                 <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
               </ion-button>
             </ion-buttons>
           </ion-item>
         </ion-card-header>
         <ion-card-content>
-          <ion-badge color="primary" *ngIf="comment.edited">Edited</ion-badge>
+          <ion-badge color="primary" *ngIf="comment.value.edited">Edited</ion-badge>
           <br>
-          <span>{{ comment.text }}</span>
+          <span>{{ comment.value.text }}</span>
         </ion-card-content>
       </ion-card>
     </ion-card-content>
